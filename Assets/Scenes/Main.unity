@@ -260,7 +260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 1
   width: 5
-  height: 8
+  height: 9
   offSet: 30
   tilePrefab: {fileID: 1911998330442460, guid: 2eb7a6d37f1acf7459d441d534196b54, type: 2}
   circle:
@@ -272,6 +272,9 @@ MonoBehaviour:
   - {fileID: 1319267572265458, guid: 2da77d918de16a84b979329e1b81fdf0, type: 2}
   - {fileID: 1106207011680258, guid: 8760d1d173bef9c47b3b58e2398a3ff4, type: 2}
   - {fileID: 1333517241104996, guid: d8ddf58b23940b24e83515de1f001326, type: 2}
+  destroyEffect: {fileID: 1363163160297792, guid: 888438abcb5679041b1c2f2c8f95a766,
+    type: 2}
+  currentCircle: {fileID: 0}
 --- !u!4 &1983667649
 Transform:
   m_ObjectHideFlags: 0

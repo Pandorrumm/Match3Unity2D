@@ -17,9 +17,13 @@ public class Board : MonoBehaviour
     public int offSet; // что бы сверху вниз появлялось всё
     public GameObject tilePrefab;
     private TileBackground[,] allTiles; //вся плитка
-    public GameObject[] circle;
+    public GameObject[] circle;    
     public GameObject[,] allCircle;
     private FindMatches findMatches;
+
+    public GameObject destroyEffect;
+
+    public Circle currentCircle; //текущий
 
     void Start ()
     {
@@ -101,9 +105,17 @@ public class Board : MonoBehaviour
 
     private void DestroyMatchesAt(int column, int row)
     {
-        if (allCircle[column,row].GetComponent<Circle>().isMatched)
+        if (allCircle[column, row].GetComponent<Circle>().isMatched)
         {
-            findMatches.currentMatches.Remove(allCircle[column, row]);
+            //сколько элементов в списке совпадений findmatches
+            if (findMatches.currentMatches.Count == 4 || findMatches.currentMatches.Count == 7)
+            {
+                findMatches.CheckBombs();
+            }
+               
+            GameObject particle = Instantiate(destroyEffect, allCircle[column, row].transform.position, Quaternion.identity);
+            Destroy(particle, .5f);
+
             Destroy(allCircle[column, row]);
             allCircle[column, row] = null;
 
@@ -116,12 +128,13 @@ public class Board : MonoBehaviour
         {
             for(int j=0; j < height; j++)
             {
-                if( allCircle[i,j] != null)
+                if(allCircle[i,j] != null)
                 {
                     DestroyMatchesAt(i, j);
                 }
             }
         }
+        findMatches.currentMatches.Clear();
         StartCoroutine(DecreaseRowCo());
     }
 
@@ -196,6 +209,8 @@ public class Board : MonoBehaviour
             yield return new WaitForSeconds(.5f);
             DestroyMatches();
         }
+        findMatches.currentMatches.Clear();
+        currentCircle = null;
         yield return new WaitForSeconds(.5f);
         currentState = GameState.move;
     }

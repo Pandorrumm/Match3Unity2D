@@ -68,12 +68,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 283aac21ca9429f46b42d4d7c6d259e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swipeAngle: 0
   column: 0
   row: 0
+  previousColumns: 0
+  previousRow: 0
   targetX: 0
   targetY: 0
   isMatched: 0
+  otherCircle: {fileID: 0}
+  swipeAngle: 0
+  swipeResist: 1
+  isColumnBomb: 0
+  isRowBomb: 0
+  rowArrow: {fileID: 1097276308423616, guid: 63a41f22c2ab9be4aba6c7540956d88a, type: 2}
+  columnArrow: {fileID: 1101889376666830, guid: 9b8bc13a82fe76649b862f37819b5fcd,
+    type: 2}
+  isColorBomb: 0
+  colorBomb: {fileID: 1165972744533922, guid: 4acab6b529d9d3242924edd0db17e92d, type: 2}
 --- !u!212 &212912930661574042
 SpriteRenderer:
   m_ObjectHideFlags: 1

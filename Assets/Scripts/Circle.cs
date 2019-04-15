@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Circle : MonoBehaviour
 {
-    [Header("Board Variables")]
+    [Header("Board Variables")] //переменные доски
     public int column; //колонка
     public int row; // строка
     public int previousColumns;
@@ -15,16 +15,29 @@ public class Circle : MonoBehaviour
 
     private FindMatches findMatches;
     private Board board;
-    private GameObject otherCircle;
+    public GameObject otherCircle;
     private Vector2 firstTouchPosition;
     private Vector2 finalTouchPosition;
     private Vector2 tempPosition;  
+
+    [Header("Swipe Stuff")] //наклоны материала
     public float swipeAngle = 0;
     public float swipeResist = 1f; //сопротивление
-    
 
+    [Header("PowerUp Stuff")]
+    public bool isColumnBomb;
+    public bool isRowBomb;
+    public GameObject rowArrow;
+    public GameObject columnArrow;
+    public bool isColorBomb;
+    public GameObject colorBomb;
+
+    
     void Start ()
     {
+        isColumnBomb = false;
+        isRowBomb = false;
+
         board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();
         //targetX = (int)transform.position.x;
@@ -34,17 +47,30 @@ public class Circle : MonoBehaviour
        // previousRow = row;
        // previousColumns = column;
     }
-	
-	void Update ()
-    {
-        //FindMatches();
 
+    //Это для тестинга и отладки Bomb
+    private void OnMouseOver()
+    {
+        if(Input.GetMouseButtonDown(1))
+        {
+            isColorBomb = true;
+            GameObject color = Instantiate(colorBomb, transform.position, Quaternion.identity);
+            color.transform.parent = this.transform;
+        }
+    }
+
+
+    void Update ()
+    {
+        
+        /*
         if (isMatched == true)
         {
             SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
-            mySprite.color = new Color(0f, 0f, 0f, 2f);
+            Color currentColor = mySprite.color;
+            mySprite.color = new Color(currentColor.r, currentColor.g, currentColor.b, .5f);
         }
-
+        */
         targetX = column;
         targetY = row;
 
@@ -94,7 +120,20 @@ public class Circle : MonoBehaviour
 
     public IEnumerator CheckMoveCo() //карантин,если не сходятся цвета, то возврат напредыдущую позицию
     {
-        yield return new WaitForSeconds(.4f);
+        if(isColorBomb) //взрывы по цвету
+        {
+            //этот кусок - цветная бомба, а другой - цвет, который нужно уничтожить
+            findMatches.MatchPiecesOfColor(otherCircle.tag);
+            isMatched = true;
+        }
+        else if(otherCircle.GetComponent<Circle>().isColorBomb)
+        {
+            //другая часть - цветная бомба, и эта часть имеет цвет, чтобы разрушить
+            findMatches.MatchPiecesOfColor(this.gameObject.tag);
+           otherCircle.GetComponent<Circle>().isMatched = true;
+        }
+
+        yield return new WaitForSeconds(.5f);
         if (otherCircle != null)
         {
             if (!isMatched && !otherCircle.GetComponent<Circle>().isMatched)
@@ -104,13 +143,14 @@ public class Circle : MonoBehaviour
                 row = previousRow;
                 column = previousColumns;
                 yield return new WaitForSeconds(.5f);
+                board.currentCircle = null;
                 board.currentState = GameState.move;
             }
             else
             {
                 board.DestroyMatches();              
             }
-            otherCircle = null;
+           // otherCircle = null;
         }        
     }
 
@@ -141,10 +181,12 @@ public class Circle : MonoBehaviour
             // Debug.Log(swipeAngle);
             MovePieces();
             board.currentState = GameState.wait;
+            board.currentCircle = this;
         }
         else
         {
             board.currentState = GameState.move;
+           
         }
     }
 
@@ -223,5 +265,19 @@ public class Circle : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void MakeRowBomb()
+    {
+        isRowBomb = true;
+        GameObject arrow = Instantiate(rowArrow, transform.position, Quaternion.identity);
+        arrow.transform.parent = this.transform;
+    }
+
+    public void MakeColumnBomb()
+    {
+        isColumnBomb = true;
+        GameObject arrow = Instantiate(columnArrow, transform.position, Quaternion.identity);
+        arrow.transform.parent = this.transform;
     }
 }
