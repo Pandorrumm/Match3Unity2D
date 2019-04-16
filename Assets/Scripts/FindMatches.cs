@@ -18,6 +18,25 @@ public class FindMatches : MonoBehaviour
         StartCoroutine(FindAllMatchesCo());
     }
 
+    private List<GameObject> IsAdjacentBomb(Circle circle1, Circle circle2, Circle circle3)
+    {
+        List<GameObject> currentCircles = new List<GameObject>();
+
+        if (circle1.isAdjacentBomb)
+        {
+            currentMatches.Union(GetAdjacentPieces(circle1.column, circle1.row));
+        }
+        if (circle2.isAdjacentBomb)
+        {
+            currentMatches.Union(GetAdjacentPieces(circle2.column, circle2.row));
+        }
+        if (circle3.isAdjacentBomb)
+        {
+            currentMatches.Union(GetAdjacentPieces(circle3.column, circle3.row));
+        }
+        return currentCircles;
+    }
+
     private List<GameObject> IsRowBomb(Circle circle1, Circle circle2, Circle circle3)
     {
         List<GameObject> currentCircles = new List<GameObject>();
@@ -107,6 +126,8 @@ public class FindMatches : MonoBehaviour
                                     //что бы не только солонка взорвалась, но и 2 остальных circla из трёх собранных
                                     currentMatches.Union(IsColumnBomb(leftCircleCircle, currentCirclCircl, rightCircleCircle));
 
+                                    currentMatches.Union(IsAdjacentBomb(leftCircleCircle, currentCirclCircl, rightCircleCircle));
+
                                     GetNearbyPieces(leftCircle, currentCircl, rightCircle);
                                 }
                             }
@@ -131,7 +152,10 @@ public class FindMatches : MonoBehaviour
                                     // взрывы 
 
                                     currentMatches.Union(IsColumnBomb(upCirclCircl, currentCirclCircl, downCirclCircl));
+
                                     currentMatches.Union(IsRowBomb(upCirclCircl, currentCirclCircl, downCirclCircl));
+
+                                    currentMatches.Union(IsAdjacentBomb(upCirclCircl, currentCirclCircl, downCirclCircl));
 
                                     GetNearbyPieces(upCircle, currentCircl, downCircle);
                                 }
@@ -144,7 +168,8 @@ public class FindMatches : MonoBehaviour
         }
     }
 
-    List<GameObject> GetColumnPieces(int column) // получить кусочки колонки
+    List<GameObject> GetColumnPieces(int column) // получить кусочки колонки для бомбы, 
+                                                 // кот уничтожит столбец
     {
         List<GameObject> circle = new List<GameObject>();
         for (int i = 0; i < board.height; i++)
@@ -179,8 +204,27 @@ public class FindMatches : MonoBehaviour
             
     }
 
+    List<GameObject> GetAdjacentPieces(int column, int row) //получаем в список соседние элементы
+                                                            // для бомбы, кот уничтожит рядомстоящие круги  
+    {
+        List<GameObject> circle = new List<GameObject>();
+        for (int i = column - 1; i <= column + 1; i++)
+        {
+            for (int j = row - 1; j <= row + 1; j++)
+            {
+                //проверяем, есть ли что то внутри доски, т.к. может быть с краю бомба
+                if(i >= 0 && i < board.width && j >= 0 && j < board.height)
+                {
+                    circle.Add(board.allCircle[i, j]);
+                    board.allCircle[i, j].GetComponent<Circle>().isMatched = true;
+                }
 
-    List<GameObject> GetRowPieces(int row) // получить кусочки колонки
+            }
+        }
+        return circle;
+    }
+
+    List<GameObject> GetRowPieces(int row) // получить кусочки колонки, для бомбы строки 
     {
         List<GameObject> circle = new List<GameObject>();
         for (int i = 0; i < board.width; i++)
@@ -194,7 +238,7 @@ public class FindMatches : MonoBehaviour
         return circle;
     }
 
-    public void CheckBombs()
+    public void CheckBombs() // бомбы row and column
     {
         //если игрок что то двигал
         if(board.currentCircle != null)
@@ -230,8 +274,6 @@ public class FindMatches : MonoBehaviour
                 {
                     board.currentCircle.MakeColumnBomb();
                 }
-
-
 
             }
             //если двигаем не шар совпадающего цвета, а другой цвет

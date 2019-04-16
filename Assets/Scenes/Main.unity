@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -137,6 +138,20 @@ AudioListener:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98556fdbadbc8dc4d84b513cd48b1854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraOffset: -10
+  aspectRatio: 1.7777
+  padding: 3
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -260,18 +275,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 1
   width: 5
-  height: 9
+  height: 8
   offSet: 30
   tilePrefab: {fileID: 1911998330442460, guid: 2eb7a6d37f1acf7459d441d534196b54, type: 2}
   circle:
   - {fileID: 1292004112657398, guid: 654b816314b27cd4cb32ff93cda99c8f, type: 2}
   - {fileID: 1514055218660456, guid: cb0b0c13394593f40a2a2850547e9568, type: 2}
   - {fileID: 1359277176997896, guid: 74a9527e9332e2046ae2dc8c0bd29096, type: 2}
-  - {fileID: 1244611654818998, guid: 3234cfc5e8aa36d4780256918a80bcb5, type: 2}
-  - {fileID: 1673749335803036, guid: e8847766a0d2d734aa046936caa28d89, type: 2}
-  - {fileID: 1319267572265458, guid: 2da77d918de16a84b979329e1b81fdf0, type: 2}
-  - {fileID: 1106207011680258, guid: 8760d1d173bef9c47b3b58e2398a3ff4, type: 2}
   - {fileID: 1333517241104996, guid: d8ddf58b23940b24e83515de1f001326, type: 2}
+  - {fileID: 1106207011680258, guid: 8760d1d173bef9c47b3b58e2398a3ff4, type: 2}
+  - {fileID: 1319267572265458, guid: 2da77d918de16a84b979329e1b81fdf0, type: 2}
+  - {fileID: 1673749335803036, guid: e8847766a0d2d734aa046936caa28d89, type: 2}
+  - {fileID: 1244611654818998, guid: 3234cfc5e8aa36d4780256918a80bcb5, type: 2}
   destroyEffect: {fileID: 1363163160297792, guid: 888438abcb5679041b1c2f2c8f95a766,
     type: 2}
   currentCircle: {fileID: 0}

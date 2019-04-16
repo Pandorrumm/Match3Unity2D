@@ -26,17 +26,22 @@ public class Circle : MonoBehaviour
 
     [Header("PowerUp Stuff")]
     public bool isColumnBomb;
-    public bool isRowBomb;
-    public GameObject rowArrow;
-    public GameObject columnArrow;
     public bool isColorBomb;
+    public bool isRowBomb;
+    public bool isAdjacentBomb; // бомба для соседних кружков
+    public GameObject adjacentMarker; //соседняя метка
+    public GameObject rowArrow;
+    public GameObject columnArrow;  
     public GameObject colorBomb;
+    
 
     
     void Start ()
     {
         isColumnBomb = false;
         isRowBomb = false;
+        isColorBomb = false;
+        isAdjacentBomb = false;
 
         board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();
@@ -53,9 +58,9 @@ public class Circle : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(1))
         {
-            isColorBomb = true;
-            GameObject color = Instantiate(colorBomb, transform.position, Quaternion.identity);
-            color.transform.parent = this.transform;
+            isAdjacentBomb = true;
+            GameObject marker = Instantiate(adjacentMarker, transform.position, Quaternion.identity);
+            marker.transform.parent = this.transform;
         }
     }
 
@@ -134,6 +139,7 @@ public class Circle : MonoBehaviour
         }
 
         yield return new WaitForSeconds(.5f);
+
         if (otherCircle != null)
         {
             if (!isMatched && !otherCircle.GetComponent<Circle>().isMatched)
@@ -176,60 +182,90 @@ public class Circle : MonoBehaviour
         if (Mathf.Abs(finalTouchPosition.y - firstTouchPosition.y) > swipeResist ||
             Mathf.Abs(finalTouchPosition.x - firstTouchPosition.x) > swipeResist)
         {
-            swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y,
-            finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
-            // Debug.Log(swipeAngle);
-            MovePieces();
             board.currentState = GameState.wait;
+            swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y,
+            finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;          
+            MovePieces();           
             board.currentCircle = this;
         }
         else
         {
-            board.currentState = GameState.move;
-           
+            board.currentState = GameState.move;          
         }
     }
 
-    void MovePieces() //движение кусочков
+    void MovePiecesActual(Vector2 direction)
+    {
+        otherCircle = board.allCircle[column + (int)direction.x, row + (int)direction.y];
+        previousRow = row;
+        previousColumns = column;
+        otherCircle.GetComponent<Circle>().column += -1 * (int)direction.x;
+        otherCircle.GetComponent<Circle>().row += -1 * (int)direction.y;
+        column += (int)direction.x;
+        row += (int)direction.y;
+
+        StartCoroutine(CheckMoveCo());
+    }
+
+    void MovePieces() //движение круглешков
     {
         if (swipeAngle > -45 && swipeAngle <= 45 && column < board.width - 1)
         {
             //Right swipe
+            /*
             otherCircle = board.allCircle[column + 1, row];
             previousRow = row;
             previousColumns = column;
             otherCircle.GetComponent<Circle>().column -= 1;
             column += 1;
+            StartCoroutine(CheckMoveCo());
+            */
+            MovePiecesActual(Vector2.right);
         }
         else if (swipeAngle > 45 && swipeAngle <= 135 && row < board.height - 1)
         {
             //Up swipe
+            /*
             otherCircle = board.allCircle[column, row + 1];
             previousRow = row;
             previousColumns = column;
             otherCircle.GetComponent<Circle>().row -= 1;
             row += 1;
+            StartCoroutine(CheckMoveCo());
+            */
+            MovePiecesActual(Vector2.up);
         }
-        else if (swipeAngle > 135 || swipeAngle <= -135 && column > 0)
+        else if ((swipeAngle > 135 || swipeAngle <= -135) && column > 0)
         {
             //Left swipe
+            /*
             otherCircle = board.allCircle[column - 1, row];
             previousRow = row;
             previousColumns = column;
             otherCircle.GetComponent<Circle>().column += 1;
             column -= 1;
+            StartCoroutine(CheckMoveCo());
+            */
+            MovePiecesActual(Vector2.left);
         }
         else if (swipeAngle < -45 && swipeAngle >= -135 && row > 0)
         {
             //Down swipe
+            /*
             otherCircle = board.allCircle[column, row - 1];
             previousRow = row;
             previousColumns = column;
             otherCircle.GetComponent<Circle>().row += 1;
             row -= 1;
+            StartCoroutine(CheckMoveCo());
+            */
+            MovePiecesActual(Vector2.down);
         }
-
-        StartCoroutine(CheckMoveCo());
+        else
+        {
+            board.currentState = GameState.move;
+        }
+      
     }
 
     void FindMatches()
@@ -267,17 +303,32 @@ public class Circle : MonoBehaviour
         }
     }
 
-    public void MakeRowBomb()
+    public void MakeRowBomb() // сделать строчную бомбу
     {
         isRowBomb = true;
         GameObject arrow = Instantiate(rowArrow, transform.position, Quaternion.identity);
         arrow.transform.parent = this.transform;
     }
 
-    public void MakeColumnBomb()
+    public void MakeColumnBomb() //Сделать колонну бомбу
     {
         isColumnBomb = true;
         GameObject arrow = Instantiate(columnArrow, transform.position, Quaternion.identity);
         arrow.transform.parent = this.transform;
     }
+
+    public void MakeColorBomb() //Сделать цветовую бомбу
+    {
+        isColorBomb = true;
+        GameObject color = Instantiate(colorBomb, transform.position, Quaternion.identity);
+        color.transform.parent = this.transform;
+    }
+
+    public void MakeAdjacentBomb() //Сделать бомбу,кот уничтожает соседние кружки
+    {
+        isAdjacentBomb = true;
+        GameObject marker = Instantiate(adjacentMarker, transform.position, Quaternion.identity);
+        marker.transform.parent = this.transform;
+    }
+ 
 }

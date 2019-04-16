@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Board.cs" />
+    <Compile Include="Assets\Scripts\CameraScalar.cs" />
     <Compile Include="Assets\Scripts\Circle.cs" />
     <Compile Include="Assets\Scripts\FindMatches.cs" />
     <Compile Include="Assets\Scripts\SwipeController.cs" />

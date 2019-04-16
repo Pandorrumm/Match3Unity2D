@@ -103,19 +103,123 @@ public class Board : MonoBehaviour
         return false;
     }
 
+    private bool ColumnOrRow() // столбец или строка
+    {
+        int numberHorizontal = 0;
+        int numberVertical = 0;
+        Circle firstPiece = findMatches.currentMatches[0].GetComponent<Circle>();
+
+        if(firstPiece != null)
+        {
+            foreach (GameObject currentPiece in findMatches.currentMatches)
+            {
+                Circle circle = currentPiece.GetComponent<Circle>();
+
+                if(circle.row == firstPiece.row)
+                {
+                    numberHorizontal++;
+                }
+
+                if(circle.column == firstPiece.column)
+                {
+                    numberVertical++;
+                }
+            }
+        }
+        return (numberVertical == 5 || numberHorizontal == 5);
+        
+    }
+
+    private void CheckToMakeBombs() // Делаем бомбы по ко-ву совпавших кружкоы
+    {
+        if(findMatches.currentMatches.Count == 4 || findMatches.currentMatches.Count == 7)
+        {
+            findMatches.CheckBombs();
+        }
+
+        if(findMatches.currentMatches.Count == 5 || findMatches.currentMatches.Count == 8)
+        {
+            if(ColumnOrRow())
+            {
+                //сделать цветную бомбу
+                //текущая точка соответствует?
+                if (currentCircle != null)
+                {
+                    if (currentCircle.isMatched)
+                    {
+                        if (!currentCircle.isColorBomb)
+                        {
+                            currentCircle.isMatched = false;
+                            currentCircle.MakeColorBomb();
+                        }
+                    }
+                    else
+                    {
+                        if(currentCircle.otherCircle != null)
+                        {
+                            Circle otherCircle = currentCircle.otherCircle.GetComponent<Circle>();
+                            if(otherCircle.isMatched)
+                            {
+                                if(!otherCircle.isColorBomb)
+                                {
+                                    otherCircle.isMatched = false;
+                                    otherCircle.MakeColorBomb();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                //сделать для соседних кругов бомбу
+                //текущая точка соответствует?
+                if (currentCircle != null)
+                {
+                    if (currentCircle.isMatched)
+                    {
+                        if (!currentCircle.isAdjacentBomb)
+                        {
+                            currentCircle.isMatched = false;
+                            currentCircle.MakeAdjacentBomb();
+                        }
+                    }
+                    else
+                    {
+                        if (currentCircle.otherCircle != null)
+                        {
+                            Circle otherCircle = currentCircle.otherCircle.GetComponent<Circle>();
+                            if (otherCircle.isMatched)
+                            {
+                                if (!otherCircle.isAdjacentBomb)
+                                {
+                                    otherCircle.isMatched = false;
+                                    otherCircle.MakeAdjacentBomb();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+
+
     private void DestroyMatchesAt(int column, int row)
     {
         if (allCircle[column, row].GetComponent<Circle>().isMatched)
         {
             //сколько элементов в списке совпадений findmatches
-            if (findMatches.currentMatches.Count == 4 || findMatches.currentMatches.Count == 7)
+            if (findMatches.currentMatches.Count >= 4)
             {
-                findMatches.CheckBombs();
+                CheckToMakeBombs();
             }
                
-            GameObject particle = Instantiate(destroyEffect, allCircle[column, row].transform.position, Quaternion.identity);
-            Destroy(particle, .5f);
+            GameObject particle = Instantiate(destroyEffect, allCircle[column, row].transform.position, 
+                                              Quaternion.identity);
 
+            Destroy(particle, .5f);
             Destroy(allCircle[column, row]);
             allCircle[column, row] = null;
 
