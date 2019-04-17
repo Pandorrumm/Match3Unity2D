@@ -199,12 +199,21 @@ public class Circle : MonoBehaviour
         otherCircle = board.allCircle[column + (int)direction.x, row + (int)direction.y];
         previousRow = row;
         previousColumns = column;
-        otherCircle.GetComponent<Circle>().column += -1 * (int)direction.x;
-        otherCircle.GetComponent<Circle>().row += -1 * (int)direction.y;
-        column += (int)direction.x;
-        row += (int)direction.y;
 
-        StartCoroutine(CheckMoveCo());
+        if(otherCircle != null)
+        {
+            otherCircle.GetComponent<Circle>().column += -1 * (int)direction.x;
+            otherCircle.GetComponent<Circle>().row += -1 * (int)direction.y;
+            column += (int)direction.x;
+            row += (int)direction.y;
+
+            StartCoroutine(CheckMoveCo());
+        }
+        else
+        {
+            board.currentState = GameState.move;
+        }
+        
     }
 
     void MovePieces() //движение круглешков

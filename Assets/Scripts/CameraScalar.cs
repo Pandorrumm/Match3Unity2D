@@ -7,7 +7,7 @@ public class CameraScalar : MonoBehaviour
     private Board board;
     public float cameraOffset;
     public float aspectRatio = 1.777f; //1280/720
-    public float padding = 2;// объём помещения кругов
+    public float padding = 2;// объём помещения кругов, отдаление камеры
 	
 	void Start ()
     {
