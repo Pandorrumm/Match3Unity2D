@@ -168,21 +168,6 @@ public class FindMatches : MonoBehaviour
         }
     }
 
-    List<GameObject> GetColumnPieces(int column) // получить кусочки колонки для бомбы, 
-                                                 // кот уничтожит столбец
-    {
-        List<GameObject> circle = new List<GameObject>();
-        for (int i = 0; i < board.height; i++)
-        {
-            if (board.allCircle[column,i] != null)
-            {
-                circle.Add(board.allCircle[column, i]);
-                board.allCircle[column, i].GetComponent<Circle>().isMatched = true;
-            }               
-        }
-        return circle;
-    }
-
     public void MatchPiecesOfColor(string color) //поиск совпадений цвета
     {
         for (int i = 0; i < board.width; i++)
@@ -215,10 +200,36 @@ public class FindMatches : MonoBehaviour
                 //проверяем, есть ли что то внутри доски, т.к. может быть с краю бомба
                 if(i >= 0 && i < board.width && j >= 0 && j < board.height)
                 {
-                    circle.Add(board.allCircle[i, j]);
-                    board.allCircle[i, j].GetComponent<Circle>().isMatched = true;
+                    if (board.allCircle[i, j] != null)
+                    {
+                        circle.Add(board.allCircle[i, j]);
+                        board.allCircle[i, j].GetComponent<Circle>().isMatched = true;
+                    }
                 }
 
+            }
+        }
+        return circle;
+    }
+
+    List<GameObject> GetColumnPieces(int column) // получить кусочки колонки для бомбы, 
+                                                 // кот уничтожит столбец
+    {
+        List<GameObject> circle = new List<GameObject>();
+        for (int i = 0; i < board.height; i++)
+        {
+            if (board.allCircle[column, i] != null)
+            {
+                //для цепной
+                Circle circl = board.allCircle[column, i].GetComponent<Circle>();
+                if(circl.isRowBomb)
+                {
+                    circle.Union(GetRowPieces(i).ToList());
+                }
+
+                circle.Add(board.allCircle[column, i]);
+                // board.allCircle[column, i].GetComponent<Circle>().isMatched = true;
+                circl.isMatched = true;
             }
         }
         return circle;
@@ -231,8 +242,15 @@ public class FindMatches : MonoBehaviour
         {
             if (board.allCircle[i, row] != null)
             {
+                //для цепной
+                Circle circl = board.allCircle[i, row].GetComponent<Circle>();
+                if (circl.isColumnBomb)
+                {
+                    circle.Union(GetColumnPieces(i).ToList());
+                }
+
                 circle.Add(board.allCircle[i, row]);
-                board.allCircle[i, row].GetComponent<Circle>().isMatched = true;
+                circl.isMatched = true;
             }
         }
         return circle;

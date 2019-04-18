@@ -26,7 +26,6 @@ public class TileType //Тип плитки, для Blank Spaces
 
 public class Board : MonoBehaviour
 {
-
     public GameState currentState = GameState.move; //текущее состояние
     public int width; //ширина
     public int height; // высота
@@ -42,9 +41,22 @@ public class Board : MonoBehaviour
     private BackgroundTile[,] breakableTiles;
     public GameObject breakableTilePrefab;
 
+    private ScoreManager scoreManager;
+    public int basePieceValue = 20; // по 20 очков
+    private int streakValue = 1; // Значение полосы
+    public float refillDelay = 0.5f; //задержка пополнения доски
+
+    public int[] scoreGoals;
+
+    private SoundManager soundManager;
+
+
+
 
     void Start()
     {
+        soundManager = FindObjectOfType<SoundManager>();
+        scoreManager = FindObjectOfType<ScoreManager>();
         breakableTiles = new BackgroundTile[width, height];
         findMatches = FindObjectOfType<FindMatches>();
         blankSpaces = new bool[width, height];
@@ -92,7 +104,10 @@ public class Board : MonoBehaviour
                 if (!blankSpaces[i, j])
                 {
                     Vector2 tempPosition = new Vector2(i, j + offSet);
-                    GameObject tileBackground = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
+
+                    Vector2 tilePosition = new Vector2(i, j);
+
+                    GameObject tileBackground = Instantiate(tilePrefab, tilePosition, Quaternion.identity) as GameObject;
                     tileBackground.transform.parent = this.transform;
                     tileBackground.name = "(" + i + ", " + j + ")";
 
@@ -194,7 +209,6 @@ public class Board : MonoBehaviour
             }
         }
         return (numberVertical == 5 || numberHorizontal == 5);
-
     }
 
     private void CheckToMakeBombs() // Делаем бомбы по ко-ву совпавших кружкоы
@@ -273,7 +287,7 @@ public class Board : MonoBehaviour
     }
 
 
-    private void DestroyMatchesAt(int column, int row)
+    private void DestroyMatchesAt(int column, int row) // нанесение урона
     {
         if (allCircle[column, row].GetComponent<Circle>().isMatched)
         {
@@ -294,12 +308,18 @@ public class Board : MonoBehaviour
                     breakableTiles[column, row] = null;
                 }
             }
+            // Менеджер звука существует?
+            if(soundManager != null)
+            {
+                soundManager.PlayRandomDestroyNoise();
+            }
 
             GameObject particle = Instantiate(destroyEffect, allCircle[column, row].transform.position,
                                               Quaternion.identity);
 
             Destroy(particle, .5f);
             Destroy(allCircle[column, row]);
+            scoreManager.IncreaseScore(basePieceValue * streakValue);
             allCircle[column, row] = null;
 
         }
@@ -347,10 +367,9 @@ public class Board : MonoBehaviour
                         }
                     }
                 }
-
             }
         }
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(refillDelay * 0.5f);
         StartCoroutine(FillBoardCo());
     }
     private IEnumerator DecreaseRowCo() //падение вниз circle 
@@ -372,7 +391,7 @@ public class Board : MonoBehaviour
             }
             nullCount = 0;
         }
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(refillDelay * 0.5f);
         StartCoroutine(FillBoardCo());
     }
 
@@ -386,6 +405,15 @@ public class Board : MonoBehaviour
                 {
                     Vector2 tempPosition = new Vector2(i, j + offSet);
                     int circlToUse = Random.Range(0, circle.Length);
+
+                    int maxIterations = 0;
+                    while(MatchesAt(i, j, circle[circlToUse]) && maxIterations < 100)
+                    {
+                        maxIterations++;
+                        circlToUse = Random.Range(0, circle.Length);
+                    }
+                    maxIterations = 0;
+
                     //piece - вставка
                     GameObject piece = Instantiate(circle[circlToUse], tempPosition, Quaternion.identity);
                     allCircle[i, j] = piece;
@@ -414,27 +442,31 @@ public class Board : MonoBehaviour
         return false;
     }
 
-    private IEnumerator FillBoardCo()//карантин заполнения доски
+    private IEnumerator FillBoardCo() // карантин заполнения доски
     {
         RefillBoard();
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(refillDelay);
 
         while (MatchesOnBoard() == true)
         {
-            yield return new WaitForSeconds(.5f);
+            streakValue ++;
             DestroyMatches();
+            yield return new WaitForSeconds(2 * refillDelay);            
         }
+
         findMatches.currentMatches.Clear();
         currentCircle = null;
-        yield return new WaitForSeconds(.5f);
+       // yield return new WaitForSeconds(0.5f);
 
         if(IsDeadLocked()) //нет ходов
         {
-            ShuffleBoard(); // перемешиваем круги на доске
+            StartCoroutine(ShuffleBoard()); // перемешиваем круги на доске
             Debug.Log("НЕТ ХОДОВ!!");
         }
 
+        yield return new WaitForSeconds(refillDelay);
         currentState = GameState.move;
+        streakValue = 1;
     }
 
     private void SwitchPieces(int column, int row, Vector2 direction) //Переключить части
@@ -488,7 +520,7 @@ public class Board : MonoBehaviour
         return false;
     }
 
-    private bool SwitchAndCheck(int column, int row, Vector2 direction)
+    public bool SwitchAndCheck(int column, int row, Vector2 direction)
     {
         SwitchPieces(column, row, direction);
         if (CheckForMatches())
@@ -529,8 +561,9 @@ public class Board : MonoBehaviour
         return true;
     }
 
-    private void ShuffleBoard() //перемешивание кругов на доске, когда нет ходов
+    private IEnumerator ShuffleBoard() //перемешивание кругов на доске, когда нет ходов
     {
+        yield return new WaitForSeconds(0.5f);
         List<GameObject> newBoard = new List<GameObject>();
         //добавляем все в список в этот
         for (int i = 0; i < width; i++)
@@ -543,6 +576,8 @@ public class Board : MonoBehaviour
                 }
             }
         }
+
+        yield return new WaitForSeconds(0.5f);
         //за каждое место на доске
         for (int i = 0; i < width; i++)
         {

@@ -8,6 +8,8 @@ public class CameraScalar : MonoBehaviour
     public float cameraOffset;
     public float aspectRatio = 1.777f; //1280/720
     public float padding = 2;// объём помещения кругов, отдаление камеры
+    public float xOffset = 1;
+
 	
 	void Start ()
     {
@@ -20,7 +22,7 @@ public class CameraScalar : MonoBehaviour
 	
 	void RepositionCamera(float x, float y) // перемещение камеры
     {
-        Vector3 tempPosition = new Vector3(x/2, y/2, cameraOffset);
+        Vector3 tempPosition = new Vector3(x/2 - xOffset, y/2, cameraOffset);
         transform.position = tempPosition;
 
         if (board.width >= board.height)

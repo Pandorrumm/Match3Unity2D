@@ -13,6 +13,7 @@ public class Circle : MonoBehaviour
     public int targetY;
     public bool isMatched = false;
 
+    private HintManager hintManager;
     private FindMatches findMatches;
     private Board board;
     public GameObject otherCircle;
@@ -43,6 +44,7 @@ public class Circle : MonoBehaviour
         isColorBomb = false;
         isAdjacentBomb = false;
 
+        hintManager = FindObjectOfType<HintManager>();
         board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();
         //targetX = (int)transform.position.x;
@@ -162,6 +164,12 @@ public class Circle : MonoBehaviour
 
     private void OnMouseDown()
     {
+        //Уничтожаем подсказку
+        if (hintManager != null)
+        {
+            hintManager.DestroyHint();
+        }
+
         if (board.currentState == GameState.move)
         {
             firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -331,6 +339,7 @@ public class Circle : MonoBehaviour
         isColorBomb = true;
         GameObject color = Instantiate(colorBomb, transform.position, Quaternion.identity);
         color.transform.parent = this.transform;
+        this.gameObject.tag = "Color"; 
     }
 
     public void MakeAdjacentBomb() //Сделать бомбу,кот уничтожает соседние кружки

@@ -12,6 +12,7 @@ TagManager:
   - 'Red Circle '
   - 'Violet Circle '
   - 'Yellow Circle '
+  - Color
   layers:
   - Default
   - TransparentFX
