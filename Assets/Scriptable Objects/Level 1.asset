@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7261223de496e20469053b6d1838bc4a, type: 3}
+  m_Name: Level 1
+  m_EditorClassIdentifier: 
+  width: 5
+  height: 5
+  boardLayout: []
+  circle:
+  - {fileID: 1673749335803036, guid: e8847766a0d2d734aa046936caa28d89, type: 2}
+  - {fileID: 1319267572265458, guid: 2da77d918de16a84b979329e1b81fdf0, type: 2}
+  - {fileID: 1359277176997896, guid: 74a9527e9332e2046ae2dc8c0bd29096, type: 2}
+  - {fileID: 1292004112657398, guid: 654b816314b27cd4cb32ff93cda99c8f, type: 2}
+  scoreGoals: 640000009001000058020000

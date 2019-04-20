@@ -8,11 +8,19 @@ TagManager:
   - 'Gray Circle '
   - 'Green Circle '
   - 'Orange Circle '
-  - Pink Circle
   - 'Red Circle '
   - 'Violet Circle '
   - 'Yellow Circle '
   - Color
+  - Breakable
+  - Red
+  - Pink
+  - Yellow
+  - Violet
+  - Orange
+  - Green
+  - Gray
+  - Blue
   layers:
   - Default
   - TransparentFX

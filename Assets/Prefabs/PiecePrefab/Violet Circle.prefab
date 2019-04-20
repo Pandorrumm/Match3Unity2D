@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114874475640032724}
   m_Layer: 0
   m_Name: Violet Circle
-  m_TagString: 'Violet Circle '
+  m_TagString: Violet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

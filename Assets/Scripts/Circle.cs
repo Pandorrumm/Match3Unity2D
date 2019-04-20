@@ -13,6 +13,7 @@ public class Circle : MonoBehaviour
     public int targetY;
     public bool isMatched = false;
 
+    private EndGameManager endGameManager;
     private HintManager hintManager;
     private FindMatches findMatches;
     private Board board;
@@ -34,6 +35,8 @@ public class Circle : MonoBehaviour
     public GameObject rowArrow;
     public GameObject columnArrow;  
     public GameObject colorBomb;
+
+
     
 
     
@@ -44,6 +47,7 @@ public class Circle : MonoBehaviour
         isColorBomb = false;
         isAdjacentBomb = false;
 
+        endGameManager = FindObjectOfType<EndGameManager>();
         hintManager = FindObjectOfType<HintManager>();
         board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();
@@ -156,6 +160,13 @@ public class Circle : MonoBehaviour
             }
             else
             {
+                if(endGameManager != null)
+                {
+                    if(endGameManager.requirements.gameType == GameType.Moves)
+                    {
+                        endGameManager.DecreaseCounterValue();
+                    }
+                }
                 board.DestroyMatches();              
             }
            // otherCircle = null;

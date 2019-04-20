@@ -5,7 +5,10 @@ using UnityEngine;
 public enum GameState //состояние игры
 {
     wait,
-    move
+    move,
+    win,
+    lose,
+    pause
 }
 
 public enum TileKind
@@ -26,35 +29,57 @@ public class TileType //Тип плитки, для Blank Spaces
 
 public class Board : MonoBehaviour
 {
+    [Header ("Scriptable Object Stuff")] //скриптовые объекты
+    public World world;
+    public int level;
+
     public GameState currentState = GameState.move; //текущее состояние
+
+    [Header("Board Dimensions")] //размеры 
     public int width; //ширина
     public int height; // высота
     public int offSet; // что бы сверху вниз появлялось всё
+
+    [Header ("Prefabs")]
     public GameObject tilePrefab;
+    public GameObject breakableTilePrefab;
     public GameObject[] circle;
-    public GameObject[,] allCircle;
-    private FindMatches findMatches;
     public GameObject destroyEffect;
+
+    [Header("Layout")] //расположение
+    public GameObject[,] allCircle;
+    private FindMatches findMatches;   
     public Circle currentCircle; //текущий
     public TileType[] boardLayout; //расположение, для Blank Spaces 
     private bool[,] blankSpaces;
     private BackgroundTile[,] breakableTiles;
-    public GameObject breakableTilePrefab;
-
+   
     private ScoreManager scoreManager;
     public int basePieceValue = 20; // по 20 очков
     private int streakValue = 1; // Значение полосы
     public float refillDelay = 0.5f; //задержка пополнения доски
-
-    public int[] scoreGoals;
-
+    public int[] scoreGoals; //goals - цель
     private SoundManager soundManager;
+    private GoalManager goalManager;
 
 
+    private void Awake()
+    {
+        if(world != null)
+        {
+            if(world.levels[level] != null)
+            {
+                width = world.levels[level].width;
+                height = world.levels[level].height;
+            }
+        }
+    }
 
 
     void Start()
     {
+        
+        goalManager = FindObjectOfType<GoalManager>();
         soundManager = FindObjectOfType<SoundManager>();
         scoreManager = FindObjectOfType<ScoreManager>();
         breakableTiles = new BackgroundTile[width, height];
@@ -62,6 +87,7 @@ public class Board : MonoBehaviour
         blankSpaces = new bool[width, height];
         allCircle = new GameObject[width, height];
         SetUp();
+        currentState = GameState.pause;
     }
 
     public void GenerateBlankSpaces()
@@ -308,6 +334,13 @@ public class Board : MonoBehaviour
                     breakableTiles[column, row] = null;
                 }
             }
+            // GoalManager
+            if(goalManager != null)
+            {
+                goalManager.CompareGoal(allCircle[column, row].tag.ToString());
+                goalManager.UpdateGoals();
+            }
+
             // Менеджер звука существует?
             if(soundManager != null)
             {

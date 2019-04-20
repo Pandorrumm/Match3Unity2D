@@ -65,9 +65,15 @@
     <Compile Include="Assets\Scripts\Board.cs" />
     <Compile Include="Assets\Scripts\CameraScalar.cs" />
     <Compile Include="Assets\Scripts\Circle.cs" />
+    <Compile Include="Assets\Scripts\EndGameManager.cs" />
+    <Compile Include="Assets\Scripts\FadePanelController.cs" />
     <Compile Include="Assets\Scripts\FindMatches.cs" />
+    <Compile Include="Assets\Scripts\GoalManager.cs" />
+    <Compile Include="Assets\Scripts\GoalPanel.cs" />
     <Compile Include="Assets\Scripts\HintManager.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\Level.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\World.cs" />
     <Compile Include="Assets\Scripts\SoundManager.cs" />
     <Compile Include="Assets\Scripts\SwipeController.cs" />
     <Reference Include="UnityEditor.StandardEvents">
