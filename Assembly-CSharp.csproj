@@ -61,21 +61,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\BackgroundTile.cs" />
-    <Compile Include="Assets\Scripts\Board.cs" />
-    <Compile Include="Assets\Scripts\CameraScalar.cs" />
-    <Compile Include="Assets\Scripts\Circle.cs" />
-    <Compile Include="Assets\Scripts\EndGameManager.cs" />
-    <Compile Include="Assets\Scripts\FadePanelController.cs" />
-    <Compile Include="Assets\Scripts\FindMatches.cs" />
-    <Compile Include="Assets\Scripts\GoalManager.cs" />
-    <Compile Include="Assets\Scripts\GoalPanel.cs" />
-    <Compile Include="Assets\Scripts\HintManager.cs" />
-    <Compile Include="Assets\Scripts\ScoreManager.cs" />
+    <Compile Include="Assets\Scripts\BaseGameScripts\BackgroundTile.cs" />
+    <Compile Include="Assets\Scripts\BaseGameScripts\Board.cs" />
+    <Compile Include="Assets\Scripts\BaseGameScripts\CameraScalar.cs" />
+    <Compile Include="Assets\Scripts\BaseGameScripts\Circle.cs" />
+    <Compile Include="Assets\Scripts\BaseGameScripts\EndGameManager.cs" />
+    <Compile Include="Assets\Scripts\BaseGameScripts\FadePanelController.cs" />
+    <Compile Include="Assets\Scripts\BaseGameScripts\FindMatches.cs" />
+    <Compile Include="Assets\Scripts\BaseGameScripts\GoalManager.cs" />
+    <Compile Include="Assets\Scripts\BaseGameScripts\GoalPanel.cs" />
+    <Compile Include="Assets\Scripts\BaseGameScripts\HintManager.cs" />
+    <Compile Include="Assets\Scripts\BaseGameScripts\ScoreManager.cs" />
+    <Compile Include="Assets\Scripts\BaseGameScripts\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\BaseGameScripts\SwipeController.cs" />
+    <Compile Include="Assets\Scripts\GameDataScripts\GameData.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\Level.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\World.cs" />
-    <Compile Include="Assets\Scripts\SoundManager.cs" />
-    <Compile Include="Assets\Scripts\SwipeController.cs" />
+    <Compile Include="Assets\Scripts\UI\BackToSplashScene.cs" />
+    <Compile Include="Assets\Scripts\UI\ConfirmPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\LevelButton.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/Unity/Проекты/Match3/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

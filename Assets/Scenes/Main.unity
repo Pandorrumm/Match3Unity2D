@@ -325,7 +325,7 @@ MonoBehaviour:
     m_Bottom: 17
   m_ChildAlignment: 4
   m_Spacing: 40
-  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
@@ -438,7 +438,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 244394306}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1494200013}
+        m_MethodName: LoseOK
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &244394306
@@ -994,7 +1005,7 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 4
   m_Spacing: 5
-  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
@@ -1347,7 +1358,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1217690746}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1494200013}
+        m_MethodName: WinOK
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1217690746
@@ -1863,6 +1885,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1494200011}
   - component: {fileID: 1494200012}
+  - component: {fileID: 1494200013}
   m_Layer: 0
   m_Name: EndGameManager
   m_TagString: Untagged
@@ -1901,8 +1924,20 @@ MonoBehaviour:
   counter: {fileID: 1938426362}
   requirements:
     gameType: 0
-    counterValue: 50
+    counterValue: 3
   currentCounterValue: 0
+--- !u!114 &1494200013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1494200010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93a250b54ff672d45bf5b540f7727372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: Splash
 --- !u!1 &1636336270
 GameObject:
   m_ObjectHideFlags: 0
@@ -2966,7 +3001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   world: {fileID: 11400000, guid: 938e576a2b11bdf408096bece83d1e36, type: 2}
-  level: 2
+  level: 0
   currentState: 1
   width: 7
   height: 6

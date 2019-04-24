@@ -19,15 +19,39 @@ public class GoalManager : MonoBehaviour
     public GameObject goalPrefab;
     public GameObject goalIntroParent; //в unity - Goal Container в FadePanel
     public GameObject goalGameParent; //в unity - Goal Container в TopUi
+    private Board board;
 
     private EndGameManager endGame;
 
     void Start ()
     {
+        board = FindObjectOfType<Board>();
         endGame = FindObjectOfType<EndGameManager>();
+        GetGoals();
         SetupGoals();
     }
 	
+    void GetGoals() // Получить цели
+    {
+        if(board != null)
+        {
+            if(board.world != null)
+            {
+                if (board.level < board.world.levels.Length)
+                {
+                    if (board.world.levels[board.level] != null)
+                    {
+                        levelGoals = board.world.levels[board.level].levelGoals;
+                        for(int i = 0; i < levelGoals.Length; i ++)
+                        {
+                            levelGoals[i].numberCollected = 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     void SetupGoals() //настройка вводимых целей
     {
         for (int i = 0; i < levelGoals.Length; i++)
