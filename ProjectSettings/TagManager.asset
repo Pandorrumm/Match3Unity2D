@@ -21,6 +21,7 @@ TagManager:
   - Green
   - Gray
   - Blue
+  - Board
   layers:
   - Default
   - TransparentFX
@@ -57,4 +58,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Markers
+    uniqueID: 93451825
     locked: 0

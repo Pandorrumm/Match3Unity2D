@@ -71,7 +71,21 @@ public class GameData : MonoBehaviour
             file.Close();
             Debug.Log("Загрузили");
         }
+        else
+        {
+            saveData = new SaveData();
+            saveData.isActiv = new bool[100];
+            saveData.stars = new int[100];
+            saveData.highScores = new int[100];
+            saveData.isActiv[0] = true; // первый уровень самый
+        }
     }
+
+    private void OnApplicationQuit() //При выходе из приложения
+    {
+        Save();
+    }
+
 
     private void OnDisable()
     {

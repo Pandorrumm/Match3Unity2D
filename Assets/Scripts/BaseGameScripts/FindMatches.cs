@@ -16,6 +16,7 @@ public class FindMatches : MonoBehaviour
     public void FindAllMatches()
     {
         StartCoroutine(FindAllMatchesCo());
+        //yield return null;
     }
 
     private List<GameObject> IsAdjacentBomb(Circle circle1, Circle circle2, Circle circle3)
@@ -95,7 +96,8 @@ public class FindMatches : MonoBehaviour
 
     private IEnumerator FindAllMatchesCo()
     {
-        yield return new WaitForSeconds(.2f);
+        //yield return new WaitForSeconds(.2f);
+        
         for (int i = 0; i < board.width; i++)
         {
             for (int j = 0; j < board.height; j++)
@@ -116,21 +118,19 @@ public class FindMatches : MonoBehaviour
                             Circle rightCircleCircle = rightCircle.GetComponent<Circle>();
                             Circle leftCircleCircle = leftCircle.GetComponent<Circle>();
 
-                            if (leftCircle != null && rightCircle != null)
+                            if (leftCircle.tag == currentCircl.tag && rightCircle.tag == currentCircl.tag)
                             {
-                                if (leftCircle.tag == currentCircl.tag && rightCircle.tag == currentCircl.tag)
-                                {
-                                    // взрывы 
-                                    currentMatches.Union(IsRowBomb(leftCircleCircle, currentCirclCircl, rightCircleCircle));
+                                // взрывы 
+                                currentMatches.Union(IsRowBomb(leftCircleCircle, currentCirclCircl, rightCircleCircle));
 
-                                    //что бы не только солонка взорвалась, но и 2 остальных circla из трёх собранных
-                                    currentMatches.Union(IsColumnBomb(leftCircleCircle, currentCirclCircl, rightCircleCircle));
+                                //что бы не только солонка взорвалась, но и 2 остальных circla из трёх собранных
+                                currentMatches.Union(IsColumnBomb(leftCircleCircle, currentCirclCircl, rightCircleCircle));
 
-                                    currentMatches.Union(IsAdjacentBomb(leftCircleCircle, currentCirclCircl, rightCircleCircle));
+                                currentMatches.Union(IsAdjacentBomb(leftCircleCircle, currentCirclCircl, rightCircleCircle));
 
-                                    GetNearbyPieces(leftCircle, currentCircl, rightCircle);
-                                }
+                                GetNearbyPieces(leftCircle, currentCircl, rightCircle);
                             }
+
                         }
                     }
 
@@ -144,28 +144,27 @@ public class FindMatches : MonoBehaviour
                             Circle downCirclCircl = downCircle.GetComponent<Circle>();
                             Circle upCirclCircl = upCircle.GetComponent<Circle>();
 
-                            if (upCircle != null && downCircle != null)
+                            if (upCircle.tag == currentCircl.tag && downCircle.tag == currentCircl.tag)
                             {
-                                if (upCircle.tag == currentCircl.tag && downCircle.tag == currentCircl.tag)
-                                {
 
-                                    // взрывы 
+                                // взрывы 
 
-                                    currentMatches.Union(IsColumnBomb(upCirclCircl, currentCirclCircl, downCirclCircl));
+                                currentMatches.Union(IsColumnBomb(upCirclCircl, currentCirclCircl, downCirclCircl));
 
-                                    currentMatches.Union(IsRowBomb(upCirclCircl, currentCirclCircl, downCirclCircl));
+                                currentMatches.Union(IsRowBomb(upCirclCircl, currentCirclCircl, downCirclCircl));
 
-                                    currentMatches.Union(IsAdjacentBomb(upCirclCircl, currentCirclCircl, downCirclCircl));
+                                currentMatches.Union(IsAdjacentBomb(upCirclCircl, currentCirclCircl, downCirclCircl));
 
-                                    GetNearbyPieces(upCircle, currentCircl, downCircle);
-                                }
+                                GetNearbyPieces(upCircle, currentCircl, downCircle);
                             }
+
                         }
                     }
                 }
-
             }
+           
         }
+        yield return null;
     }
 
     public void MatchPiecesOfColor(string color) //поиск совпадений цвета
@@ -256,19 +255,20 @@ public class FindMatches : MonoBehaviour
         return circle;
     }
 
-    public void CheckBombs() // бомбы row and column
+    public void CheckBombs(MatchType matchType) // бомбы row and column
     {
         //если игрок что то двигал
         if(board.currentCircle != null)
         {
             //если совпало
-            if(board.currentCircle.isMatched)
+            if(board.currentCircle.isMatched && board.currentCircle.tag == matchType.color)
             {
                 // сделать его не похожим
                 board.currentCircle.isMatched = false;
 
                 //решить, какую бомбу сделать
                 //первый способ
+
                 /*
                 int typeOfBomb = Random.Range(0, 100);
                 if(typeOfBomb < 50)
@@ -282,6 +282,7 @@ public class FindMatches : MonoBehaviour
                     board.currentCircle.MakeColumnBomb();
                 }
                 */
+
                 //второй способ
                 if ((board.currentCircle.swipeAngle > -45 && board.currentCircle.swipeAngle <= 45)
                     || (board.currentCircle.swipeAngle < -135 || board.currentCircle.swipeAngle >= 135))
@@ -299,7 +300,7 @@ public class FindMatches : MonoBehaviour
             {
                 Circle otherCircle = board.currentCircle.otherCircle.GetComponent<Circle>();
                 //другой Круг соответствует?
-                if (otherCircle.isMatched)
+                if (otherCircle.isMatched && otherCircle.tag == matchType.color)
                 {
                     otherCircle.isMatched = false;
                     /*

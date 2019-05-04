@@ -18,8 +18,8 @@ public class Circle : MonoBehaviour
     private FindMatches findMatches;
     private Board board;
     public GameObject otherCircle;
-    private Vector2 firstTouchPosition;
-    private Vector2 finalTouchPosition;
+    private Vector2 firstTouchPosition = Vector2.zero;
+    private Vector2 finalTouchPosition = Vector2.zero;
     private Vector2 tempPosition;  
 
     [Header("Swipe Stuff")] //наклоны материала
@@ -37,9 +37,7 @@ public class Circle : MonoBehaviour
     public GameObject colorBomb;
 
 
-    
-
-    
+   
     void Start ()
     {
         isColumnBomb = false;
@@ -49,7 +47,8 @@ public class Circle : MonoBehaviour
 
         endGameManager = FindObjectOfType<EndGameManager>();
         hintManager = FindObjectOfType<HintManager>();
-        board = FindObjectOfType<Board>();
+        board = GameObject.FindWithTag("Board").GetComponent<Board>(); // так быстрее работать будет
+       // board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();
         //targetX = (int)transform.position.x;
        // targetY = (int)transform.position.y;
@@ -92,11 +91,12 @@ public class Circle : MonoBehaviour
             //движение к цели
             tempPosition = new Vector2(targetX, transform.position.y);
             transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
+
             if(board.allCircle[column,row] != this.gameObject)
             {
                 board.allCircle[column, row] = this.gameObject;
-            }
-            findMatches.FindAllMatches();
+                findMatches.FindAllMatches();
+            }           
         }
 
         else
@@ -117,31 +117,30 @@ public class Circle : MonoBehaviour
             if (board.allCircle[column, row] != this.gameObject)
             {
                 board.allCircle[column, row] = this.gameObject;
-            }
-            findMatches.FindAllMatches();
+                findMatches.FindAllMatches();
+            }           
         }
         else
         {
             //установить позицию напрямую
             tempPosition = new Vector2(transform.position.x, targetY);
-            transform.position = tempPosition;
-           
+            transform.position = tempPosition;           
         }
     }
 
     public IEnumerator CheckMoveCo() //карантин,если не сходятся цвета, то возврат напредыдущую позицию
     {
-        if(isColorBomb) //взрывы по цвету
+        if (isColorBomb) //взрывы по цвету
         {
             //этот кусок - цветная бомба, а другой - цвет, который нужно уничтожить
             findMatches.MatchPiecesOfColor(otherCircle.tag);
             isMatched = true;
         }
-        else if(otherCircle.GetComponent<Circle>().isColorBomb)
+        else if (otherCircle.GetComponent<Circle>().isColorBomb)
         {
             //другая часть - цветная бомба, и эта часть имеет цвет, чтобы разрушить
             findMatches.MatchPiecesOfColor(this.gameObject.tag);
-           otherCircle.GetComponent<Circle>().isMatched = true;
+            otherCircle.GetComponent<Circle>().isMatched = true;
         }
 
         yield return new WaitForSeconds(.5f);
@@ -181,6 +180,8 @@ public class Circle : MonoBehaviour
             hintManager.DestroyHint();
         }
 
+
+
         if (board.currentState == GameState.move)
         {
             firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -219,20 +220,27 @@ public class Circle : MonoBehaviour
         previousRow = row;
         previousColumns = column;
 
-        if(otherCircle != null)
+        if (board.lockTiles[column, row] == null && board.lockTiles[column + (int)direction.x, row + (int)direction.y] == null)
         {
-            otherCircle.GetComponent<Circle>().column += -1 * (int)direction.x;
-            otherCircle.GetComponent<Circle>().row += -1 * (int)direction.y;
-            column += (int)direction.x;
-            row += (int)direction.y;
+            if (otherCircle != null)
+            {
+                otherCircle.GetComponent<Circle>().column += -1 * (int)direction.x;
+                otherCircle.GetComponent<Circle>().row += -1 * (int)direction.y;
+                column += (int)direction.x;
+                row += (int)direction.y;
 
-            StartCoroutine(CheckMoveCo());
+                StartCoroutine(CheckMoveCo());
+            }
+            else
+            {
+                board.currentState = GameState.move;
+            }
         }
         else
         {
             board.currentState = GameState.move;
         }
-        
+
     }
 
     void MovePieces() //движение круглешков
@@ -329,35 +337,48 @@ public class Circle : MonoBehaviour
                 }
             }
         }
+        
     }
 
     public void MakeRowBomb() // сделать строчную бомбу
     {
-        isRowBomb = true;
-        GameObject arrow = Instantiate(rowArrow, transform.position, Quaternion.identity);
-        arrow.transform.parent = this.transform;
+        if (!isColumnBomb && !isColorBomb && !isAdjacentBomb)
+        {
+            isRowBomb = true;
+            GameObject arrow = Instantiate(rowArrow, transform.position, Quaternion.identity);
+            arrow.transform.parent = this.transform;
+        }
     }
 
     public void MakeColumnBomb() //Сделать колонну бомбу
     {
-        isColumnBomb = true;
-        GameObject arrow = Instantiate(columnArrow, transform.position, Quaternion.identity);
-        arrow.transform.parent = this.transform;
+        if (!isRowBomb && !isColorBomb && !isAdjacentBomb)
+        {
+            isColumnBomb = true;
+            GameObject arrow = Instantiate(columnArrow, transform.position, Quaternion.identity);
+            arrow.transform.parent = this.transform;
+        }
     }
 
     public void MakeColorBomb() //Сделать цветовую бомбу
     {
-        isColorBomb = true;
-        GameObject color = Instantiate(colorBomb, transform.position, Quaternion.identity);
-        color.transform.parent = this.transform;
-        this.gameObject.tag = "Color"; 
+        if (!isColumnBomb && !isRowBomb && !isAdjacentBomb)
+        {
+            isColorBomb = true;
+            GameObject color = Instantiate(colorBomb, transform.position, Quaternion.identity);
+            color.transform.parent = this.transform;
+            this.gameObject.tag = "Color";
+        }
     }
 
     public void MakeAdjacentBomb() //Сделать бомбу,кот уничтожает соседние кружки
     {
-        isAdjacentBomb = true;
-        GameObject marker = Instantiate(adjacentMarker, transform.position, Quaternion.identity);
-        marker.transform.parent = this.transform;
+        if (!isColumnBomb && !isColorBomb && !isRowBomb)
+        {
+            isAdjacentBomb = true;
+            GameObject marker = Instantiate(adjacentMarker, transform.position, Quaternion.identity);
+            marker.transform.parent = this.transform;
+        }
     }
  
 }

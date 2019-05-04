@@ -15,7 +15,17 @@ public enum TileKind
 {
     Breakable, //разбиваемые плитки
     Blank, //пробел
+    Lock,
+    Concrete,
+    Slime,
     Normal
+}
+
+[System.Serializable]
+public class MatchType
+{
+    public int type;
+    public string color;
 }
 
 [System.Serializable]
@@ -43,17 +53,23 @@ public class Board : MonoBehaviour
     [Header ("Prefabs")]
     public GameObject tilePrefab;
     public GameObject breakableTilePrefab;
+    public GameObject lockTilePrefab;
+    public GameObject concreteTilePrefab;
     public GameObject[] circle;
     public GameObject destroyEffect;
 
     [Header("Layout")] //расположение
-    public GameObject[,] allCircle;
-    private FindMatches findMatches;   
-    public Circle currentCircle; //текущий
+    public GameObject[,] allCircle;      
     public TileType[] boardLayout; //расположение, для Blank Spaces 
     private bool[,] blankSpaces;
+    public BackgroundTile[,] lockTiles;
     private BackgroundTile[,] breakableTiles;
-   
+    private BackgroundTile[,] concreteTiles;
+
+    [Header("Match Stuff")]
+    public MatchType matchType;
+    public Circle currentCircle; //текущий
+    private FindMatches findMatches;
     private ScoreManager scoreManager;
     public int basePieceValue = 20; // по 20 очков
     private int streakValue = 1; // Значение полосы
@@ -94,6 +110,8 @@ public class Board : MonoBehaviour
         soundManager = FindObjectOfType<SoundManager>();
         scoreManager = FindObjectOfType<ScoreManager>();
         breakableTiles = new BackgroundTile[width, height];
+        lockTiles = new BackgroundTile[width, height];
+        concreteTiles = new BackgroundTile[width, height];
         findMatches = FindObjectOfType<FindMatches>();
         blankSpaces = new bool[width, height];
         allCircle = new GameObject[width, height];
@@ -128,20 +146,53 @@ public class Board : MonoBehaviour
         }
     }
 
+    private void GenerateLockTiles()
+    {
+        //смотрим на все плитки 
+        for (int i = 0; i < boardLayout.Length; i++)
+        {
+            //если плитка - "закрытая которая"
+            if (boardLayout[i].tileKind == TileKind.Lock)
+            {
+                //создать закрытую плитку на позиции
+                Vector2 tempPosition = new Vector2(boardLayout[i].x, boardLayout[i].y);
+                GameObject tile = Instantiate(lockTilePrefab, tempPosition, Quaternion.identity);
+                lockTiles[boardLayout[i].x, boardLayout[i].y] = tile.GetComponent<BackgroundTile>();
+            }
+        }
+    }
+
+    private void GenerateConcreteLockTiles()
+    {
+        //смотрим на все плитки 
+        for (int i = 0; i < boardLayout.Length; i++)
+        {
+            //если плитка - "закрытая которая"
+            if (boardLayout[i].tileKind == TileKind.Concrete)
+            {
+                //создать закрытую плитку на позиции
+                Vector2 tempPosition = new Vector2(boardLayout[i].x, boardLayout[i].y);
+                GameObject tile = Instantiate(concreteTilePrefab, tempPosition, Quaternion.identity);
+                concreteTiles[boardLayout[i].x, boardLayout[i].y] = tile.GetComponent<BackgroundTile>();
+            }
+        }
+    }
+
     private void SetUp()
     {
         GenerateBlankSpaces();
         GenerateBreakableTiles();
+        GenerateLockTiles();
+        GenerateConcreteLockTiles();
 
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
                 // квадраты под сетку
-                if (!blankSpaces[i, j])
+                if (!blankSpaces[i, j] && !concreteTiles[i,j])
                 {
                     Vector2 tempPosition = new Vector2(i, j + offSet);
-
                     Vector2 tilePosition = new Vector2(i, j);
 
                     GameObject tileBackground = Instantiate(tilePrefab, tilePosition, Quaternion.identity) as GameObject;
@@ -222,8 +273,74 @@ public class Board : MonoBehaviour
         return false;
     }
 
-    private bool ColumnOrRow() // столбец или строка
+    private MatchType ColumnOrRow() // столбец или строка
     {
+        // сделать копию текущих совпадений
+        List<GameObject> matchCopy = findMatches.currentMatches as List<GameObject>;
+
+        matchType.type = 0;
+        matchType.color = "";
+
+        //перебрать все совпадения Скопировать и решить, нужно ли делать бомбу
+
+        for (int i = 0; i < matchCopy.Count; i++)
+        {
+            // сохранить этот круг
+            Circle thisCircle = matchCopy[i].GetComponent<Circle>();
+            string color = matchCopy[i].tag;
+            int column = thisCircle.column;
+            int row = thisCircle.row;
+            int columnMatch = 0;
+            int rowMatch = 0;
+
+            //перебрать остальные части и сравнить
+            for (int j = 0; j < matchCopy.Count; j++)
+            {
+                //Хранить следующий кружок
+                Circle nextCircle = matchCopy[j].GetComponent<Circle>();
+                if (nextCircle == thisCircle)
+                {
+                    continue;
+                }
+                if (nextCircle.column == thisCircle.column && nextCircle.tag == color)
+                {
+                    columnMatch++;
+                }
+                if (nextCircle.row == thisCircle.row && nextCircle.tag == color)
+                {
+                    rowMatch++;
+                }
+            }
+
+            //return 3 если столбец или строка совпадают
+            //return 2 если рядом
+            //return 1 если это цветная бомба
+
+            if (columnMatch == 4 || rowMatch == 4)
+            {
+                matchType.type = 1;
+                matchType.color = color;
+                return matchType;
+            }
+            else if (columnMatch == 2 && rowMatch == 2)
+            {
+                matchType.type = 2;
+                matchType.color = color;
+                return matchType;
+            }
+            else if (columnMatch == 3 || rowMatch == 3) // column, row Bomb
+            {
+                matchType.type = 3;
+                matchType.color = color;
+                return matchType;
+            }
+        }
+
+        matchType.type = 0;
+        matchType.color = "";
+        return matchType; ;
+
+        /* //это всё рабочее тоже, вместо int - bool в названии
         int numberHorizontal = 0;
         int numberVertical = 0;
         Circle firstPiece = findMatches.currentMatches[0].GetComponent<Circle>();
@@ -246,107 +363,100 @@ public class Board : MonoBehaviour
             }
         }
         return (numberVertical == 5 || numberHorizontal == 5);
+        */
     }
 
-    private void CheckToMakeBombs() // Делаем бомбы по ко-ву совпавших кружкоы
+    private void CheckToMakeBombs() // Делаем бомбы по ко-ву совпавших кружков    
     {
-        if (findMatches.currentMatches.Count == 4 || findMatches.currentMatches.Count == 7)
-        {
-            findMatches.CheckBombs();
-        }
+        //сколько объектов в поиске соответствует текущему соответствию
 
-        if (findMatches.currentMatches.Count == 5 || findMatches.currentMatches.Count == 8)
+        if (findMatches.currentMatches.Count > 3)
         {
-            if (ColumnOrRow())
+            //какой тип совпадения?
+
+            MatchType typeOfMatch = ColumnOrRow();
+
+            if (typeOfMatch.type == 1) // делаем цветную бомбу
             {
                 //сделать цветную бомбу
                 //текущая точка соответствует?
-                if (currentCircle != null)
+                if (currentCircle != null && currentCircle.isMatched && currentCircle.tag == typeOfMatch.color)
                 {
-                    if (currentCircle.isMatched)
-                    {
-                        if (!currentCircle.isColorBomb)
-                        {
-                            currentCircle.isMatched = false;
-                            currentCircle.MakeColorBomb();
-                        }
-                    }
-                    else
-                    {
-                        if (currentCircle.otherCircle != null)
-                        {
-                            Circle otherCircle = currentCircle.otherCircle.GetComponent<Circle>();
-                            if (otherCircle.isMatched)
-                            {
-                                if (!otherCircle.isColorBomb)
-                                {
-                                    otherCircle.isMatched = false;
-                                    otherCircle.MakeColorBomb();
-                                }
-                            }
-                        }
-                    }
+                    currentCircle.isMatched = false;
+                    currentCircle.MakeColorBomb();
                 }
+                else
+                {
+                    if (currentCircle.otherCircle != null)
+                    {
+                        Circle otherCircle = currentCircle.otherCircle.GetComponent<Circle>();
+                        if (otherCircle.isMatched && otherCircle.tag == typeOfMatch.color)
+                        {
+                            otherCircle.isMatched = false;
+                            otherCircle.MakeColorBomb();
+                        }
+                    }
+                }               
             }
-            else
+
+            else if (typeOfMatch.type == 2) // бомба для соседних кругов
             {
                 //сделать для соседних кругов бомбу
                 //текущая точка соответствует?
-                if (currentCircle != null)
+                if (currentCircle != null && currentCircle.isMatched && currentCircle.tag == typeOfMatch.color)
                 {
-                    if (currentCircle.isMatched)
-                    {
-                        if (!currentCircle.isAdjacentBomb)
-                        {
-                            currentCircle.isMatched = false;
-                            currentCircle.MakeAdjacentBomb();
-                        }
-                    }
-                    else
-                    {
-                        if (currentCircle.otherCircle != null)
-                        {
-                            Circle otherCircle = currentCircle.otherCircle.GetComponent<Circle>();
-                            if (otherCircle.isMatched)
-                            {
-                                if (!otherCircle.isAdjacentBomb)
-                                {
-                                    otherCircle.isMatched = false;
-                                    otherCircle.MakeAdjacentBomb();
-                                }
-                            }
-                        }
-                    }
+                    currentCircle.isMatched = false;
+                    currentCircle.MakeAdjacentBomb();
                 }
+
+                else if (currentCircle.otherCircle != null)
+                {
+                    Circle otherCircle = currentCircle.otherCircle.GetComponent<Circle>();
+                    if (otherCircle.isMatched && otherCircle.tag == typeOfMatch.color)
+                    {
+                        otherCircle.isMatched = false;
+                        otherCircle.MakeAdjacentBomb();
+                    }
+                }                             
+            }
+            else if (typeOfMatch.type == 3) //строчная и колонная бомбы
+            {
+                findMatches.CheckBombs(typeOfMatch);
             }
         }
-
     }
-
 
     private void DestroyMatchesAt(int column, int row) // нанесение урона
     {
         if (allCircle[column, row].GetComponent<Circle>().isMatched)
-        {
-            //сколько элементов в списке совпадений findmatches
-            if (findMatches.currentMatches.Count >= 4)
-            {
-                CheckToMakeBombs();
-            }
-            // нужно ли ломать плитку?
-
+        {         
+            // нужно ли ломать плитку?          
             if (breakableTiles[column, row] != null)
             {
                 //если да, нанесите один урон
-
                 breakableTiles[column, row].TakeDamage(1);
+
                 if (breakableTiles[column, row].hitPoints <= 0)
                 {
                     breakableTiles[column, row] = null;
                 }
             }
+
+            DamageConcrete(column, row);
+
+            if (lockTiles[column, row] != null)
+            {
+                //если да, нанесите один урон
+                lockTiles[column, row].TakeDamage(1);
+
+                if (lockTiles[column, row].hitPoints <= 0)
+                {
+                    lockTiles[column, row] = null;
+                }
+            }
+
             // GoalManager
-            if(goalManager != null)
+            if (goalManager != null)
             {
                 goalManager.CompareGoal(allCircle[column, row].tag.ToString());
                 goalManager.UpdateGoals();
@@ -369,8 +479,18 @@ public class Board : MonoBehaviour
         }
     }
 
+
     public void DestroyMatches()
     {
+        //сколько элементов в списке совпадений findmatches
+
+        if (findMatches.currentMatches.Count >= 4)
+        {
+            CheckToMakeBombs();
+        }
+
+        findMatches.currentMatches.Clear();
+
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -381,9 +501,58 @@ public class Board : MonoBehaviour
                 }
             }
         }
-        findMatches.currentMatches.Clear();
+        
         StartCoroutine(DecreaseRowCo2());
     }
+
+    private void DamageConcrete(int column, int row) // урон плиткам concrete
+    {
+        if(column > 0)
+        {
+            if(concreteTiles[column - 1, row])
+            {
+                concreteTiles[column - 1, row].TakeDamage(1);
+                if (concreteTiles[column - 1, row].hitPoints <= 0)
+                {
+                    concreteTiles[column - 1, row] = null;
+                }
+            }
+        }
+        if (column < width - 1)
+        {
+            if (concreteTiles[column + 1, row])
+            {
+                concreteTiles[column + 1, row].TakeDamage(1);
+                if (concreteTiles[column + 1, row].hitPoints <= 0)
+                {
+                    concreteTiles[column + 1 , row] = null;
+                }
+            }
+        }
+        if (row > 0)
+        {
+            if (concreteTiles[column, row -1])
+            {
+                concreteTiles[column, row - 1].TakeDamage(1);
+                if (concreteTiles[column, row - 1].hitPoints <= 0)
+                {
+                    concreteTiles[column, row - 1] = null;
+                }
+            }
+        }
+        if (row < height - 1)
+        {
+            if (concreteTiles[column, row + 1])
+            {
+                concreteTiles[column, row + 1].TakeDamage(1);
+                if (concreteTiles[column, row + 1].hitPoints <= 0)
+                {
+                    concreteTiles[column, row + 1] = null;
+                }
+            }
+        }
+    }
+
 
     private IEnumerator DecreaseRowCo2() //падение вниз circle Не в пустоты
     {
@@ -416,6 +585,8 @@ public class Board : MonoBehaviour
         yield return new WaitForSeconds(refillDelay * 0.5f);
         StartCoroutine(FillBoardCo());
     }
+
+
     private IEnumerator DecreaseRowCo() //падение вниз circle 
     {
         int nullCount = 0;
@@ -438,6 +609,7 @@ public class Board : MonoBehaviour
         yield return new WaitForSeconds(refillDelay * 0.5f);
         StartCoroutine(FillBoardCo());
     }
+
 
     private void RefillBoard() // пополнение доски
     {
@@ -468,8 +640,11 @@ public class Board : MonoBehaviour
         }
     }
 
+
     private bool MatchesOnBoard()
     {
+        findMatches.FindAllMatches();
+
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -486,22 +661,20 @@ public class Board : MonoBehaviour
         return false;
     }
 
+
     private IEnumerator FillBoardCo() // карантин заполнения доски
-    {
+    {       
+        yield return new WaitForSeconds(refillDelay);
         RefillBoard();
         yield return new WaitForSeconds(refillDelay);
-
-        while (MatchesOnBoard() == true)
-        {
+        while (MatchesOnBoard())
+        {          
             streakValue ++;
             DestroyMatches();
-            yield return new WaitForSeconds(2 * refillDelay);            
-        }
-
-        findMatches.currentMatches.Clear();
+            yield break;                    
+        }     
         currentCircle = null;
-       // yield return new WaitForSeconds(0.5f);
-
+       
         if(IsDeadLocked()) //нет ходов
         {
             StartCoroutine(ShuffleBoard()); // перемешиваем круги на доске
