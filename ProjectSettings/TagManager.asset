@@ -22,6 +22,9 @@ TagManager:
   - Gray
   - Blue
   - Board
+  - Concrete
+  - Chocolate
+  - Lock
   layers:
   - Default
   - TransparentFX

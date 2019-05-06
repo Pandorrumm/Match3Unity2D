@@ -17,7 +17,7 @@ public enum TileKind
     Blank, //пробел
     Lock,
     Concrete,
-    Slime,
+    Slime, //тэг Scocolate, появляется с каждым ходом, блокируя всё
     Normal
 }
 
@@ -55,6 +55,7 @@ public class Board : MonoBehaviour
     public GameObject breakableTilePrefab;
     public GameObject lockTilePrefab;
     public GameObject concreteTilePrefab;
+    public GameObject slimePiecePrefab; 
     public GameObject[] circle;
     public GameObject destroyEffect;
 
@@ -65,6 +66,7 @@ public class Board : MonoBehaviour
     public BackgroundTile[,] lockTiles;
     private BackgroundTile[,] breakableTiles;
     private BackgroundTile[,] concreteTiles;
+    private BackgroundTile[,] slimeTiles;
 
     [Header("Match Stuff")]
     public MatchType matchType;
@@ -77,6 +79,7 @@ public class Board : MonoBehaviour
     public int[] scoreGoals; //goals - цель
     private SoundManager soundManager;
     private GoalManager goalManager;
+    private bool makeSlime = true;
 
 
     private void Awake()
@@ -104,14 +107,14 @@ public class Board : MonoBehaviour
 
 
     void Start()
-    {
-        
+    {       
         goalManager = FindObjectOfType<GoalManager>();
         soundManager = FindObjectOfType<SoundManager>();
         scoreManager = FindObjectOfType<ScoreManager>();
         breakableTiles = new BackgroundTile[width, height];
         lockTiles = new BackgroundTile[width, height];
         concreteTiles = new BackgroundTile[width, height];
+        slimeTiles = new BackgroundTile[width, height];
         findMatches = FindObjectOfType<FindMatches>();
         blankSpaces = new bool[width, height];
         allCircle = new GameObject[width, height];
@@ -162,7 +165,7 @@ public class Board : MonoBehaviour
         }
     }
 
-    private void GenerateConcreteLockTiles()
+    private void GenerateConcreteTiles()
     {
         //смотрим на все плитки 
         for (int i = 0; i < boardLayout.Length; i++)
@@ -178,19 +181,36 @@ public class Board : MonoBehaviour
         }
     }
 
+    private void GenerateSlimeTiles()
+    {
+        //смотрим на все плитки 
+        for (int i = 0; i < boardLayout.Length; i++)
+        {
+            //если плитка - "закрытая которая"
+            if (boardLayout[i].tileKind == TileKind.Slime)
+            {
+                
+                Vector2 tempPosition = new Vector2(boardLayout[i].x, boardLayout[i].y);
+                GameObject tile = Instantiate(slimePiecePrefab, tempPosition, Quaternion.identity);
+                slimeTiles[boardLayout[i].x, boardLayout[i].y] = tile.GetComponent<BackgroundTile>();
+            }
+        }
+    }
+
     private void SetUp()
     {
         GenerateBlankSpaces();
         GenerateBreakableTiles();
         GenerateLockTiles();
-        GenerateConcreteLockTiles();
+        GenerateConcreteTiles();
+        GenerateSlimeTiles();
 
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
                 // квадраты под сетку
-                if (!blankSpaces[i, j] && !concreteTiles[i,j])
+                if (!blankSpaces[i, j] && !concreteTiles[i,j] && !slimeTiles[i,j])
                 {
                     Vector2 tempPosition = new Vector2(i, j + offSet);
                     Vector2 tilePosition = new Vector2(i, j);
@@ -426,6 +446,36 @@ public class Board : MonoBehaviour
         }
     }
 
+    public void BombRow(int row)
+    {
+        for (int i = 0; i < width; i++)
+        {
+            if (concreteTiles[i, row])
+            {
+                concreteTiles[i, row].TakeDamage(1);
+                if (concreteTiles[i, row].hitPoints <= 0)
+                {
+                    concreteTiles[i, row] = null;
+                }
+            }
+        }
+    }
+
+    public void BombColumn(int column)
+    {
+        for (int i = 0; i < width; i++)
+        {
+            if (concreteTiles[column, i])
+            {
+                concreteTiles[column, i].TakeDamage(1);
+                if (concreteTiles[column, i].hitPoints <= 0)
+                {
+                    concreteTiles[column, i] = null;
+                }
+            }
+        }
+    }
+
     private void DestroyMatchesAt(int column, int row) // нанесение урона
     {
         if (allCircle[column, row].GetComponent<Circle>().isMatched)
@@ -441,9 +491,7 @@ public class Board : MonoBehaviour
                     breakableTiles[column, row] = null;
                 }
             }
-
-            DamageConcrete(column, row);
-
+            
             if (lockTiles[column, row] != null)
             {
                 //если да, нанесите один урон
@@ -454,6 +502,9 @@ public class Board : MonoBehaviour
                     lockTiles[column, row] = null;
                 }
             }
+
+            DamageConcrete(column, row);
+            DamageSlime(column, row);
 
             // GoalManager
             if (goalManager != null)
@@ -478,7 +529,6 @@ public class Board : MonoBehaviour
 
         }
     }
-
 
     public void DestroyMatches()
     {
@@ -553,6 +603,57 @@ public class Board : MonoBehaviour
         }
     }
 
+    private void DamageSlime(int column, int row) // урон плиткам slime
+    {
+        if (column > 0)
+        {
+            if (slimeTiles[column - 1, row])
+            {
+                slimeTiles[column - 1, row].TakeDamage(1);
+                if (slimeTiles[column - 1, row].hitPoints <= 0)
+                {
+                    slimeTiles[column - 1, row] = null;
+                }
+                makeSlime = false;
+            }
+        }
+        if (column < width - 1)
+        {
+            if (slimeTiles[column + 1, row])
+            {
+                slimeTiles[column + 1, row].TakeDamage(1);
+                if (slimeTiles[column + 1, row].hitPoints <= 0)
+                {
+                    slimeTiles[column + 1, row] = null;
+                }
+                makeSlime = false;
+            }
+        }
+        if (row > 0)
+        {
+            if (slimeTiles[column, row - 1])
+            {
+                slimeTiles[column, row - 1].TakeDamage(1);
+                if (slimeTiles[column, row - 1].hitPoints <= 0)
+                {
+                    slimeTiles[column, row - 1] = null;
+                }
+                makeSlime = false;
+            }
+        }
+        if (row < height - 1)
+        {
+            if (slimeTiles[column, row + 1])
+            {
+                slimeTiles[column, row + 1].TakeDamage(1);
+                if (slimeTiles[column, row + 1].hitPoints <= 0)
+                {
+                    slimeTiles[column, row + 1] = null;
+                }
+                makeSlime = false;
+            }
+        }
+    }
 
     private IEnumerator DecreaseRowCo2() //падение вниз circle Не в пустоты
     {
@@ -561,7 +662,7 @@ public class Board : MonoBehaviour
             for (int j = 0; j < height; j++)
             {
                 //если текущее место не пустое ... и не пустота
-                if (!blankSpaces[i, j] && allCircle[i, j] == null)
+                if (!blankSpaces[i, j] && allCircle[i, j] == null && !concreteTiles[i,j] && !slimeTiles[i, j])
                 {
                     //пщвторы из пустоты сверху до вершины столбца
                     for (int k = j + 1; k < height; k++)
@@ -586,7 +687,6 @@ public class Board : MonoBehaviour
         StartCoroutine(FillBoardCo());
     }
 
-
     private IEnumerator DecreaseRowCo() //падение вниз circle 
     {
         int nullCount = 0;
@@ -610,14 +710,13 @@ public class Board : MonoBehaviour
         StartCoroutine(FillBoardCo());
     }
 
-
     private void RefillBoard() // пополнение доски
     {
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
-                if (allCircle[i, j] == null && !blankSpaces[i, j])
+                if (allCircle[i, j] == null && !blankSpaces[i, j] && !concreteTiles[i,j] && !slimeTiles[i, j])
                 {
                     Vector2 tempPosition = new Vector2(i, j + offSet);
                     int circlToUse = Random.Range(0, circle.Length);
@@ -640,7 +739,6 @@ public class Board : MonoBehaviour
         }
     }
 
-
     private bool MatchesOnBoard()
     {
         findMatches.FindAllMatches();
@@ -661,7 +759,6 @@ public class Board : MonoBehaviour
         return false;
     }
 
-
     private IEnumerator FillBoardCo() // карантин заполнения доски
     {       
         yield return new WaitForSeconds(refillDelay);
@@ -674,28 +771,101 @@ public class Board : MonoBehaviour
             yield break;                    
         }     
         currentCircle = null;
-       
+        CheckToMakeSlime();
+
         if(IsDeadLocked()) //нет ходов
         {
             StartCoroutine(ShuffleBoard()); // перемешиваем круги на доске
             Debug.Log("НЕТ ХОДОВ!!");
         }
-
         yield return new WaitForSeconds(refillDelay);
-        currentState = GameState.move;
+
+        if (currentState != GameState.pause)
+        {
+            currentState = GameState.move;
+        }
+        makeSlime = true;
         streakValue = 1;
+    }
+
+    private void CheckToMakeSlime()
+    {
+        //проверить массив тонких плиток
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if(slimeTiles[i,j] != null && makeSlime)
+                {
+                    //вызвать другой метод, чтобы сделать новую slim плитку
+                    MakeNewSlime();
+                    return;
+                }
+            }
+        }
+    }
+
+    private Vector2 CheckForAdjacent(int column, int row)
+    {
+        if(allCircle[column + 1, row] && column < width - 1)
+        {
+            return Vector2.right;
+        }
+        if (allCircle[column - 1, row] && column > 0)
+        {
+            return Vector2.left;
+        }
+        if (allCircle[column, row + 1] && row < height - 1)
+        {
+            return Vector2.up;
+        }
+        if (allCircle[column, row - 1] && row > 0)
+        {
+            return Vector2.down;
+        }
+
+        return Vector2.zero;
+    }
+
+    private void MakeNewSlime()
+    {
+        bool slime = false;
+        int loops = 0; // повторы
+        while(!slime && loops < 200)
+        {
+            int newX = Random.Range(0, width);
+            int newY = Random.Range(0, height); 
+
+            if(slimeTiles[newX, newY])
+            {
+                Vector2 adjacent = CheckForAdjacent(newX, newY);
+
+                if(adjacent != Vector2.zero)
+                {
+                    Destroy(allCircle[newX + (int)adjacent.x, newY + (int)adjacent.y]);
+                    Vector2 tempPosition = new Vector2(newX + (int)adjacent.x, newY + (int)adjacent.y);
+                    GameObject tile = Instantiate(slimePiecePrefab, tempPosition, Quaternion.identity);
+                    slimeTiles[newX + (int)adjacent.x, newY + (int)adjacent.y] = tile.GetComponent<BackgroundTile>();
+                    slime = true;
+                }
+            }
+            loops++;
+        }
     }
 
     private void SwitchPieces(int column, int row, Vector2 direction) //Переключить части
     {
-        //Возьмите второй кусок и сохраните его в держателе - в holder
-        GameObject holder = allCircle[column + (int)direction.x, row + (int)direction.y] as GameObject;
+        if (allCircle[column + (int)direction.x, row + (int)direction.y] != null)
+        {
+            //Возьмите второй кусок и сохраните его в держателе - в holder
+            GameObject holder = allCircle[column + (int)direction.x, row + (int)direction.y] as GameObject;
 
-        //переключение первого круга на вторую позицию
-        allCircle[column + (int)direction.x, row + (int)direction.y] = allCircle[column, row];
+            //переключение первого круга на вторую позицию
+            allCircle[column + (int)direction.x, row + (int)direction.y] = allCircle[column, row];
 
-        //установить первый круг, чтобы быть второй круг
-        allCircle[column, row] = holder;
+            //установить первый круг, чтобы быть второй круг
+            allCircle[column, row] = holder;
+        }
     }
 
     private bool CheckForMatches() //Проверим на совпадения, вдруг ничего нету!
@@ -801,7 +971,7 @@ public class Board : MonoBehaviour
             for (int j = 0; j < height; j++)
             {
                 //если это место не пустое
-                if(!blankSpaces[i,j])
+                if(!blankSpaces[i,j] && !concreteTiles[i,j] && !slimeTiles[i, j])
                 {
                     //выбрать случайные числа
                     int pieceToUse = Random.Range(0, newBoard.Count);                   
@@ -812,7 +982,7 @@ public class Board : MonoBehaviour
                     {
                         pieceToUse = Random.Range(0, newBoard.Count);
                         maxIterations++;
-                        Debug.Log(maxIterations);
+                       // Debug.Log(maxIterations);
                     }
                     // сделать контейнер для частей
                     Circle piece = newBoard[pieceToUse].GetComponent<Circle>();
@@ -834,7 +1004,7 @@ public class Board : MonoBehaviour
         //Проверить, вдруг после перемешивания опять тупик, то заново
         if(IsDeadLocked())
         {
-            ShuffleBoard();
+            StartCoroutine(ShuffleBoard());
         }
     }
 }

@@ -98,13 +98,12 @@ public class Circle : MonoBehaviour
                 findMatches.FindAllMatches();
             }           
         }
-
         else
         {
             //установить позицию напрямую
             tempPosition = new Vector2(targetX, transform.position.y);
             transform.position = tempPosition;
-            board.allCircle[column, row] = this.gameObject;
+           // board.allCircle[column, row] = this.gameObject;
         }
 
         // перемещение с заменой места круга  по Y

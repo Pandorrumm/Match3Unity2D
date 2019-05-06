@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114758660782782690}
   m_Layer: 0
   m_Name: Concrete Tile
-  m_TagString: Breakable
+  m_TagString: Concrete
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -12,20 +12,20 @@ MonoBehaviour:
   m_Name: Level 2
   m_EditorClassIdentifier: 
   width: 6
-  height: 9
+  height: 7
   boardLayout:
   - x: 1
-    y: 1
+    y: 3
     tileKind: 3
   - x: 2
-    y: 1
+    y: 3
     tileKind: 3
   - x: 3
-    y: 1
-    tileKind: 3
+    y: 3
+    tileKind: 4
   - x: 4
-    y: 1
-    tileKind: 3
+    y: 3
+    tileKind: 4
   circle:
   - {fileID: 1333517241104996, guid: d8ddf58b23940b24e83515de1f001326, type: 2}
   - {fileID: 1292004112657398, guid: 654b816314b27cd4cb32ff93cda99c8f, type: 2}
@@ -38,10 +38,10 @@ MonoBehaviour:
     counterValue: 100
   levelGoals:
   - numberNeeded: 10
-    numberCollected: 12
+    numberCollected: 3
     goalSprite: {fileID: 21300000, guid: 14f5a4bac629aba41ad20c4eb8e4ea43, type: 3}
     matchValue: Pink
   - numberNeeded: 10
-    numberCollected: 4
+    numberCollected: 9
     goalSprite: {fileID: 21300000, guid: 4255131409322c641a0db3eeb70a62ae, type: 3}
     matchValue: Blue

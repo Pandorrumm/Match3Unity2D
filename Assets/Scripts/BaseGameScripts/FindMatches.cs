@@ -45,14 +45,19 @@ public class FindMatches : MonoBehaviour
         if (circle1.isRowBomb)
         {
             currentMatches.Union(GetRowPieces(circle1.row));
+            board.BombRow(circle1.row);
         }
+
         if (circle2.isRowBomb)
         {
             currentMatches.Union(GetRowPieces(circle2.row));
+            board.BombRow(circle2.row);
         }
+
         if (circle3.isRowBomb)
         {
             currentMatches.Union(GetRowPieces(circle3.row));
+            board.BombRow(circle3.row);
         }
         return currentCircles;
     }
@@ -64,14 +69,17 @@ public class FindMatches : MonoBehaviour
         if (circle1.isColumnBomb)
         {
             currentMatches.Union(GetColumnPieces(circle1.column));
+            board.BombColumn(circle1.column);
         }
         if (circle2.isColumnBomb)
         {
             currentMatches.Union(GetColumnPieces(circle2.column));
+            board.BombColumn(circle2.column);
         }
         if (circle3.isColumnBomb)
         {
             currentMatches.Union(GetColumnPieces(circle3.column));
+            board.BombColumn(circle3.column);
         }
         return currentCircles;
     }
@@ -96,8 +104,7 @@ public class FindMatches : MonoBehaviour
 
     private IEnumerator FindAllMatchesCo()
     {
-        //yield return new WaitForSeconds(.2f);
-        
+        //yield return new WaitForSeconds(.2f);       
         for (int i = 0; i < board.width; i++)
         {
             for (int j = 0; j < board.height; j++)
