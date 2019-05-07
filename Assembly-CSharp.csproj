@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\UI\ConfirmPanel.cs" />
     <Compile Include="Assets\Scripts\UI\GameStartManager.cs" />
     <Compile Include="Assets\Scripts\UI\LevelButton.cs" />
+    <Compile Include="Assets\Scripts\UI\LevelSelectManager.cs" />
     <Compile Include="Assets\Scripts\UI\PauseManager.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/Unity/Проекты/Match3/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

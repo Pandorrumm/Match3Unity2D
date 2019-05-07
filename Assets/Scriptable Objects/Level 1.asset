@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Level 1
   m_EditorClassIdentifier: 
   width: 6
-  height: 6
+  height: 7
   boardLayout: []
   circle:
   - {fileID: 1673749335803036, guid: e8847766a0d2d734aa046936caa28d89, type: 2}
@@ -25,6 +25,6 @@ MonoBehaviour:
     counterValue: 50
   levelGoals:
   - numberNeeded: 1
-    numberCollected: 12
-    goalSprite: {fileID: 21300000, guid: ce7a6dfaa88bbd04fbc4f51d31b84bdc, type: 3}
+    numberCollected: 3
+    goalSprite: {fileID: 21300000, guid: 9c1bed82ac6dd4841ab7403e61603076, type: 3}
     matchValue: Green

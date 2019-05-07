@@ -10,14 +10,13 @@ public class ScoreManager : MonoBehaviour
     public int score;
     public Image scoreBar;
     private GameData gameData;
-
+    private int numberStars;
 	
 	void Start ()
     {
         board = FindObjectOfType<Board>();
         gameData = FindObjectOfType<GameData>();
         UpdateBar();
-
     }
 	
 	void Update ()
@@ -30,17 +29,35 @@ public class ScoreManager : MonoBehaviour
     {
         score += amountToIncrease;
 
+        for(int i = 0; i < board.scoreGoals.Length; i ++)
+        {
+            if(score > board.scoreGoals[i] && numberStars < i + 1)
+            {
+                numberStars++;
+            }
+        }
+
         if (gameData != null)
         {
             int highscore = gameData.saveData.highScores[board.level];
+
             if (score > highscore)
             {
                 gameData.saveData.highScores[board.level] = score;
+               // gameData.saveData.stars[board.level] = numberStars;
             }
+
+            int currentStars = gameData.saveData.stars[board.level];
+            if(numberStars > currentStars)
+            {
+                gameData.saveData.stars[board.level] = numberStars;
+            }
+
             gameData.Save();
         }
         UpdateBar();
     }
+
 
     private void UpdateBar()
     {

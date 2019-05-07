@@ -11,75 +11,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7261223de496e20469053b6d1838bc4a, type: 3}
   m_Name: Level 3
   m_EditorClassIdentifier: 
-  width: 9
-  height: 9
-  boardLayout:
-  - x: 0
-    y: 0
-    tileKind: 1
-  - x: 0
-    y: 1
-    tileKind: 1
-  - x: 1
-    y: 0
-    tileKind: 1
-  - x: 0
-    y: 7
-    tileKind: 2
-  - x: 0
-    y: 8
-    tileKind: 2
-  - x: 1
-    y: 8
-    tileKind: 1
-  - x: 7
-    y: 0
-    tileKind: 1
-  - x: 8
-    y: 0
-    tileKind: 1
-  - x: 8
-    y: 1
-    tileKind: 1
-  - x: 8
-    y: 7
-    tileKind: 1
-  - x: 8
-    y: 8
-    tileKind: 1
-  - x: 7
-    y: 8
-    tileKind: 1
-  - x: 3
-    y: 4
-    tileKind: 0
-  - x: 2
-    y: 4
-    tileKind: 0
-  - x: 4
-    y: 4
-    tileKind: 0
-  - x: 5
-    y: 4
-    tileKind: 0
-  - x: 6
-    y: 4
-    tileKind: 0
+  width: 6
+  height: 7
+  boardLayout: []
   circle:
   - {fileID: 1292004112657398, guid: 654b816314b27cd4cb32ff93cda99c8f, type: 2}
   - {fileID: 1359277176997896, guid: 74a9527e9332e2046ae2dc8c0bd29096, type: 2}
   - {fileID: 1514055218660456, guid: cb0b0c13394593f40a2a2850547e9568, type: 2}
   - {fileID: 1673749335803036, guid: e8847766a0d2d734aa046936caa28d89, type: 2}
   - {fileID: 1244611654818998, guid: 3234cfc5e8aa36d4780256918a80bcb5, type: 2}
-  - {fileID: 1333517241104996, guid: d8ddf58b23940b24e83515de1f001326, type: 2}
   scoreGoals: 64000000
   endGameRequirements:
     gameType: 1
     counterValue: 100
   levelGoals:
   - numberNeeded: 15
-    numberCollected: 0
-    goalSprite: {fileID: 21300000, guid: ce7a6dfaa88bbd04fbc4f51d31b84bdc, type: 3}
+    numberCollected: 6
+    goalSprite: {fileID: 21300000, guid: 9c1bed82ac6dd4841ab7403e61603076, type: 3}
     matchValue: Green
   - numberNeeded: 5
     numberCollected: 0

@@ -8,6 +8,7 @@ public class BackToSplashScene : MonoBehaviour
     public string sceneToLoad;
     private GameData gameData;
     private Board board;
+   
 
     public void WinOK()
     {
@@ -17,6 +18,7 @@ public class BackToSplashScene : MonoBehaviour
             gameData.Save();
         }
         SceneManager.LoadScene(sceneToLoad);
+        //startManager.startPanel.SetActive(false);
     }
 	
     public void LoseOK()
@@ -26,6 +28,7 @@ public class BackToSplashScene : MonoBehaviour
 
     void Start()
     {
+     // startManager = FindObjectOfType<GameStartManager>();
         gameData = FindObjectOfType<GameData>();
         board = FindObjectOfType<Board>();
     }
