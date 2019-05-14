@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\BaseGameScripts\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\BaseGameScripts\SoundManager.cs" />
     <Compile Include="Assets\Scripts\BaseGameScripts\SwipeController.cs" />
+    <Compile Include="Assets\Scripts\BaseGameScripts\Volume.cs" />
     <Compile Include="Assets\Scripts\GameDataScripts\GameData.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\Level.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\World.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Assets\Scripts\UI\LevelButton.cs" />
     <Compile Include="Assets\Scripts\UI\LevelSelectManager.cs" />
     <Compile Include="Assets\Scripts\UI\PauseManager.cs" />
+    <Compile Include="Assets\Scripts\UI\PauseMenu.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/Unity/Проекты/Match3/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
