@@ -29,7 +29,7 @@ public class LevelSelectManager : MonoBehaviour
                 }
             }
         }
-        page = (int)Mathf.Floor(currentLevel / 8);
+        page = (int)Mathf.Floor(currentLevel / 9);
         currentPanel = panels[page];
         panels[page].SetActive(true);
 	}
@@ -59,5 +59,12 @@ public class LevelSelectManager : MonoBehaviour
             currentPanel = panels[page];
             currentPanel.SetActive(true);
         }
+    }
+
+    public void QuitGame()
+    {
+        gameData.Save();
+        Application.Quit();        
+        Debug.Log("Вышли из игры");
     }
 }

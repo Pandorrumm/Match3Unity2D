@@ -11,20 +11,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7261223de496e20469053b6d1838bc4a, type: 3}
   m_Name: Level 1
   m_EditorClassIdentifier: 
-  width: 6
-  height: 7
-  boardLayout: []
+  width: 7
+  height: 8
+  boardLayout:
+  - x: 0
+    y: 0
+    tileKind: 1
+  - x: 0
+    y: 7
+    tileKind: 1
+  - x: 6
+    y: 0
+    tileKind: 1
+  - x: 6
+    y: 7
+    tileKind: 1
   circle:
   - {fileID: 1673749335803036, guid: e8847766a0d2d734aa046936caa28d89, type: 2}
   - {fileID: 1319267572265458, guid: 2da77d918de16a84b979329e1b81fdf0, type: 2}
   - {fileID: 1359277176997896, guid: 74a9527e9332e2046ae2dc8c0bd29096, type: 2}
   - {fileID: 1292004112657398, guid: 654b816314b27cd4cb32ff93cda99c8f, type: 2}
-  scoreGoals: 640000009001000058020000
+  scoreGoals: 2c010000e8030000dc050000
   endGameRequirements:
     gameType: 0
-    counterValue: 50
+    counterValue: 10
   levelGoals:
-  - numberNeeded: 1
-    numberCollected: 3
+  - numberNeeded: 10
+    numberCollected: 6
     goalSprite: {fileID: 21300000, guid: 9c1bed82ac6dd4841ab7403e61603076, type: 3}
     matchValue: Green

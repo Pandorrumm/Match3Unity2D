@@ -1,6 +1,6 @@
 Android
 PlayerPath?
-D:/Unity/Проекты/Match3/Proba.apk
+D:/Unity/Проекты/Match3/Proba2.apk
 SceneListBegin?
 Assets/Scenes/Splash.unity
 Assets/Scenes/Main.unity
@@ -118,9 +118,11 @@ da21fc3f8056b1f91c3dd09c7bf4f90a UnityEngine.Networking.dll:UnityEngine.Networki
 529a95e9e8e7686c4816e08fbb37183f UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransform
 fc061f3ae8a876c0687e86378d4a447c UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformChild
 7ca56e063bd071986fff4f513cc4f477 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformVisualizer
+b244d1d0d85b9077fb6724edac2a4dad Assembly-CSharp.dll:.Volume
 0a006f3734181ba8b26758f0866152c0 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
 382b8ef512fa8d6108723a01b57af65b UnityEngine.Analytics.dll:UnityEngine.Analytics.AnalyticsEventTracker
 d22c788799ee45d8676254eccf20e8b8 UnityEngine.Analytics.dll:UnityEngine.Analytics.AnalyticsTracker
+1afff93e2034c5c18aa203983531df4f Assembly-CSharp.dll:.PauseManager
 d75dc834c5dec688db75a55a1724c90f UnityEngine.HoloLens.dll:UnityEngine.Audio.AudioSpatializerMicrosoft
 486cd95c82d8305219c352c06b776e1f UnityEngine.HoloLens.dll:UnityEngine.EventSystems.HoloLensInput
 e1ea12ca952c81d81a9a21fdf34446ed UnityEngine.HoloLens.dll:UnityEngine.EventSystems.HoloLensInputModule
@@ -129,6 +131,7 @@ dfd33ff9ae3ce8d7ca1f22b475ec2387 UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 96f3ea9f23b6f08e60710ebb4af49174 Unity.TextMeshPro.dll:TMPro.TMP_SpriteAsset
 8dada8f0051fa3da569554fd4471ae79 Assembly-CSharp.dll:.GameData
 4673cffd692c44a4f9bafbe40b0c84aa Assembly-CSharp.dll:.BackToSplashScene
+3be6e3f1ab974ca3bdf0bded1f16ac19 Assembly-CSharp.dll:.PauseMenu
 f16835701e71dd5d6fb1fed4b7aff1d8 Unity.TextMeshPro.dll:TMPro.TMP_Asset
 90d91c840e4a20c2150177bc2e21855b Assembly-CSharp.dll:.FindMatches
 486cd95c82d8305219c352c06b776e1f Unity.TextMeshPro.dll:TMPro.TMP_SpriteAnimator
@@ -151,6 +154,7 @@ fc061f3ae8a876c0687e86378d4a447c UnityEngine.Networking.dll:UnityEngine.Networki
 72a8523b432c0a5317826b7a9e0a0e79 Unity.TextMeshPro.dll:TMPro.PackageResourceImporterWindow
 e53cc67d84060d628c7f03fc725766d8 Unity.TextMeshPro.dll:TMPro.TMP_FontAsset
 392c5b921098bd4c139d9146d0efa6d7 Unity.TextMeshPro.dll:TMPro.TMP_Settings
+7134a1ce33f51e1bba3c3ec9fb9a281b Assembly-CSharp.dll:.LevelSelectManager
 ddcae71b3f91386237efd012a9eef2be UnityEngine.TestRunner.dll:UnityEngine.TestTools.EnumerableSetUpTearDownCommandState
 486cd95c82d8305219c352c06b776e1f UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.PlayModeRunnerCallback
 e033f131358cea5a0eabf9561e781deb UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.PlaymodeTestsController
@@ -171,11 +175,12 @@ e1ea12ca952c81d81a9a21fdf34446ed UnityEngine.HoloLens.dll:UnityEngine.EventSyste
 dfd33ff9ae3ce8d7ca1f22b475ec2387 UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
 fca16cb18e9acc16fcdccd757616d045 Assembly-CSharp.dll:.CameraScalar
 aac9c55ae7ba4b95b852a7d9c191acd1 Unity.TextMeshPro.dll:TMPro.TextMeshProUGUI
+615f10c1ad1d20f16000de568adf1de7 Assembly-CSharp.dll:.StarsGame
 0a006f3734181ba8b26758f0866152c0 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
 bc3f1237163a686d813f5cc9fbfed733 Assembly-CSharp.dll:.Level
 1e10e09cf5fecc7c7ad4881682866b87 Assembly-CSharp.dll:.ScoreManager
-88afffdf99c95778de98cce6fa5313ed Assembly-CSharp.dll:.Board
-f20e45c54ea7fa25e9a7b5ed49cae75d Assembly-CSharp.dll:.SoundManager
+5c6ad657313c68f4b45157346a2fa4ab Assembly-CSharp.dll:.Board
+58fcc80c609db9de7050c80b224098f7 Assembly-CSharp.dll:.SoundManager
 e04611b8715e6833d2bd7010fc6be10b Unity.TextMeshPro.dll:TMPro.TMP_StyleSheet
 3007402684709b482c2929a297984b3c Assembly-CSharp.dll:.World
 dd05584f396a22112da9352c6187a884 Assembly-CSharp.dll:.GoalPanel
@@ -184,4 +189,5 @@ dd05584f396a22112da9352c6187a884 Assembly-CSharp.dll:.GoalPanel
 2f9af06a78208a67db480e9bfed4a076 Unity.TextMeshPro.dll:TMPro.TextMeshPro
 9318334b30e9f195f573b2ce00154b95 Unity.TextMeshPro.dll:TMPro.TMP_ColorGradient
 a061bb4a75a66342f47ad43fab850793 Assembly-CSharp.dll:.FadePanelController
+143db82da930e95b5c26641889f959a7 Assembly-CSharp.dll:.GameStartManager
 93307bd34e39d73fd24e00ec39c25a91 Unity.TextMeshPro.dll:TMPro.TMP_SubMesh

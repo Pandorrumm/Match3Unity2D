@@ -103,7 +103,7 @@ public class EndGameManager : MonoBehaviour
         currentCounterValue = 0;
         counter.text = "" + currentCounterValue;
         FadePanelController fade = FindObjectOfType<FadePanelController>();
-        fade.GameOver();
+        fade.GameOver(); // вылет панели анимация
     }
 
 	void Update ()

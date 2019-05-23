@@ -8,14 +8,17 @@ public class ScoreManager : MonoBehaviour
     private Board board;
     public Text scoreText;
     public int score;
-    public Image scoreBar;
+    public Image scoreBar; // увеличивающаяся полоска
     private GameData gameData;
-    private int numberStars;
+    private int numberStars; // кол - во звёзд
+    private StarsGame starsGame;
 	
 	void Start ()
     {
         board = FindObjectOfType<Board>();
         gameData = FindObjectOfType<GameData>();
+        starsGame = FindObjectOfType<StarsGame>();
+
         UpdateBar();
     }
 	
@@ -29,11 +32,13 @@ public class ScoreManager : MonoBehaviour
     {
         score += amountToIncrease;
 
-        for(int i = 0; i < board.scoreGoals.Length; i ++)
+        starsGame.ActivateStars(); //звёзды при увеличении очков на слайдере
+
+        for (int i = 0; i < board.scoreGoals.Length; i ++)
         {
             if(score > board.scoreGoals[i] && numberStars < i + 1)
             {
-                numberStars++;
+                numberStars++;               
             }
         }
 
@@ -48,6 +53,7 @@ public class ScoreManager : MonoBehaviour
             }
 
             int currentStars = gameData.saveData.stars[board.level];
+
             if(numberStars > currentStars)
             {
                 gameData.saveData.stars[board.level] = numberStars;

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class LevelButton : MonoBehaviour
 {
-    [Header ("Active Stuff")] //Активные вещи
+    [Header("Active Stuff")] //Активные вещи
     public bool isActive;
     public Sprite activeSprite; // открытый
     public Sprite lockedSprite; // закрытый
@@ -14,16 +14,16 @@ public class LevelButton : MonoBehaviour
     private Button myButton;
     private int starsActive;
 
-    [Header ("Level UI")]
+    [Header("Level UI")]
     public Image[] stars; //заполненные звёзды, дочерние в юнити
     public Text levelText;
     public int level;
     public GameObject confirmPanel; //панель с баксами и звездами
-    
+
 
     private GameData gameData;
 
-	void Start ()
+    void Start()
     {
         gameData = FindObjectOfType<GameData>();
         buttonImage = GetComponent<Image>();
@@ -34,14 +34,14 @@ public class LevelButton : MonoBehaviour
         DecideSprite();
 
     }
-	
+
     void LoadData()
     {
         //Есть ли игровые данные?
-        if(gameData != null)
+        if (gameData != null)
         {
             //принять решение, если уровень активен
-            if(gameData.saveData.isActiv[level - 1])
+            if (gameData.saveData.isActiv[level - 1])
             {
                 isActive = true;
             }
@@ -55,17 +55,16 @@ public class LevelButton : MonoBehaviour
     }
 
     void ActivateStars()
-    {       
-        for (int i = 0; i < starsActive; i ++)
+    {
+        for (int i = 0; i < starsActive; i++)
         {
-
             stars[i].enabled = true;
         }
     }
 
     void DecideSprite() // решение по спрайту - открытый или закрытый уровень
     {
-        if(isActive)
+        if (isActive)
         {
             buttonImage.sprite = activeSprite;
             myButton.enabled = true;
@@ -84,16 +83,15 @@ public class LevelButton : MonoBehaviour
         levelText.text = "" + level;
     }
 
-	void Update ()
+    void Update()
     {
-		
-	}
 
-   public void ConfirmPanel(int level)
+    }
+
+    public void ConfirmPanel(int level)
     {
         confirmPanel.GetComponent<ConfirmPanel>().level = level;
         confirmPanel.SetActive(true);
     }
-
 
 }

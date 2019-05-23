@@ -522,8 +522,9 @@ public class Board : MonoBehaviour
             GameObject particle = Instantiate(destroyEffect, allCircle[column, row].transform.position,
                                               Quaternion.identity);
 
-            Destroy(particle, .5f);
-            Destroy(allCircle[column, row]);
+            Destroy(particle, 1f);
+            allCircle[column, row].GetComponent<Circle>().PopAnimation();
+            Destroy(allCircle[column, row], .4f);
             scoreManager.IncreaseScore(basePieceValue * streakValue);
             allCircle[column, row] = null;
 
@@ -539,7 +540,7 @@ public class Board : MonoBehaviour
             CheckToMakeBombs();
         }
 
-        findMatches.currentMatches.Clear();
+       findMatches.currentMatches.Clear();
 
         for (int i = 0; i < width; i++)
         {
@@ -657,6 +658,8 @@ public class Board : MonoBehaviour
 
     private IEnumerator DecreaseRowCo2() //падение вниз circle Не в пустоты
     {
+        yield return new WaitForSeconds(0.5f); // задержка кругов при падении вниз после взрыва кругов под ними
+
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -664,20 +667,21 @@ public class Board : MonoBehaviour
                 //если текущее место не пустое ... и не пустота
                 if (!blankSpaces[i, j] && allCircle[i, j] == null && !concreteTiles[i,j] && !slimeTiles[i, j])
                 {
-                    //пщвторы из пустоты сверху до вершины столбца
+                    //повторы из пустоты сверху до вершины столбца
                     for (int k = j + 1; k < height; k++)
                     {
+                        
                         //если круг найден..
                         if (allCircle[i, k] != null)
                         {
-                            //сдвинуть круг в пустое место
+                            //сдвинуть круг в пустое место                          
                             allCircle[i, k].GetComponent<Circle>().row = j;
 
                             //установить это место равным нулю
                             allCircle[i, k] = null;
-                            //выйти из петли
+                            
+                            //выйти из цикла
                             break;
-
                         }
                     }
                 }
@@ -706,7 +710,7 @@ public class Board : MonoBehaviour
             }
             nullCount = 0;
         }
-        yield return new WaitForSeconds(refillDelay * 0.5f);
+        yield return new WaitForSeconds(refillDelay * 1f);
         StartCoroutine(FillBoardCo());
     }
 
@@ -730,6 +734,7 @@ public class Board : MonoBehaviour
                     maxIterations = 0;
 
                     //piece - вставка
+                   
                     GameObject piece = Instantiate(circle[circlToUse], tempPosition, Quaternion.identity);
                     allCircle[i, j] = piece;
                     piece.GetComponent<Circle>().row = j;
@@ -761,9 +766,9 @@ public class Board : MonoBehaviour
 
     private IEnumerator FillBoardCo() // карантин заполнения доски
     {       
-        yield return new WaitForSeconds(refillDelay);
+        yield return new WaitForSeconds(refillDelay);// через сколько будут выпадать сверху на доску
         RefillBoard();
-        yield return new WaitForSeconds(refillDelay);
+        yield return new WaitForSeconds(refillDelay);// если есть повторные - через сколько они взорвутся
         while (MatchesOnBoard())
         {          
             streakValue ++;
@@ -778,7 +783,7 @@ public class Board : MonoBehaviour
             StartCoroutine(ShuffleBoard()); // перемешиваем круги на доске
             Debug.Log("НЕТ ХОДОВ!!");
         }
-        yield return new WaitForSeconds(refillDelay);
+        yield return new WaitForSeconds(refillDelay);// сколько ждать, что бы ходить дальше после взрывов 
 
         if (currentState != GameState.pause)
         {
@@ -807,19 +812,19 @@ public class Board : MonoBehaviour
 
     private Vector2 CheckForAdjacent(int column, int row)
     {
-        if(allCircle[column + 1, row] && column < width - 1)
+        if(column < width - 1 && allCircle[column + 1, row])
         {
             return Vector2.right;
         }
-        if (allCircle[column - 1, row] && column > 0)
+        if (column > 0 && allCircle[column - 1, row])
         {
             return Vector2.left;
         }
-        if (allCircle[column, row + 1] && row < height - 1)
+        if (row < height - 1 && allCircle[column, row + 1])
         {
             return Vector2.up;
         }
-        if (allCircle[column, row - 1] && row > 0)
+        if (row > 0 && allCircle[column, row - 1])
         {
             return Vector2.down;
         }

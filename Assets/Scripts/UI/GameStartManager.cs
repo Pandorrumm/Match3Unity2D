@@ -6,9 +6,11 @@ public class GameStartManager : MonoBehaviour
 {
     public GameObject startPanel;
     public GameObject levelPanel;
+    private GameData gameData;
 	
 	void Start ()
     {
+        gameData = FindObjectOfType<GameData>();
         startPanel.SetActive(true);
         levelPanel.SetActive(false);
     }
@@ -17,6 +19,13 @@ public class GameStartManager : MonoBehaviour
     {
         startPanel.SetActive(false);
         levelPanel.SetActive(true);
+       // gameData.Load();
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log("Вышли из игры");
     }
 
     public void Home()

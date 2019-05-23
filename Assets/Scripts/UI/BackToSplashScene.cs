@@ -8,7 +8,8 @@ public class BackToSplashScene : MonoBehaviour
     public string sceneToLoad;
     private GameData gameData;
     private Board board;
-   
+
+   // public GameObject startGamePanel;
 
     public void WinOK()
     {
@@ -22,8 +23,9 @@ public class BackToSplashScene : MonoBehaviour
     }
 	
     public void LoseOK()
-    {
+    {       
         SceneManager.LoadScene(sceneToLoad);
+        //startGamePanel.SetActive(false);
     }
 
     void Start()

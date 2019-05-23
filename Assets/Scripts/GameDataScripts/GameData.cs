@@ -21,7 +21,8 @@ public class GameData : MonoBehaviour
 	
 	void Awake ()
     {
-		if(gameData == null)
+        
+        if (gameData == null)
         {
             DontDestroyOnLoad(this.gameObject);
             gameData = this;
@@ -35,7 +36,7 @@ public class GameData : MonoBehaviour
 
     private void Start()
     {
-       
+        
     }
 
     public void Save()
@@ -43,8 +44,11 @@ public class GameData : MonoBehaviour
         //создаём binary formatter, который может читать бинарные файлы
         BinaryFormatter formatter = new BinaryFormatter();
 
+        string path = Application.persistentDataPath + "/player.fun";
         //создаём поток (маршрут) из программы в файл
-        FileStream file = File.Open(Application.persistentDataPath + "/player.dat", FileMode.Create);
+        //FileStream file = File.Create(Application.persistentDataPath + "/player.fun");
+
+        FileStream file = new FileStream(path, FileMode.Create);
 
         //создаём пустые  данные сохранения
         SaveData data = new SaveData();
@@ -61,36 +65,42 @@ public class GameData : MonoBehaviour
 
     public void Load()
     {
+        string path = Application.persistentDataPath + "/player.fun";
         // проверяем, существует ли файл сохранения игры
-        if (File.Exists(Application.persistentDataPath + "/player.dat"))
+        if (File.Exists(path))
         {
             //создаём binary formatter
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/player.dat", FileMode.Open);
+
+            FileStream file = new FileStream(path, FileMode.Open);
+            //FileStream file = File.Open(Application.persistentDataPath + "/player.fun", FileMode.Open);
             saveData = formatter.Deserialize(file) as SaveData;
             file.Close();
             Debug.Log("Загрузили");
         }
-        else
+        else 
         {
             saveData = new SaveData();
             saveData.isActiv = new bool[100];
             saveData.stars = new int[100];
             saveData.highScores = new int[100];
             saveData.isActiv[0] = true; // первый уровень самый
+            Debug.Log("Открыт первый уровень");
         }
     }
-
-    private void OnApplicationQuit() //При выходе из приложения
-    {
-        Save();
-    }
-
 
     private void OnDisable()
     {
         Save();
     }
+
+    public void OnApplicationQuit() //При выходе из приложения
+    {
+        Application.Quit();
+        Save();
+        Debug.Log("Вышли из игры");
+    }
+   
 
     void Update ()
     {

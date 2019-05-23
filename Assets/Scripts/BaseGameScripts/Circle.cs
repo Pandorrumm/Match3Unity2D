@@ -13,6 +13,9 @@ public class Circle : MonoBehaviour
     public int targetY;
     public bool isMatched = false;
 
+    private Animator anim;
+    private float shineDelay; // задержка анимации движухи персонажей, когда стоят просто так
+    private float shineDelaySeconds;
     private EndGameManager endGameManager;
     private HintManager hintManager;
     private FindMatches findMatches;
@@ -45,6 +48,10 @@ public class Circle : MonoBehaviour
         isColorBomb = false;
         isAdjacentBomb = false;
 
+        shineDelay = Random.Range(3f, 6f);
+        shineDelaySeconds = shineDelay;
+
+        anim = GetComponent<Animator>();
         endGameManager = FindObjectOfType<EndGameManager>();
         hintManager = FindObjectOfType<HintManager>();
         board = GameObject.FindWithTag("Board").GetComponent<Board>(); // так быстрее работать будет
@@ -69,10 +76,16 @@ public class Circle : MonoBehaviour
         }
     }
 
-
     void Update ()
     {
-        
+
+        shineDelaySeconds -= Time.deltaTime;
+        if(shineDelaySeconds <= 0)
+        {
+            shineDelaySeconds = shineDelay;
+            StartCoroutine(StartShineCo());
+        }
+
         /*
         if (isMatched == true)
         {
@@ -127,6 +140,18 @@ public class Circle : MonoBehaviour
         }
     }
 
+    IEnumerator StartShineCo()
+    {
+        anim.SetBool("Двигаются, когда стоят", true);
+        yield return null;
+        anim.SetBool("Двигаются, когда стоят", false);
+    }
+
+    public void PopAnimation()
+    {
+        anim.SetBool("Взрыв шариков", true);
+    }
+
     public IEnumerator CheckMoveCo() //карантин,если не сходятся цвета, то возврат напредыдущую позицию
     {
         if (isColorBomb) //взрывы по цвету
@@ -142,7 +167,7 @@ public class Circle : MonoBehaviour
             otherCircle.GetComponent<Circle>().isMatched = true;
         }
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(0.5f); //задержка на возвращение на предыдущее место, если не сошлись цвета
 
         if (otherCircle != null)
         {
@@ -152,7 +177,7 @@ public class Circle : MonoBehaviour
                 otherCircle.GetComponent<Circle>().column = column;
                 row = previousRow;
                 column = previousColumns;
-                yield return new WaitForSeconds(.5f);
+                yield return new WaitForSeconds(0.5f);//запрет на ход - задержка для возврата кругов на исходные места если не совпали
                 board.currentCircle = null;
                 board.currentState = GameState.move;
             }
@@ -173,13 +198,15 @@ public class Circle : MonoBehaviour
 
     private void OnMouseDown()
     {
+        //if(anim != null)
+        //{
+        //    anim.SetBool("Touched", true);
+        //}
         //Уничтожаем подсказку
         if (hintManager != null)
         {
             hintManager.DestroyHint();
         }
-
-
 
         if (board.currentState == GameState.move)
         {
@@ -189,6 +216,7 @@ public class Circle : MonoBehaviour
 
     private void OnMouseUp()
     {
+        //anim.SetBool("Touched", false);
         if (board.currentState == GameState.move)
         {
             finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
