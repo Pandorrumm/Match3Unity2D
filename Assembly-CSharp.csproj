@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\BaseGameScripts\GoalManager.cs" />
     <Compile Include="Assets\Scripts\BaseGameScripts\GoalPanel.cs" />
     <Compile Include="Assets\Scripts\BaseGameScripts\HintManager.cs" />
+    <Compile Include="Assets\Scripts\BaseGameScripts\Puzir.cs" />
     <Compile Include="Assets\Scripts\BaseGameScripts\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\BaseGameScripts\SoundManager.cs" />
     <Compile Include="Assets\Scripts\BaseGameScripts\SwipeController.cs" />
@@ -85,6 +86,8 @@
     <Compile Include="Assets\Scripts\UI\LevelSelectManager.cs" />
     <Compile Include="Assets\Scripts\UI\PauseManager.cs" />
     <Compile Include="Assets\Scripts\UI\PauseMenu.cs" />
+    <Compile Include="Assets\Scripts\UI\SrarsWinPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\StarsAnimations.cs" />
     <Compile Include="Assets\Scripts\UI\StarsGame.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/Unity/Проекты/Match3/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

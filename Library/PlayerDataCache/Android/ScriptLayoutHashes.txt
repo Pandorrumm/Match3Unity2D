@@ -1,11 +1,12 @@
 Android
 PlayerPath?
-D:/Unity/Проекты/Match3/Proba2.apk
+D:/Unity/Проекты/Match3/Proba3.apk
 SceneListBegin?
 Assets/Scenes/Splash.unity
 Assets/Scenes/Main.unity
 SceneListEnd?
 c422dd62785a6d0afa870fbd111886ce Unity.TextMeshPro.dll:TMPro.TMP_SelectionCaret
+64af87c9702df4c3bfebc2d4f4c63cbd Assembly-CSharp.dll:.SrarsWinPanel
 7b803eb2910e9b4cd5e521ae07b9f7d6 Unity.TextMeshPro.dll:TMPro.TMP_Dropdown
 486cd95c82d8305219c352c06b776e1f UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 9e61f3535f3c55760a1cedfbd114f4af UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
@@ -58,6 +59,7 @@ e90403eeda069970e0b9de1533de13a6 UnityEngine.UI.dll:UnityEngine.UI.ToggleGroup
 16da51d1b62ef6d4ee1849350434023b UnityEngine.UI.dll:UnityEngine.UI.VerticalLayoutGroup
 50b0b141074b216c8b53b1bd467f73c9 Unity.TextMeshPro.dll:TMPro.TMP_InputField
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.SwipeController
+3d25edd86f282d40cb9797291374d80c Assembly-CSharp.dll:.StarsAnimations
 53cefe5d98cadefbab750835e70b89c0 UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 486cd95c82d8305219c352c06b776e1f UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
 da2091a04d360891450faf16cdf621f1 UnityEngine.UI.dll:UnityEngine.UI.Button
@@ -154,7 +156,7 @@ fc061f3ae8a876c0687e86378d4a447c UnityEngine.Networking.dll:UnityEngine.Networki
 72a8523b432c0a5317826b7a9e0a0e79 Unity.TextMeshPro.dll:TMPro.PackageResourceImporterWindow
 e53cc67d84060d628c7f03fc725766d8 Unity.TextMeshPro.dll:TMPro.TMP_FontAsset
 392c5b921098bd4c139d9146d0efa6d7 Unity.TextMeshPro.dll:TMPro.TMP_Settings
-7134a1ce33f51e1bba3c3ec9fb9a281b Assembly-CSharp.dll:.LevelSelectManager
+b39ef2a5c44789b4df87d2cf83b0f2c0 Assembly-CSharp.dll:.LevelSelectManager
 ddcae71b3f91386237efd012a9eef2be UnityEngine.TestRunner.dll:UnityEngine.TestTools.EnumerableSetUpTearDownCommandState
 486cd95c82d8305219c352c06b776e1f UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.PlayModeRunnerCallback
 e033f131358cea5a0eabf9561e781deb UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.PlaymodeTestsController
@@ -175,7 +177,7 @@ e1ea12ca952c81d81a9a21fdf34446ed UnityEngine.HoloLens.dll:UnityEngine.EventSyste
 dfd33ff9ae3ce8d7ca1f22b475ec2387 UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
 fca16cb18e9acc16fcdccd757616d045 Assembly-CSharp.dll:.CameraScalar
 aac9c55ae7ba4b95b852a7d9c191acd1 Unity.TextMeshPro.dll:TMPro.TextMeshProUGUI
-615f10c1ad1d20f16000de568adf1de7 Assembly-CSharp.dll:.StarsGame
+64af87c9702df4c3bfebc2d4f4c63cbd Assembly-CSharp.dll:.StarsGame
 0a006f3734181ba8b26758f0866152c0 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
 bc3f1237163a686d813f5cc9fbfed733 Assembly-CSharp.dll:.Level
 1e10e09cf5fecc7c7ad4881682866b87 Assembly-CSharp.dll:.ScoreManager
@@ -184,10 +186,11 @@ bc3f1237163a686d813f5cc9fbfed733 Assembly-CSharp.dll:.Level
 e04611b8715e6833d2bd7010fc6be10b Unity.TextMeshPro.dll:TMPro.TMP_StyleSheet
 3007402684709b482c2929a297984b3c Assembly-CSharp.dll:.World
 dd05584f396a22112da9352c6187a884 Assembly-CSharp.dll:.GoalPanel
-4fb43941de78549ad953bd255e11509d Assembly-CSharp.dll:.GoalManager
+073230a8bac7f673e2821635b83ab0cf Assembly-CSharp.dll:.GoalManager
 74644e4d750e446a30b859becf15df51 Assembly-CSharp.dll:.BackgroundTile
 2f9af06a78208a67db480e9bfed4a076 Unity.TextMeshPro.dll:TMPro.TextMeshPro
 9318334b30e9f195f573b2ce00154b95 Unity.TextMeshPro.dll:TMPro.TMP_ColorGradient
 a061bb4a75a66342f47ad43fab850793 Assembly-CSharp.dll:.FadePanelController
 143db82da930e95b5c26641889f959a7 Assembly-CSharp.dll:.GameStartManager
 93307bd34e39d73fd24e00ec39c25a91 Unity.TextMeshPro.dll:TMPro.TMP_SubMesh
+338286149e7c33cdaca52efffa0b1811 Assembly-CSharp.dll:.Puzir

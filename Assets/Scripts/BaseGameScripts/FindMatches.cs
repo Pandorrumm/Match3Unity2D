@@ -127,6 +127,8 @@ public class FindMatches : MonoBehaviour
 
                             if (leftCircle.tag == currentCircl.tag && rightCircle.tag == currentCircl.tag)
                             {
+                                                            
+
                                 // взрывы 
                                 currentMatches.Union(IsRowBomb(leftCircleCircle, currentCirclCircl, rightCircleCircle));
 
@@ -153,6 +155,7 @@ public class FindMatches : MonoBehaviour
 
                             if (upCircle.tag == currentCircl.tag && downCircle.tag == currentCircl.tag)
                             {
+                                
 
                                 // взрывы 
 
@@ -230,7 +233,7 @@ public class FindMatches : MonoBehaviour
                 Circle circl = board.allCircle[column, i].GetComponent<Circle>();
                 if(circl.isRowBomb)
                 {
-                    circle.Union(GetRowPieces(i).ToList());
+                    circle.Union(GetRowPieces(i)).ToList();
                 }
 
                 circle.Add(board.allCircle[column, i]);
@@ -252,7 +255,7 @@ public class FindMatches : MonoBehaviour
                 Circle circl = board.allCircle[i, row].GetComponent<Circle>();
                 if (circl.isColumnBomb)
                 {
-                    circle.Union(GetColumnPieces(i).ToList());
+                    circle.Union(GetColumnPieces(i)).ToList();
                 }
 
                 circle.Add(board.allCircle[i, row]);

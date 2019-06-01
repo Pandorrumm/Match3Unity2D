@@ -78,7 +78,6 @@ public class Circle : MonoBehaviour
 
     void Update ()
     {
-
         shineDelaySeconds -= Time.deltaTime;
         if(shineDelaySeconds <= 0)
         {
@@ -109,7 +108,8 @@ public class Circle : MonoBehaviour
             {
                 board.allCircle[column, row] = this.gameObject;
                 findMatches.FindAllMatches();
-            }           
+            }
+            
         }
         else
         {
@@ -130,7 +130,8 @@ public class Circle : MonoBehaviour
             {
                 board.allCircle[column, row] = this.gameObject;
                 findMatches.FindAllMatches();
-            }           
+            }
+            
         }
         else
         {
@@ -192,7 +193,7 @@ public class Circle : MonoBehaviour
                 }
                 board.DestroyMatches();              
             }
-           // otherCircle = null;
+            //otherCircle = null;
         }        
     }
 
@@ -255,7 +256,11 @@ public class Circle : MonoBehaviour
                 otherCircle.GetComponent<Circle>().row += -1 * (int)direction.y;
                 column += (int)direction.x;
                 row += (int)direction.y;
-
+                /////////
+                board.allCircle[column, row] = this.gameObject;
+                board.allCircle[column - (int)direction.x, row - (int)direction.y] = otherCircle.gameObject;
+                findMatches.FindAllMatches();
+                ///////////
                 StartCoroutine(CheckMoveCo());
             }
             else
@@ -283,6 +288,7 @@ public class Circle : MonoBehaviour
             column += 1;
             StartCoroutine(CheckMoveCo());
             */
+            
             MovePiecesActual(Vector2.right);
         }
         else if (swipeAngle > 45 && swipeAngle <= 135 && row < board.height - 1)

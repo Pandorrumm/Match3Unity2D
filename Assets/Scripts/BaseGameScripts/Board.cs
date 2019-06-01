@@ -229,7 +229,7 @@ public class Board : MonoBehaviour
                     {
                         circlToUse = Random.Range(0, circle.Length);
                         maxIterations++;
-                        Debug.Log(maxIterations);
+                        //Debug.Log(maxIterations);
                     }
                     maxIterations = 0;
 
@@ -358,7 +358,7 @@ public class Board : MonoBehaviour
 
         matchType.type = 0;
         matchType.color = "";
-        return matchType; ;
+        return matchType; 
 
         /* //это всё рабочее тоже, вместо int - bool в названии
         int numberHorizontal = 0;
@@ -461,22 +461,39 @@ public class Board : MonoBehaviour
         }
     }
 
+    //public void BombColumn(int column)
+    //{
+    //    for (int i = 0; i < width; i++)
+    //    {
+    //        if (concreteTiles[column, i])
+    //        {
+    //            concreteTiles[column, i].TakeDamage(1);
+    //            if (concreteTiles[column, i].hitPoints <= 0)
+    //            {
+    //                concreteTiles[column, i] = null;
+    //            }
+    //        }
+    //    }
+    //}
     public void BombColumn(int column)
     {
         for (int i = 0; i < width; i++)
         {
-            if (concreteTiles[column, i])
+            for (int j = 0; j < height; j++)
             {
-                concreteTiles[column, i].TakeDamage(1);
-                if (concreteTiles[column, i].hitPoints <= 0)
+                if (concreteTiles[i, j])
                 {
-                    concreteTiles[column, i] = null;
+                    concreteTiles[column, i].TakeDamage(1);
+                    if (concreteTiles[column, i].hitPoints <= 0)
+                    {
+                        concreteTiles[column, i] = null;
+                    }
                 }
             }
         }
     }
 
-    private void DestroyMatchesAt(int column, int row) // нанесение урона
+    private void DestroyMatchesAt(int column, int row) // нанесение урона+анимация
     {
         if (allCircle[column, row].GetComponent<Circle>().isMatched)
         {         
@@ -524,7 +541,10 @@ public class Board : MonoBehaviour
 
             Destroy(particle, 1f);
             allCircle[column, row].GetComponent<Circle>().PopAnimation();
-            Destroy(allCircle[column, row], .4f);
+            ///////
+            //findMatches.currentMatches.Remove(allCircle[column, row]);
+            ///////
+            Destroy(allCircle[column, row], .3f);
             scoreManager.IncreaseScore(basePieceValue * streakValue);
             allCircle[column, row] = null;
 
@@ -658,7 +678,7 @@ public class Board : MonoBehaviour
 
     private IEnumerator DecreaseRowCo2() //падение вниз circle Не в пустоты
     {
-        yield return new WaitForSeconds(0.5f); // задержка кругов при падении вниз после взрыва кругов под ними
+        yield return new WaitForSeconds(1f); // задержка кругов при падении вниз после взрыва кругов под ними
 
         for (int i = 0; i < width; i++)
         {
@@ -773,7 +793,8 @@ public class Board : MonoBehaviour
         {          
             streakValue ++;
             DestroyMatches();
-            yield break;                    
+            yield break;  
+            //yield return;
         }     
         currentCircle = null;
         CheckToMakeSlime();
@@ -812,19 +833,19 @@ public class Board : MonoBehaviour
 
     private Vector2 CheckForAdjacent(int column, int row)
     {
-        if(column < width - 1 && allCircle[column + 1, row])
+        if(allCircle[column + 1, row] && column < width - 1 /*&& allCircle[column + 1, row]*/)
         {
             return Vector2.right;
         }
-        if (column > 0 && allCircle[column - 1, row])
+        if (allCircle[column - 1, row] && column > 0 /*&& allCircle[column - 1, row]*/)
         {
             return Vector2.left;
         }
-        if (row < height - 1 && allCircle[column, row + 1])
+        if (allCircle[column, row + 1] && row < height - 1 /*&& allCircle[column, row + 1]*/)
         {
             return Vector2.up;
         }
-        if (row > 0 && allCircle[column, row - 1])
+        if (allCircle[column, row - 1] && row > 0 /*&& allCircle[column, row - 1]*/)
         {
             return Vector2.down;
         }
@@ -841,7 +862,7 @@ public class Board : MonoBehaviour
             int newX = Random.Range(0, width);
             int newY = Random.Range(0, height); 
 
-            if(slimeTiles[newX, newY])
+            if(slimeTiles[newX, newY] != null)
             {
                 Vector2 adjacent = CheckForAdjacent(newX, newY);
 

@@ -54,7 +54,7 @@ public class LevelButton : MonoBehaviour
         }
     }
 
-    void ActivateStars()
+    public void ActivateStars()
     {
         for (int i = 0; i < starsActive; i++)
         {

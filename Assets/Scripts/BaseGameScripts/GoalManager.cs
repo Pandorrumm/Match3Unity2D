@@ -23,6 +23,8 @@ public class GoalManager : MonoBehaviour
 
     private EndGameManager endGame;
 
+    public GameObject goalManagerAnimation;
+
     void Start ()
     {
         board = FindObjectOfType<Board>();
@@ -95,9 +97,13 @@ public class GoalManager : MonoBehaviour
 
         if(goalsCompleted >= levelGoals.Length) //если все цели выполнены
         {
-            if(endGame != null )
+            goalManagerAnimation.GetComponent<Animation>().Play("GoalContainer");
+
+            if (endGame != null )
             {
                 endGame.WinGame();
+                
+                board.currentState = GameState.wait;
             }
             Debug.Log("ПОБЕДААА");
         }

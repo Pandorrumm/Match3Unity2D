@@ -28,10 +28,12 @@ public class EndGameManager : MonoBehaviour
     public int currentCounterValue;
     private float timerSeconds;
     private Board board;
+    //private LevelButton levelButton;
 
     void Start ()
     {
         board = FindObjectOfType<Board>();
+        //levelButton = FindObjectOfType<LevelButton>();
         SetGameType();
         SetupGame();
 
@@ -86,13 +88,19 @@ public class EndGameManager : MonoBehaviour
 	
     public void WinGame()
     {
-        youWinPanel.SetActive(true);
+        //youWinPanel.SetActive(true);
+        Invoke("YouWinPanel", 2); // задержка в появлении панели
         board.currentState = GameState.win;
         currentCounterValue = 0;
         counter.text = "" + currentCounterValue;
         FadePanelController fade = FindObjectOfType<FadePanelController>();
         fade.GameOver();
 
+    }
+
+    public void YouWinPanel()
+    {
+        youWinPanel.SetActive(true);
     }
 
     public void LoseGame()
