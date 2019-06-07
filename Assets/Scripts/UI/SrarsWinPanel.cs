@@ -12,16 +12,19 @@ public class SrarsWinPanel : MonoBehaviour
     //public int currentScore;
     private Board board;
 
-   // private StarsAnimations starsAnimations;
+    private StarsAnimationWinPanel starsAnimWinPanel;
 
 
     void Start()
     {
-        //starsAnimations = FindObjectOfType<StarsAnimations>();
+        starsAnimWinPanel = FindObjectOfType<StarsAnimationWinPanel>();
 
         board = FindObjectOfType<Board>();
         scoreManager = FindObjectOfType<ScoreManager>();
-        ActivateStars();
+        if (stars[0].enabled == false)
+        {
+            ActivateStars();
+        }
 
     }
     private void Update()
@@ -45,7 +48,7 @@ public class SrarsWinPanel : MonoBehaviour
         if (scoreManager.score > board.scoreGoals[0])
         {
             stars[0].enabled = true;
-            //starsAnimations.StartAnimationsBigLitl();
+            starsAnimWinPanel.StartAnimationsWinPanelBigLitl();
             //Debug.Log(board.scoreGoals[0] + 20);
           
         }
@@ -53,14 +56,14 @@ public class SrarsWinPanel : MonoBehaviour
         if (scoreManager.score > board.scoreGoals[1] )
         {
             stars[1].enabled = true;
-            //starsAnimations.StartAnimationsBigLitlA();
+            starsAnimWinPanel.StartAnimationsWinPanelBigLitllA();
             // Debug.Log("Открыть вторую звезду!!");
         }
 
         if (scoreManager.score > board.scoreGoals[2] )
         {
             stars[2].enabled = true;
-           // starsAnimations.StartAnimationsBigLitlB();
+            starsAnimWinPanel.StartAnimationsWinPanelBigLitlB();
             // Debug.Log("Открыть третью звезду!!");
         }
 

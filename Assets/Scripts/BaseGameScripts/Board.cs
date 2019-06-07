@@ -65,7 +65,7 @@ public class Board : MonoBehaviour
     private bool[,] blankSpaces;
     public BackgroundTile[,] lockTiles;
     private BackgroundTile[,] breakableTiles;
-    private BackgroundTile[,] concreteTiles;
+    private BackgroundTileConcrete[,] concreteTiles;
     private BackgroundTile[,] slimeTiles;
 
     [Header("Match Stuff")]
@@ -113,7 +113,7 @@ public class Board : MonoBehaviour
         scoreManager = FindObjectOfType<ScoreManager>();
         breakableTiles = new BackgroundTile[width, height];
         lockTiles = new BackgroundTile[width, height];
-        concreteTiles = new BackgroundTile[width, height];
+        concreteTiles = new BackgroundTileConcrete[width, height];
         slimeTiles = new BackgroundTile[width, height];
         findMatches = FindObjectOfType<FindMatches>();
         blankSpaces = new bool[width, height];
@@ -143,6 +143,13 @@ public class Board : MonoBehaviour
             {
                 //создать бьющуюся плитку на позиции
                 Vector2 tempPosition = new Vector2(boardLayout[i].x, boardLayout[i].y);
+
+                //что бы "под" была обычная плитка 
+                //// 
+                GameObject backGroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
+                backGroundTile.transform.parent = this.transform;
+                ////
+
                 GameObject tile = Instantiate(breakableTilePrefab, tempPosition, Quaternion.identity);
                 breakableTiles[boardLayout[i].x, boardLayout[i].y] = tile.GetComponent<BackgroundTile>();
             }
@@ -159,6 +166,13 @@ public class Board : MonoBehaviour
             {
                 //создать закрытую плитку на позиции
                 Vector2 tempPosition = new Vector2(boardLayout[i].x, boardLayout[i].y);
+
+                //что бы "под" была обычная плитка 
+                //// 
+                //GameObject backGroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
+                //backGroundTile.transform.parent = this.transform;
+                ////
+
                 GameObject tile = Instantiate(lockTilePrefab, tempPosition, Quaternion.identity);
                 lockTiles[boardLayout[i].x, boardLayout[i].y] = tile.GetComponent<BackgroundTile>();
             }
@@ -175,8 +189,15 @@ public class Board : MonoBehaviour
             {
                 //создать закрытую плитку на позиции
                 Vector2 tempPosition = new Vector2(boardLayout[i].x, boardLayout[i].y);
+
+                //что бы "под" была обычная плитка 
+                //// 
+                GameObject backGroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
+                backGroundTile.transform.parent = this.transform;
+                ////
+
                 GameObject tile = Instantiate(concreteTilePrefab, tempPosition, Quaternion.identity);
-                concreteTiles[boardLayout[i].x, boardLayout[i].y] = tile.GetComponent<BackgroundTile>();
+                concreteTiles[boardLayout[i].x, boardLayout[i].y] = tile.GetComponent<BackgroundTileConcrete>();
             }
         }
     }
@@ -191,6 +212,13 @@ public class Board : MonoBehaviour
             {
                 
                 Vector2 tempPosition = new Vector2(boardLayout[i].x, boardLayout[i].y);
+
+                //что бы "под" была обычная плитка 
+                //// 
+                GameObject backGroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
+                backGroundTile.transform.parent = this.transform;
+                ////
+
                 GameObject tile = Instantiate(slimePiecePrefab, tempPosition, Quaternion.identity);
                 slimeTiles[boardLayout[i].x, boardLayout[i].y] = tile.GetComponent<BackgroundTile>();
             }
@@ -583,6 +611,7 @@ public class Board : MonoBehaviour
             if(concreteTiles[column - 1, row])
             {
                 concreteTiles[column - 1, row].TakeDamage(1);
+
                 if (concreteTiles[column - 1, row].hitPoints <= 0)
                 {
                     concreteTiles[column - 1, row] = null;
@@ -594,6 +623,7 @@ public class Board : MonoBehaviour
             if (concreteTiles[column + 1, row])
             {
                 concreteTiles[column + 1, row].TakeDamage(1);
+
                 if (concreteTiles[column + 1, row].hitPoints <= 0)
                 {
                     concreteTiles[column + 1 , row] = null;
@@ -605,6 +635,7 @@ public class Board : MonoBehaviour
             if (concreteTiles[column, row -1])
             {
                 concreteTiles[column, row - 1].TakeDamage(1);
+
                 if (concreteTiles[column, row - 1].hitPoints <= 0)
                 {
                     concreteTiles[column, row - 1] = null;
@@ -616,6 +647,7 @@ public class Board : MonoBehaviour
             if (concreteTiles[column, row + 1])
             {
                 concreteTiles[column, row + 1].TakeDamage(1);
+
                 if (concreteTiles[column, row + 1].hitPoints <= 0)
                 {
                     concreteTiles[column, row + 1] = null;

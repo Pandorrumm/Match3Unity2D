@@ -248,7 +248,7 @@ public class Circle : MonoBehaviour
         previousRow = row;
         previousColumns = column;
 
-        if (board.lockTiles[column, row] == null && board.lockTiles[column + (int)direction.x, row + (int)direction.y] == null)
+        if (board.lockTiles[column, row] == null && board.lockTiles[column + (int)direction.x, row + (int)direction.y] == null) //что бы нельзябыло двигать lock плитки
         {
             if (otherCircle != null)
             {

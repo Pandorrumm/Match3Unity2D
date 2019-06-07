@@ -23,6 +23,7 @@ public class EndGameManager : MonoBehaviour
     public GameObject timeLabel;
     public GameObject youWinPanel;
     public GameObject tryAgainPanel;
+    public GameObject starsWinPanel;
     public Text counter; //счётчик
     public EndGameRequirements requirements;
     public int currentCounterValue;
@@ -101,6 +102,12 @@ public class EndGameManager : MonoBehaviour
     public void YouWinPanel()
     {
         youWinPanel.SetActive(true);
+        // starsWinPanel.SetActive(true);
+        Invoke("ActivStarsWinPanel", 1);
+    }
+    public void ActivStarsWinPanel()
+    {
+        starsWinPanel.SetActive(true);
     }
 
     public void LoseGame()

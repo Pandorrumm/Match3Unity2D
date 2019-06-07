@@ -62,7 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\BaseGameScripts\BackgroundTile.cs" />
+    <Compile Include="Assets\Scripts\BaseGameScripts\BackgroundTileConcrete.cs" />
     <Compile Include="Assets\Scripts\BaseGameScripts\Board.cs" />
+    <Compile Include="Assets\Scripts\BaseGameScripts\BrickDamage.cs" />
     <Compile Include="Assets\Scripts\BaseGameScripts\CameraScalar.cs" />
     <Compile Include="Assets\Scripts\BaseGameScripts\Circle.cs" />
     <Compile Include="Assets\Scripts\BaseGameScripts\EndGameManager.cs" />
@@ -88,6 +90,7 @@
     <Compile Include="Assets\Scripts\UI\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\UI\SrarsWinPanel.cs" />
     <Compile Include="Assets\Scripts\UI\StarsAnimations.cs" />
+    <Compile Include="Assets\Scripts\UI\StarsAnimationWinPanel.cs" />
     <Compile Include="Assets\Scripts\UI\StarsGame.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/Unity/Проекты/Match3/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

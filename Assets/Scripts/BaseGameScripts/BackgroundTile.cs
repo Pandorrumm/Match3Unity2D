@@ -7,11 +7,13 @@ public class BackgroundTile : MonoBehaviour
     public int hitPoints; //сколько нужно урона блоку
     private SpriteRenderer sprite;
     private GoalManager goalManager;
+   // private BrickDamage brickDamage;
 
     private void Start()
     {
         goalManager = FindObjectOfType<GoalManager>();
         sprite = GetComponent<SpriteRenderer>();
+        //brickDamage = FindObjectOfType<BrickDamage>();
     }
 
     private void Update()
@@ -31,13 +33,14 @@ public class BackgroundTile : MonoBehaviour
     {
         hitPoints -= damage;
         MakeLighter();
+        //brickDamage.BreakBrick();
     }
 
     void MakeLighter() //Сделать легче
     {
         //взять текущий цвет
         Color color = sprite.color;
-
+       // brickDamage.BreakBrick();
         // получить текущее альфа-значение цвета и разрезать его пополам
         float newAlpha = color.a * .5f;
         sprite.color = new Color(color.r, color.g, color.b, newAlpha);

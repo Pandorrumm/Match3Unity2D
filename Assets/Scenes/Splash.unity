@@ -3003,7 +3003,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.0000019073, y: -248}
+  m_AnchoredPosition: {x: -27, y: -248}
   m_SizeDelta: {x: 812.2, y: 365}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &357636901
@@ -17062,7 +17062,7 @@ Prefab:
         type: 2}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: a7eb974a5b9e7d445a958169999a5b71,
+      objectReference: {fileID: 21300000, guid: 62a55f41ceb56b144a3650e7887f6cf0,
         type: 3}
     - target: {fileID: 114730451932613810, guid: f2f50024c4564dc4ab404d7a348981e3,
         type: 2}
