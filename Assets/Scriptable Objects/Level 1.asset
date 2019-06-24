@@ -52,10 +52,13 @@ MonoBehaviour:
     tileKind: 1
   - x: 3
     y: 3
-    tileKind: 4
+    tileKind: 5
   - x: 4
     y: 5
-    tileKind: 3
+    tileKind: 5
+  - x: 2
+    y: 2
+    tileKind: 5
   circle:
   - {fileID: 1673749335803036, guid: e8847766a0d2d734aa046936caa28d89, type: 2}
   - {fileID: 1319267572265458, guid: 2da77d918de16a84b979329e1b81fdf0, type: 2}

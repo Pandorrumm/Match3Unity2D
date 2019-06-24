@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
     public string newLevel;
     public bool paused = false;
     private Board board;
+    
 
     public static bool GameIsPaused;
    // public GameObject pauseMenuUi;
@@ -22,6 +23,7 @@ public class PauseMenu : MonoBehaviour
         GameIsPaused = false;
         Time.timeScale = 1;
         board = FindObjectOfType<Board>();
+        
     }
 
     void Update()
@@ -77,6 +79,9 @@ public class PauseMenu : MonoBehaviour
 
     public void QuitGame()
     {
+        
         SceneManager.LoadScene("Splash");
+        
+
     }
 }

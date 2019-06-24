@@ -6,20 +6,29 @@ public class GameStartManager : MonoBehaviour
 {
     public GameObject startPanel;
     public GameObject levelPanel;
+    public GameObject trainingPanel;
     private GameData gameData;
 	
 	void Start ()
     {
         gameData = FindObjectOfType<GameData>();
-        startPanel.SetActive(true);
+        startPanel.SetActive(true);        
         levelPanel.SetActive(false);
     }
 	
 	public void PlayGame()
     {
         startPanel.SetActive(false);
-        levelPanel.SetActive(true);
+        trainingPanel.SetActive(true);
+       // levelPanel.SetActive(true);
        // gameData.Load();
+    }
+
+    public void Next()
+    {       
+        trainingPanel.SetActive(false);
+         levelPanel.SetActive(true);
+        // gameData.Load();
     }
 
     public void QuitGame()

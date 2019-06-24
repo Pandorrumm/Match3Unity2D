@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7261223de496e20469053b6d1838bc4a, type: 3}
+  m_Name: Level 23
+  m_EditorClassIdentifier: 
+  width: 7
+  height: 9
+  boardLayout:
+  - x: 0
+    y: 0
+    tileKind: 1
+  - x: 0
+    y: 1
+    tileKind: 1
+  - x: 0
+    y: 2
+    tileKind: 1
+  - x: 0
+    y: 6
+    tileKind: 1
+  - x: 0
+    y: 7
+    tileKind: 1
+  - x: 0
+    y: 8
+    tileKind: 1
+  - x: 6
+    y: 0
+    tileKind: 1
+  - x: 6
+    y: 1
+    tileKind: 1
+  - x: 6
+    y: 2
+    tileKind: 1
+  - x: 6
+    y: 6
+    tileKind: 1
+  - x: 6
+    y: 7
+    tileKind: 1
+  - x: 6
+    y: 8
+    tileKind: 1
+  - x: 3
+    y: 0
+    tileKind: 3
+  - x: 3
+    y: 1
+    tileKind: 3
+  - x: 3
+    y: 2
+    tileKind: 3
+  - x: 3
+    y: 3
+    tileKind: 3
+  - x: 3
+    y: 4
+    tileKind: 3
+  - x: 3
+    y: 5
+    tileKind: 3
+  - x: 3
+    y: 6
+    tileKind: 3
+  - x: 3
+    y: 7
+    tileKind: 3
+  - x: 3
+    y: 8
+    tileKind: 3
+  - x: 1
+    y: 3
+    tileKind: 2
+  - x: 1
+    y: 4
+    tileKind: 2
+  - x: 5
+    y: 4
+    tileKind: 2
+  - x: 5
+    y: 5
+    tileKind: 2
+  circle:
+  - {fileID: 1319267572265458, guid: 2da77d918de16a84b979329e1b81fdf0, type: 2}
+  - {fileID: 1244611654818998, guid: 3234cfc5e8aa36d4780256918a80bcb5, type: 2}
+  - {fileID: 1190178853279326, guid: d96c3900473537c42982f9facc1cbac9, type: 2}
+  - {fileID: 1292004112657398, guid: 654b816314b27cd4cb32ff93cda99c8f, type: 2}
+  - {fileID: 1333517241104996, guid: d8ddf58b23940b24e83515de1f001326, type: 2}
+  scoreGoals: e8030000c4090000d80e0000
+  endGameRequirements:
+    gameType: 0
+    counterValue: 20
+  levelGoals:
+  - numberNeeded: 4
+    numberCollected: 4
+    goalSprite: {fileID: 21300000, guid: f68659a671d5be743a42eaf36c6125d2, type: 3}
+    matchValue: Lock
+  - numberNeeded: 20
+    numberCollected: 21
+    goalSprite: {fileID: 21300000, guid: c4f77e9f8af13b449a93c18368032af0, type: 3}
+    matchValue: Orange

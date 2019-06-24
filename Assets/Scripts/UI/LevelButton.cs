@@ -12,7 +12,8 @@ public class LevelButton : MonoBehaviour
     public Sprite lockedSprite; // закрытый
     private Image buttonImage;
     private Button myButton;
-    private int starsActive;
+    public int starsActive;
+    private Board board;
 
     [Header("Level UI")]
     public Image[] stars; //заполненные звёзды, дочерние в юнити
@@ -25,11 +26,12 @@ public class LevelButton : MonoBehaviour
 
     void Start()
     {
+        board = FindObjectOfType<Board>();
         gameData = FindObjectOfType<GameData>();
         buttonImage = GetComponent<Image>();
         myButton = GetComponent<Button>();
         LoadData();
-        ActivateStars();
+        ActivateStars();       
         ShowLevel();
         DecideSprite();
 
@@ -60,6 +62,7 @@ public class LevelButton : MonoBehaviour
         {
             stars[i].enabled = true;
         }
+
     }
 
     void DecideSprite() // решение по спрайту - открытый или закрытый уровень

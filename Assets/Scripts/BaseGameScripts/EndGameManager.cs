@@ -29,12 +29,17 @@ public class EndGameManager : MonoBehaviour
     public int currentCounterValue;
     private float timerSeconds;
     private Board board;
-    //private LevelButton levelButton;
+    private LevelButton levelButton;
+    //private ConfirmPanel confirmPanel;
+    private GameData gameData;
+   // private int level;
 
     void Start ()
     {
+        //confirmPanel = FindObjectOfType<ConfirmPanel>();
         board = FindObjectOfType<Board>();
-        //levelButton = FindObjectOfType<LevelButton>();
+        levelButton = FindObjectOfType<LevelButton>();
+        gameData = FindObjectOfType<GameData>();
         SetGameType();
         SetupGame();
 
@@ -79,7 +84,6 @@ public class EndGameManager : MonoBehaviour
         {
             currentCounterValue--;
             counter.text = "" + currentCounterValue;
-
             if (currentCounterValue <= 0) //если кончились ходы
             {
                 LoseGame();
@@ -92,7 +96,7 @@ public class EndGameManager : MonoBehaviour
         //youWinPanel.SetActive(true);
         Invoke("YouWinPanel", 2); // задержка в появлении панели
         board.currentState = GameState.win;
-        currentCounterValue = 0;
+        currentCounterValue = 0;      
         counter.text = "" + currentCounterValue;
         FadePanelController fade = FindObjectOfType<FadePanelController>();
         fade.GameOver();
@@ -105,6 +109,7 @@ public class EndGameManager : MonoBehaviour
         // starsWinPanel.SetActive(true);
         Invoke("ActivStarsWinPanel", 1);
     }
+
     public void ActivStarsWinPanel()
     {
         starsWinPanel.SetActive(true);
@@ -112,13 +117,30 @@ public class EndGameManager : MonoBehaviour
 
     public void LoseGame()
     {
-        tryAgainPanel.SetActive(true);
+        
+        tryAgainPanel.SetActive(true);       
         board.currentState = GameState.lose;
         Debug.Log("Вы проиграли!");
-        currentCounterValue = 0;
+
+        //Debug.Log(levelButton.starsActive);
+
+        //if (gameData != null)
+        //{
+
+        //    gameData.saveData.stars[board.level] = 0;
+
+        //}
+        //else
+        //{
+        //    gameData.saveData.stars[board.level] = 0;
+        //}
+
+        currentCounterValue = 0;      
         counter.text = "" + currentCounterValue;
         FadePanelController fade = FindObjectOfType<FadePanelController>();
         fade.GameOver(); // вылет панели анимация
+        
+        
     }
 
 	void Update ()

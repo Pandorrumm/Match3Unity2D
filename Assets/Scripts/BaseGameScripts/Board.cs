@@ -11,7 +11,7 @@ public enum GameState //состояние игры
     pause
 }
 
-public enum TileKind
+public enum TileKind // вид плитки
 {
     Breakable, //разбиваемые плитки
     Blank, //пробел
@@ -55,9 +55,11 @@ public class Board : MonoBehaviour
     public GameObject breakableTilePrefab;
     public GameObject lockTilePrefab;
     public GameObject concreteTilePrefab;
+  //  public GameObject concreteDestroy;
     public GameObject slimePiecePrefab; 
     public GameObject[] circle;
     public GameObject destroyEffect;
+   // private BrickDamage brickDamage;
 
     [Header("Layout")] //расположение
     public GameObject[,] allCircle;      
@@ -65,7 +67,8 @@ public class Board : MonoBehaviour
     private bool[,] blankSpaces;
     public BackgroundTile[,] lockTiles;
     private BackgroundTile[,] breakableTiles;
-    private BackgroundTileConcrete[,] concreteTiles;
+    private BackgroundTile[,] concreteTiles;
+   // private BackgroundTileConcrete[,] concreteTiles;
     private BackgroundTile[,] slimeTiles;
 
     [Header("Match Stuff")]
@@ -80,6 +83,8 @@ public class Board : MonoBehaviour
     private SoundManager soundManager;
     private GoalManager goalManager;
     private bool makeSlime = true;
+
+   // private Animator anim;
 
 
     private void Awake()
@@ -107,13 +112,16 @@ public class Board : MonoBehaviour
 
 
     void Start()
-    {       
+    {
+        //anim = GetComponent<Animator>();
+       // brickDamage = FindObjectOfType<BrickDamage>();
         goalManager = FindObjectOfType<GoalManager>();
         soundManager = FindObjectOfType<SoundManager>();
         scoreManager = FindObjectOfType<ScoreManager>();
         breakableTiles = new BackgroundTile[width, height];
         lockTiles = new BackgroundTile[width, height];
-        concreteTiles = new BackgroundTileConcrete[width, height];
+        concreteTiles = new BackgroundTile[width, height];
+       // concreteTiles = new BackgroundTileConcrete[width, height];
         slimeTiles = new BackgroundTile[width, height];
         findMatches = FindObjectOfType<FindMatches>();
         blankSpaces = new bool[width, height];
@@ -146,8 +154,8 @@ public class Board : MonoBehaviour
 
                 //что бы "под" была обычная плитка 
                 //// 
-                GameObject backGroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
-                backGroundTile.transform.parent = this.transform;
+                //GameObject backGroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
+                //backGroundTile.transform.parent = this.transform;
                 ////
 
                 GameObject tile = Instantiate(breakableTilePrefab, tempPosition, Quaternion.identity);
@@ -179,7 +187,7 @@ public class Board : MonoBehaviour
         }
     }
 
-    private void GenerateConcreteTiles()
+    public void GenerateConcreteTiles()
     {
         //смотрим на все плитки 
         for (int i = 0; i < boardLayout.Length; i++)
@@ -197,7 +205,7 @@ public class Board : MonoBehaviour
                 ////
 
                 GameObject tile = Instantiate(concreteTilePrefab, tempPosition, Quaternion.identity);
-                concreteTiles[boardLayout[i].x, boardLayout[i].y] = tile.GetComponent<BackgroundTileConcrete>();
+                concreteTiles[boardLayout[i].x, boardLayout[i].y] = tile.GetComponent<BackgroundTile>();
             }
         }
     }
@@ -489,37 +497,38 @@ public class Board : MonoBehaviour
         }
     }
 
-    //public void BombColumn(int column)
-    //{
-    //    for (int i = 0; i < width; i++)
-    //    {
-    //        if (concreteTiles[column, i])
-    //        {
-    //            concreteTiles[column, i].TakeDamage(1);
-    //            if (concreteTiles[column, i].hitPoints <= 0)
-    //            {
-    //                concreteTiles[column, i] = null;
-    //            }
-    //        }
-    //    }
-    //}
     public void BombColumn(int column)
     {
         for (int i = 0; i < width; i++)
         {
-            for (int j = 0; j < height; j++)
+            if (concreteTiles[column, i])
             {
-                if (concreteTiles[i, j])
+                concreteTiles[column, i].TakeDamage(1);
+                if (concreteTiles[column, i].hitPoints <= 0)
                 {
-                    concreteTiles[column, i].TakeDamage(1);
-                    if (concreteTiles[column, i].hitPoints <= 0)
-                    {
-                        concreteTiles[column, i] = null;
-                    }
+                    concreteTiles[column, i] = null;
                 }
             }
         }
     }
+
+    //public void BombColumn(int column)
+    //{
+    //    for (int i = 0; i < width; i++)
+    //    {
+    //        for (int j = 0; j < height; j++)
+    //        {
+    //            if (concreteTiles[i, j])
+    //            {
+    //                concreteTiles[column, i].TakeDamage(1);
+    //                if (concreteTiles[column, i].hitPoints <= 0)
+    //                {
+    //                    concreteTiles[column, i] = null;
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 
     private void DestroyMatchesAt(int column, int row) // нанесение урона+анимация
     {
@@ -541,7 +550,7 @@ public class Board : MonoBehaviour
             {
                 //если да, нанесите один урон
                 lockTiles[column, row].TakeDamage(1);
-
+                
                 if (lockTiles[column, row].hitPoints <= 0)
                 {
                     lockTiles[column, row] = null;
@@ -570,7 +579,7 @@ public class Board : MonoBehaviour
             Destroy(particle, 1f);
             allCircle[column, row].GetComponent<Circle>().PopAnimation();
             ///////
-            //findMatches.currentMatches.Remove(allCircle[column, row]);
+            findMatches.currentMatches.Remove(allCircle[column, row]);
             ///////
             Destroy(allCircle[column, row], .3f);
             scoreManager.IncreaseScore(basePieceValue * streakValue);
@@ -610,11 +619,12 @@ public class Board : MonoBehaviour
         {
             if(concreteTiles[column - 1, row])
             {
-                concreteTiles[column - 1, row].TakeDamage(1);
 
+                concreteTiles[column - 1, row].TakeDamage(1);
+               
                 if (concreteTiles[column - 1, row].hitPoints <= 0)
                 {
-                    concreteTiles[column - 1, row] = null;
+                    concreteTiles[column - 1, row] = null;                   
                 }
             }
         }
@@ -665,7 +675,7 @@ public class Board : MonoBehaviour
                 slimeTiles[column - 1, row].TakeDamage(1);
                 if (slimeTiles[column - 1, row].hitPoints <= 0)
                 {
-                    slimeTiles[column - 1, row] = null;
+                    slimeTiles[column - 1, row] = null;                   
                 }
                 makeSlime = false;
             }
@@ -690,6 +700,7 @@ public class Board : MonoBehaviour
                 if (slimeTiles[column, row - 1].hitPoints <= 0)
                 {
                     slimeTiles[column, row - 1] = null;
+
                 }
                 makeSlime = false;
             }
@@ -701,7 +712,10 @@ public class Board : MonoBehaviour
                 slimeTiles[column, row + 1].TakeDamage(1);
                 if (slimeTiles[column, row + 1].hitPoints <= 0)
                 {
+
                     slimeTiles[column, row + 1] = null;
+                  
+
                 }
                 makeSlime = false;
             }
@@ -865,19 +879,19 @@ public class Board : MonoBehaviour
 
     private Vector2 CheckForAdjacent(int column, int row)
     {
-        if(allCircle[column + 1, row] && column < width - 1 /*&& allCircle[column + 1, row]*/)
+        if(/*allCircle[column + 1, row] && */column < width - 1 && allCircle[column + 1, row])
         {
             return Vector2.right;
         }
-        if (allCircle[column - 1, row] && column > 0 /*&& allCircle[column - 1, row]*/)
+        if (/*allCircle[column - 1, row] && */column > 0 && allCircle[column - 1, row])
         {
             return Vector2.left;
         }
-        if (allCircle[column, row + 1] && row < height - 1 /*&& allCircle[column, row + 1]*/)
+        if (/*allCircle[column, row + 1] && */row < height - 1 && allCircle[column, row + 1])
         {
             return Vector2.up;
         }
-        if (allCircle[column, row - 1] && row > 0 /*&& allCircle[column, row - 1]*/)
+        if (/*allCircle[column, row - 1] && */row > 0 && allCircle[column, row - 1])
         {
             return Vector2.down;
         }

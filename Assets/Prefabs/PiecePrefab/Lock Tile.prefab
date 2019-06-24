@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoints: 1
+  hitSprite: {fileID: 21300000, guid: 63325053fc9cadb43838bda8a1a89a52, type: 3}
 --- !u!212 &212018847718502340
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -7,6 +7,7 @@ public class LevelSelectManager : MonoBehaviour
     public GameObject[] panels; // блоки с уровнями
     public GameObject currentPanel;
     public GameObject LeftButton;
+    public GameObject RightButton;
     public int page;
     private GameData gameData;
     public int currentLevel = 0;
@@ -22,16 +23,18 @@ public class LevelSelectManager : MonoBehaviour
             panels[i].SetActive(false);
         }
 
-        if (gameData != null)
-        {
-            for (int i = 0; i < gameData.saveData.isActiv.Length; i++)
-            {
-                if(gameData.saveData.isActiv[i])
-                {
-                    currentLevel = i;
-                }
-            }
-        }
+        // что бы при запуске открывались туры, до которых дошёл
+        //if (gameData != null)
+        //{
+        //    for (int i = 0; i < gameData.saveData.isActiv.Length; i++)
+        //    {
+        //        if(gameData.saveData.isActiv[i])
+        //        {
+        //            currentLevel = i;
+        //        }
+        //    }
+        //}
+
         page = (int)Mathf.Floor(currentLevel / 9);
         currentPanel = panels[page];
         panels[page].SetActive(true);
@@ -40,7 +43,18 @@ public class LevelSelectManager : MonoBehaviour
 		
 	void Update ()
     {
-		
+		if(currentLevel > 9 && page >= 1)
+        {
+            LeftButton.SetActive(true);
+        }
+        if (currentLevel > 90 && page == 10)
+        {
+            RightButton.SetActive(false);
+        }
+        else
+        {
+            RightButton.SetActive(true);
+        }
 	}
 
     public void PageRight() // стрелка в право
@@ -78,4 +92,5 @@ public class LevelSelectManager : MonoBehaviour
         Application.Quit();        
         Debug.Log("Вышли из игры");
     }
+    
 }

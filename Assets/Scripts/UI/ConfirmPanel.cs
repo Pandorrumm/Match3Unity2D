@@ -10,7 +10,7 @@ public class ConfirmPanel : MonoBehaviour
     public string levelToLoad; //уровень для загрузки
     public int level;
     private GameData gameData;
-    private int starsActive;
+    public int starsActive;
     private int highScore;
 
 

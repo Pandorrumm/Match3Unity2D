@@ -1,6 +1,6 @@
 Android
 PlayerPath?
-D:/Unity/Проекты/Match3/Proba4.apk
+D:/Unity/Проекты/Match3/Match3.apk
 SceneListBegin?
 Assets/Scenes/Splash.unity
 Assets/Scenes/Main.unity
@@ -22,9 +22,10 @@ c7dd12c15208b0447e101f80038706df UnityEngine.Timeline.dll:UnityEngine.Timeline.A
 64f3a13c1277a7f1324321d93d0ec13b UnityEngine.Timeline.dll:UnityEngine.Timeline.TimelineAsset
 f6637497451c9a030c421de4a1ad5cdb Unity.TextMeshPro.dll:TMPro.TMP_ScrollbarEventHandler
 44d3ba018f22d4e242a9d48cbb5b9b9c Assembly-CSharp.dll:.Circle
-6ad3d79f5156381967e6a1d2acb00b6e Assembly-CSharp.dll:.LevelButton
+915fd9a11d4e7ef63ec86117169db5e2 Assembly-CSharp.dll:.LevelButton
 28e0e1dcec96e66d9ac569c180945cba Assembly-CSharp.dll:.HintManager
 b14b4630cc47b6e9ea8a644551a6a8cc Unity.TextMeshPro.dll:TMPro.TMP_Text
+3d25edd86f282d40cb9797291374d80c Assembly-CSharp.dll:.StarsAnimationWinPanel
 53cefe5d98cadefbab750835e70b89c0 UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 486cd95c82d8305219c352c06b776e1f UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
 da2091a04d360891450faf16cdf621f1 UnityEngine.UI.dll:UnityEngine.UI.Button
@@ -92,7 +93,7 @@ a44114bd4fa541174f78b4bb92bacb48 UnityEngine.UI.dll:UnityEngine.EventSystems.Sta
 e90403eeda069970e0b9de1533de13a6 UnityEngine.UI.dll:UnityEngine.UI.ToggleGroup
 2d58ca16854b99daea8c45e9c0f367b7 UnityEngine.UI.dll:UnityEngine.EventSystems.TouchInputModule
 16da51d1b62ef6d4ee1849350434023b UnityEngine.UI.dll:UnityEngine.UI.VerticalLayoutGroup
-8ea1b07fd85c39e5cd9d4ffa87e713a7 Assembly-CSharp.dll:.ConfirmPanel
+9dd531250536bd3799df514aaa3d4290 Assembly-CSharp.dll:.ConfirmPanel
 486cd95c82d8305219c352c06b776e1f UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 9e61f3535f3c55760a1cedfbd114f4af UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
 754551afe4f2531f58476bf14c510657 UnityEngine.Timeline.dll:UnityEngine.Timeline.AnimationPlayableAsset
@@ -157,7 +158,7 @@ fc061f3ae8a876c0687e86378d4a447c UnityEngine.Networking.dll:UnityEngine.Networki
 72a8523b432c0a5317826b7a9e0a0e79 Unity.TextMeshPro.dll:TMPro.PackageResourceImporterWindow
 e53cc67d84060d628c7f03fc725766d8 Unity.TextMeshPro.dll:TMPro.TMP_FontAsset
 392c5b921098bd4c139d9146d0efa6d7 Unity.TextMeshPro.dll:TMPro.TMP_Settings
-b39ef2a5c44789b4df87d2cf83b0f2c0 Assembly-CSharp.dll:.LevelSelectManager
+a085ecd80be0b3aeaebf94302ecedfc5 Assembly-CSharp.dll:.LevelSelectManager
 ddcae71b3f91386237efd012a9eef2be UnityEngine.TestRunner.dll:UnityEngine.TestTools.EnumerableSetUpTearDownCommandState
 486cd95c82d8305219c352c06b776e1f UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.PlayModeRunnerCallback
 e033f131358cea5a0eabf9561e781deb UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.PlaymodeTestsController
@@ -184,14 +185,15 @@ bc3f1237163a686d813f5cc9fbfed733 Assembly-CSharp.dll:.Level
 1e10e09cf5fecc7c7ad4881682866b87 Assembly-CSharp.dll:.ScoreManager
 5c6ad657313c68f4b45157346a2fa4ab Assembly-CSharp.dll:.Board
 58fcc80c609db9de7050c80b224098f7 Assembly-CSharp.dll:.SoundManager
+bbba2a94328a48b6cbe86fb9375f9f39 Assembly-CSharp.dll:.BrickDamage
 e04611b8715e6833d2bd7010fc6be10b Unity.TextMeshPro.dll:TMPro.TMP_StyleSheet
 3007402684709b482c2929a297984b3c Assembly-CSharp.dll:.World
 dd05584f396a22112da9352c6187a884 Assembly-CSharp.dll:.GoalPanel
 073230a8bac7f673e2821635b83ab0cf Assembly-CSharp.dll:.GoalManager
-74644e4d750e446a30b859becf15df51 Assembly-CSharp.dll:.BackgroundTile
+b1d9c288e3506f675f72b3abba8135ea Assembly-CSharp.dll:.BackgroundTile
 2f9af06a78208a67db480e9bfed4a076 Unity.TextMeshPro.dll:TMPro.TextMeshPro
 9318334b30e9f195f573b2ce00154b95 Unity.TextMeshPro.dll:TMPro.TMP_ColorGradient
 a061bb4a75a66342f47ad43fab850793 Assembly-CSharp.dll:.FadePanelController
-143db82da930e95b5c26641889f959a7 Assembly-CSharp.dll:.GameStartManager
+07d4dddd9ea167ae874db57c5c6b0461 Assembly-CSharp.dll:.GameStartManager
 93307bd34e39d73fd24e00ec39c25a91 Unity.TextMeshPro.dll:TMPro.TMP_SubMesh
-3d25edd86f282d40cb9797291374d80c Assembly-CSharp.dll:.StarsAnimationWinPanel
+74644e4d750e446a30b859becf15df51 Assembly-CSharp.dll:.BackgroundTileConcrete

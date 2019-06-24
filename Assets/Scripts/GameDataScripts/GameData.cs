@@ -18,8 +18,16 @@ public class GameData : MonoBehaviour
 {
     public static GameData gameData;
     public SaveData saveData;
-	
-	void Awake ()
+    private EndGameManager endGameManager;
+    private Board board;
+
+    void Start()
+    {
+        endGameManager = FindObjectOfType<EndGameManager>();
+        board = FindObjectOfType<Board>();
+    }
+
+    void Awake ()
     {
         
         if (gameData == null)
@@ -32,12 +40,7 @@ public class GameData : MonoBehaviour
             Destroy(this.gameObject);
         }
         Load();
-    }
-
-    private void Start()
-    {
-        
-    }
+    }  
 
     public void Save()
     {
@@ -53,7 +56,11 @@ public class GameData : MonoBehaviour
         //создаём пустые  данные сохранения
         SaveData data = new SaveData();
         data = saveData;
-
+        
+        //if(endGameManager.tryAgainPanel )
+        //{
+        //    saveData.stars[board.level -1] = 0;
+        //}
         //сохраняем файлы
         formatter.Serialize(file, data);
 

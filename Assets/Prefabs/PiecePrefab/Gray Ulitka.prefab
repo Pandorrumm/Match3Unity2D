@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 95356431731201762}
   m_Layer: 0
   m_Name: Gray Ulitka
-  m_TagString: 'Gray Circle '
+  m_TagString: Gray
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
