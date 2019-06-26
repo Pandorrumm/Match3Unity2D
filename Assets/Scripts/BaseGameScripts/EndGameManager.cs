@@ -24,7 +24,9 @@ public class EndGameManager : MonoBehaviour
     public GameObject youWinPanel;
     public GameObject tryAgainPanel;
     public GameObject starsWinPanel;
-    public Text counter; //счётчик
+    public Text counter; //счётчик (цифры)
+    public GameObject counterAnimation;
+    
     public EndGameRequirements requirements;
     public int currentCounterValue;
     private float timerSeconds;
@@ -32,7 +34,8 @@ public class EndGameManager : MonoBehaviour
     private LevelButton levelButton;
     //private ConfirmPanel confirmPanel;
     private GameData gameData;
-   // private int level;
+    // private int level;
+    
 
     void Start ()
     {
@@ -40,6 +43,7 @@ public class EndGameManager : MonoBehaviour
         board = FindObjectOfType<Board>();
         levelButton = FindObjectOfType<LevelButton>();
         gameData = FindObjectOfType<GameData>();
+        
         SetGameType();
         SetupGame();
 
@@ -68,12 +72,14 @@ public class EndGameManager : MonoBehaviour
         {
             movesLabel.SetActive(true);
             timeLabel.SetActive(false);
+           
         }
         else
         {
             timerSeconds = 1;
             movesLabel.SetActive(false);
             timeLabel.SetActive(true);
+           
         }
         counter.text = "" + currentCounterValue;
     }
@@ -84,6 +90,28 @@ public class EndGameManager : MonoBehaviour
         {
             currentCounterValue--;
             counter.text = "" + currentCounterValue;
+
+            if (requirements.gameType == GameType.Moves)
+            {              
+                if (currentCounterValue <= 5) // анимация когда заканчиваются ходы или время
+                {
+                    counterAnimation.GetComponent<Animation>().Play("Counter");
+                   // Color color = counter.color;
+                   // float newAlpha = color.a * 0.4f;
+                    counter.color = new Color(255, 0, 0, 255);
+                }
+            }
+            else
+            {              
+                if (currentCounterValue <= 12) // анимация когда заканчиваются ходы или время
+                {
+                    counterAnimation.GetComponent<Animation>().Play("Counter");
+                    counter.color = new Color(255, 0, 0, 255);
+                }
+            }
+
+
+
             if (currentCounterValue <= 0) //если кончились ходы
             {
                 LoseGame();
@@ -100,6 +128,7 @@ public class EndGameManager : MonoBehaviour
         counter.text = "" + currentCounterValue;
         FadePanelController fade = FindObjectOfType<FadePanelController>();
         fade.GameOver();
+        Music.PlaySound("Win");
 
     }
 
@@ -139,8 +168,8 @@ public class EndGameManager : MonoBehaviour
         counter.text = "" + currentCounterValue;
         FadePanelController fade = FindObjectOfType<FadePanelController>();
         fade.GameOver(); // вылет панели анимация
-        
-        
+        Music.PlaySound("Lose");
+
     }
 
 	void Update ()

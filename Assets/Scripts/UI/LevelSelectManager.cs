@@ -24,16 +24,16 @@ public class LevelSelectManager : MonoBehaviour
         }
 
         // что бы при запуске открывались туры, до которых дошёл
-        //if (gameData != null)
-        //{
-        //    for (int i = 0; i < gameData.saveData.isActiv.Length; i++)
-        //    {
-        //        if(gameData.saveData.isActiv[i])
-        //        {
-        //            currentLevel = i;
-        //        }
-        //    }
-        //}
+        if (gameData != null)
+        {
+            for (int i = 0; i < gameData.saveData.isActiv.Length; i++)
+            {
+                if (gameData.saveData.isActiv[i])
+                {
+                    currentLevel = i;
+                }
+            }
+        }
 
         page = (int)Mathf.Floor(currentLevel / 9);
         currentPanel = panels[page];

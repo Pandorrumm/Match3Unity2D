@@ -14,7 +14,7 @@ public class BackToSplashScene : MonoBehaviour
     public void WinOK()
     {
 
-        if(gameData != null && gameData.saveData.isActiv.Length < 98)
+        if(gameData != null && board.level < 98)
         {
             gameData.saveData.isActiv[board.level + 1] = true;
             gameData.Save();

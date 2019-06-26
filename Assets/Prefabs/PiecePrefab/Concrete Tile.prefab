@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4217850842105234}
   - component: {fileID: 212297103736993510}
   - component: {fileID: 114564942385189288}
+  - component: {fileID: 114221665606952386}
   m_Layer: 0
   m_Name: Concrete Tile
   m_TagString: Concrete
@@ -41,6 +42,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114221665606952386
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1697140520524828}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2986a47f6afbab14a9be240a0a935624, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitPoints: 2
+  concreteDestroy: {fileID: 1266465641045572, guid: eb9a04461a1c4fa4a8a01df8567aeac6,
+    type: 2}
+  hitSprite: {fileID: 21300000, guid: 5098d878e62ebbb4dba9c8a44eaeeb41, type: 3}
 --- !u!114 &114564942385189288
 MonoBehaviour:
   m_ObjectHideFlags: 1

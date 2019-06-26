@@ -82,13 +82,13 @@ MonoBehaviour:
     tileKind: 3
   - x: 1
     y: 2
-    tileKind: 3
+    tileKind: 5
   - x: 5
     y: 5
     tileKind: 3
   - x: 5
     y: 2
-    tileKind: 3
+    tileKind: 5
   - x: 3
     y: 2
     tileKind: 3
@@ -115,11 +115,11 @@ MonoBehaviour:
     gameType: 0
     counterValue: 35
   levelGoals:
-  - numberNeeded: 45
-    numberCollected: 29
+  - numberNeeded: 15
+    numberCollected: 0
     goalSprite: {fileID: 21300000, guid: 5b1b528ceb9779844b8963cabbd21aa6, type: 3}
     matchValue: Red
   - numberNeeded: 5
-    numberCollected: 4
+    numberCollected: 0
     goalSprite: {fileID: 21300000, guid: f68659a671d5be743a42eaf36c6125d2, type: 3}
     matchValue: Lock

@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\BaseGameScripts\GoalManager.cs" />
     <Compile Include="Assets\Scripts\BaseGameScripts\GoalPanel.cs" />
     <Compile Include="Assets\Scripts\BaseGameScripts\HintManager.cs" />
+    <Compile Include="Assets\Scripts\BaseGameScripts\Music.cs" />
     <Compile Include="Assets\Scripts\BaseGameScripts\Puzir.cs" />
     <Compile Include="Assets\Scripts\BaseGameScripts\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\BaseGameScripts\SoundManager.cs" />

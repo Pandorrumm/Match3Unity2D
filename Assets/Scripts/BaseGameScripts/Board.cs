@@ -55,20 +55,25 @@ public class Board : MonoBehaviour
     public GameObject breakableTilePrefab;
     public GameObject lockTilePrefab;
     public GameObject concreteTilePrefab;
-  //  public GameObject concreteDestroy;
+
+    //public GameObject concreteDestroy;
+
     public GameObject slimePiecePrefab; 
     public GameObject[] circle;
     public GameObject destroyEffect;
-   // private BrickDamage brickDamage;
+
+    private BrickDamage brickDamage;
 
     [Header("Layout")] //расположение
     public GameObject[,] allCircle;      
-    public TileType[] boardLayout; //расположение, для Blank Spaces 
+    public TileType[] boardLayout; //расположение для blank, lock и др.
     private bool[,] blankSpaces;
     public BackgroundTile[,] lockTiles;
     private BackgroundTile[,] breakableTiles;
     private BackgroundTile[,] concreteTiles;
+
    // private BackgroundTileConcrete[,] concreteTiles;
+
     private BackgroundTile[,] slimeTiles;
 
     [Header("Match Stuff")]
@@ -114,15 +119,17 @@ public class Board : MonoBehaviour
     void Start()
     {
         //anim = GetComponent<Animator>();
-       // brickDamage = FindObjectOfType<BrickDamage>();
+        brickDamage = FindObjectOfType<BrickDamage>();
         goalManager = FindObjectOfType<GoalManager>();
         soundManager = FindObjectOfType<SoundManager>();
         scoreManager = FindObjectOfType<ScoreManager>();
         breakableTiles = new BackgroundTile[width, height];
         lockTiles = new BackgroundTile[width, height];
         concreteTiles = new BackgroundTile[width, height];
+
        // concreteTiles = new BackgroundTileConcrete[width, height];
         slimeTiles = new BackgroundTile[width, height];
+
         findMatches = FindObjectOfType<FindMatches>();
         blankSpaces = new bool[width, height];
         allCircle = new GameObject[width, height];
@@ -205,6 +212,7 @@ public class Board : MonoBehaviour
                 ////
 
                 GameObject tile = Instantiate(concreteTilePrefab, tempPosition, Quaternion.identity);
+                // concreteTiles[boardLayout[i].x, boardLayout[i].y] = tile.GetComponent<BackgroundTileConcrete>();
                 concreteTiles[boardLayout[i].x, boardLayout[i].y] = tile.GetComponent<BackgroundTile>();
             }
         }
@@ -215,7 +223,7 @@ public class Board : MonoBehaviour
         //смотрим на все плитки 
         for (int i = 0; i < boardLayout.Length; i++)
         {
-            //если плитка - "закрытая которая"
+            //если плитка - "Slime"
             if (boardLayout[i].tileKind == TileKind.Slime)
             {
                 
@@ -543,6 +551,7 @@ public class Board : MonoBehaviour
                 if (breakableTiles[column, row].hitPoints <= 0)
                 {
                     breakableTiles[column, row] = null;
+                    Music.PlaySound("Breakable");
                 }
             }
             
@@ -554,6 +563,7 @@ public class Board : MonoBehaviour
                 if (lockTiles[column, row].hitPoints <= 0)
                 {
                     lockTiles[column, row] = null;
+                    Music.PlaySound("Lock");
                 }
             }
 
@@ -624,7 +634,9 @@ public class Board : MonoBehaviour
                
                 if (concreteTiles[column - 1, row].hitPoints <= 0)
                 {
-                    concreteTiles[column - 1, row] = null;                   
+                    concreteTiles[column - 1, row] = null;
+                    Music.PlaySound("Concrete Destroy");
+
                 }
             }
         }
@@ -637,6 +649,7 @@ public class Board : MonoBehaviour
                 if (concreteTiles[column + 1, row].hitPoints <= 0)
                 {
                     concreteTiles[column + 1 , row] = null;
+                    Music.PlaySound("Concrete Destroy");
                 }
             }
         }
@@ -649,6 +662,7 @@ public class Board : MonoBehaviour
                 if (concreteTiles[column, row - 1].hitPoints <= 0)
                 {
                     concreteTiles[column, row - 1] = null;
+                    Music.PlaySound("Concrete Destroy");
                 }
             }
         }
@@ -661,9 +675,11 @@ public class Board : MonoBehaviour
                 if (concreteTiles[column, row + 1].hitPoints <= 0)
                 {
                     concreteTiles[column, row + 1] = null;
+                    Music.PlaySound("Concrete Destroy");
                 }
             }
         }
+        
     }
 
     private void DamageSlime(int column, int row) // урон плиткам slime
@@ -675,7 +691,8 @@ public class Board : MonoBehaviour
                 slimeTiles[column - 1, row].TakeDamage(1);
                 if (slimeTiles[column - 1, row].hitPoints <= 0)
                 {
-                    slimeTiles[column - 1, row] = null;                   
+                    slimeTiles[column - 1, row] = null;
+                    Music.PlaySound("Slim");
                 }
                 makeSlime = false;
             }
@@ -688,6 +705,7 @@ public class Board : MonoBehaviour
                 if (slimeTiles[column + 1, row].hitPoints <= 0)
                 {
                     slimeTiles[column + 1, row] = null;
+                    Music.PlaySound("Slim");
                 }
                 makeSlime = false;
             }
@@ -700,6 +718,7 @@ public class Board : MonoBehaviour
                 if (slimeTiles[column, row - 1].hitPoints <= 0)
                 {
                     slimeTiles[column, row - 1] = null;
+                    Music.PlaySound("Slim");
 
                 }
                 makeSlime = false;
@@ -714,7 +733,7 @@ public class Board : MonoBehaviour
                 {
 
                     slimeTiles[column, row + 1] = null;
-                  
+                    Music.PlaySound("Slim");
 
                 }
                 makeSlime = false;
@@ -917,6 +936,9 @@ public class Board : MonoBehaviour
                     Destroy(allCircle[newX + (int)adjacent.x, newY + (int)adjacent.y]);
                     Vector2 tempPosition = new Vector2(newX + (int)adjacent.x, newY + (int)adjacent.y);
                     GameObject tile = Instantiate(slimePiecePrefab, tempPosition, Quaternion.identity);
+
+                    Music.PlaySound("Slim Start");
+
                     slimeTiles[newX + (int)adjacent.x, newY + (int)adjacent.y] = tile.GetComponent<BackgroundTile>();
                     slime = true;
                 }

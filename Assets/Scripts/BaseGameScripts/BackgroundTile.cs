@@ -52,6 +52,7 @@ public class BackgroundTile : MonoBehaviour
         // // получить текущее альфа-значение цвета и разрезать его пополам
         // float newAlpha = color.a * 0.4f;
         // sprite.color = new Color(color.r, color.g, color.b, newAlpha);
+        Music.PlaySound("Concrete Damage");
         GetComponent<SpriteRenderer>().sprite = hitSprite;
     }
 
