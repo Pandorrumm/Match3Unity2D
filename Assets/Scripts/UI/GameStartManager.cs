@@ -8,16 +8,23 @@ public class GameStartManager : MonoBehaviour
     public GameObject levelPanel;
     public GameObject trainingPanel;
     private GameData gameData;
-	
-	void Start ()
+    
+
+    void Start ()
     {
+        //if (StartGamePanel == true)
+        //{
+        //    Music.PlaySound("StartGameFon)");
+        //}
         gameData = FindObjectOfType<GameData>();
+
         startPanel.SetActive(true);        
         levelPanel.SetActive(false);
     }
 	
 	public void PlayGame()
     {
+        Music.PlaySound("Button");
         startPanel.SetActive(false);
         trainingPanel.SetActive(true);
        // levelPanel.SetActive(true);
@@ -25,7 +32,8 @@ public class GameStartManager : MonoBehaviour
     }
 
     public void Next()
-    {       
+    {
+        Music.PlaySound("Button");
         trainingPanel.SetActive(false);
          levelPanel.SetActive(true);
         // gameData.Load();
@@ -45,6 +53,9 @@ public class GameStartManager : MonoBehaviour
 
 	void Update ()
     {
-		
-	}
+        if (startPanel == true)
+        {
+            MusicStartPanel.PlaySound("StartGameFon)");
+        }
+    }
 }

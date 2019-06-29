@@ -21,6 +21,8 @@ public class GameData : MonoBehaviour
     private EndGameManager endGameManager;
     private Board board;
 
+    
+
     void Start()
     {
         endGameManager = FindObjectOfType<EndGameManager>();
@@ -83,6 +85,7 @@ public class GameData : MonoBehaviour
             //FileStream file = File.Open(Application.persistentDataPath + "/player.fun", FileMode.Open);
             saveData = formatter.Deserialize(file) as SaveData;
             file.Close();
+            //return saveData; 
             Debug.Log("Загрузили");
         }
         else 
@@ -96,21 +99,21 @@ public class GameData : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        Save();
-    }
+    //private void OnDisable()
+    //{
+    //    Save();
+    //}
 
-    public void OnApplicationQuit() //При выходе из приложения
-    {
-        Application.Quit();
-        Save();
-        Debug.Log("Вышли из игры");
-    }
-   
+    //public void OnApplicationQuit() //При выходе из приложения
+    //{
+    //    Application.Quit();
+    //    Save();
+    //    Debug.Log("Вышли из игры");
+    //}
+
 
     void Update ()
     {
-		
-	}
+      
+    }
 }

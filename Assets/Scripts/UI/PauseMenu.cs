@@ -43,6 +43,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Continue()
     {
+        Music.PlaySound("Button");
         GameState holder1 = board.currentState;
         board.currentState = GameState.move;
         pausePanel.SetActive(false);
@@ -79,9 +80,10 @@ public class PauseMenu : MonoBehaviour
 
     public void QuitGame()
     {
-        
+        Music.PlaySound("Button");
         SceneManager.LoadScene("Splash");
-        
+        Music.PlaySound("StartGameFon)");
+
 
     }
 }

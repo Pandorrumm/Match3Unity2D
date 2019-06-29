@@ -378,6 +378,7 @@ public class Circle : MonoBehaviour
         if (!isColumnBomb && !isColorBomb && !isAdjacentBomb)
         {
             isRowBomb = true;
+            Music.PlaySound("ColumnRow");
             GameObject arrow = Instantiate(rowArrow, transform.position, Quaternion.identity);
             arrow.transform.parent = this.transform;
         }
@@ -388,6 +389,7 @@ public class Circle : MonoBehaviour
         if (!isRowBomb && !isColorBomb && !isAdjacentBomb)
         {
             isColumnBomb = true;
+            Music.PlaySound("ColumnRow");
             GameObject arrow = Instantiate(columnArrow, transform.position, Quaternion.identity);
             arrow.transform.parent = this.transform;
         }
@@ -398,6 +400,7 @@ public class Circle : MonoBehaviour
         if (!isColumnBomb && !isRowBomb && !isAdjacentBomb)
         {
             isColorBomb = true;
+            Music.PlaySound("ColorBomb");
             GameObject color = Instantiate(colorBomb, transform.position, Quaternion.identity);
             color.transform.parent = this.transform;
             this.gameObject.tag = "Color";
@@ -409,6 +412,7 @@ public class Circle : MonoBehaviour
         if (!isColumnBomb && !isColorBomb && !isRowBomb)
         {
             isAdjacentBomb = true;
+            Music.PlaySound("AdjacentBomb");
             GameObject marker = Instantiate(adjacentMarker, transform.position, Quaternion.identity);
             marker.transform.parent = this.transform;
         }

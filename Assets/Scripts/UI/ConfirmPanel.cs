@@ -58,11 +58,13 @@ public class ConfirmPanel : MonoBehaviour
 
    public void Cancel() // кнопка крестик
     {
+        Music.PlaySound("Button");
         this.gameObject.SetActive(false);
     }
 
     public void Play() //кнопка плей
     {
+        Music.PlaySound("Button");
         PlayerPrefs.SetInt("Current Level", level - 1);
         SceneManager.LoadScene(levelToLoad);
     }

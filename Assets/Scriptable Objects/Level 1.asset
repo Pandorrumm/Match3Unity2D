@@ -52,36 +52,36 @@ MonoBehaviour:
     tileKind: 1
   - x: 3
     y: 3
-    tileKind: 0
+    tileKind: 5
   - x: 4
     y: 5
-    tileKind: 0
+    tileKind: 5
   - x: 2
     y: 2
-    tileKind: 2
+    tileKind: 5
   - x: 1
     y: 4
-    tileKind: 2
+    tileKind: 5
   - x: 5
     y: 2
-    tileKind: 3
+    tileKind: 5
   - x: 3
     y: 6
-    tileKind: 0
+    tileKind: 5
   - x: 2
-    y: 2
-    tileKind: 0
+    y: 5
+    tileKind: 5
   circle:
   - {fileID: 1673749335803036, guid: e8847766a0d2d734aa046936caa28d89, type: 2}
   - {fileID: 1319267572265458, guid: 2da77d918de16a84b979329e1b81fdf0, type: 2}
   - {fileID: 1359277176997896, guid: 74a9527e9332e2046ae2dc8c0bd29096, type: 2}
   - {fileID: 1333517241104996, guid: d8ddf58b23940b24e83515de1f001326, type: 2}
-  scoreGoals: 2c010000e8030000dc050000
+  scoreGoals: c8000000200300006a040000
   endGameRequirements:
     gameType: 0
-    counterValue: 2
+    counterValue: 15
   levelGoals:
-  - numberNeeded: 3
-    numberCollected: 0
+  - numberNeeded: 10
+    numberCollected: 3
     goalSprite: {fileID: 21300000, guid: 5b1b528ceb9779844b8963cabbd21aa6, type: 3}
     matchValue: Red

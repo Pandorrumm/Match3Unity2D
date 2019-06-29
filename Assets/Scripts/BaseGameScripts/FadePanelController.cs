@@ -9,6 +9,7 @@ public class FadePanelController : MonoBehaviour
 
     public void OK()
     {
+        Music.PlaySound("Button");
         if (panelAnim != null && gameInfoAnim != null)
         {
             panelAnim.SetBool("Out", true);

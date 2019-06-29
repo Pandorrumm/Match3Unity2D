@@ -60,7 +60,7 @@ MonoBehaviour:
     gameType: 1
     counterValue: 60
   levelGoals:
-  - numberNeeded: 20
+  - numberNeeded: 15
     numberCollected: 0
     goalSprite: {fileID: 21300000, guid: a080e6fb983fb1d4d87441b63b4fceb4, type: 3}
     matchValue: Pink

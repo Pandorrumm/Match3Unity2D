@@ -93,6 +93,7 @@ public class LevelButton : MonoBehaviour
 
     public void ConfirmPanel(int level)
     {
+        Music.PlaySound("Button");
         confirmPanel.GetComponent<ConfirmPanel>().level = level;
         confirmPanel.SetActive(true);
     }

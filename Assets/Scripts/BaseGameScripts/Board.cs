@@ -56,13 +56,15 @@ public class Board : MonoBehaviour
     public GameObject lockTilePrefab;
     public GameObject concreteTilePrefab;
 
-    //public GameObject concreteDestroy;
+    public GameObject concreteDestroy;
+    public GameObject slimeDestroy;
+    public GameObject lockDestroy;
 
     public GameObject slimePiecePrefab; 
     public GameObject[] circle;
     public GameObject destroyEffect;
 
-    private BrickDamage brickDamage;
+   
 
     [Header("Layout")] //расположение
     public GameObject[,] allCircle;      
@@ -71,9 +73,6 @@ public class Board : MonoBehaviour
     public BackgroundTile[,] lockTiles;
     private BackgroundTile[,] breakableTiles;
     private BackgroundTile[,] concreteTiles;
-
-   // private BackgroundTileConcrete[,] concreteTiles;
-
     private BackgroundTile[,] slimeTiles;
 
     [Header("Match Stuff")]
@@ -90,7 +89,6 @@ public class Board : MonoBehaviour
     private bool makeSlime = true;
 
    // private Animator anim;
-
 
     private void Awake()
     {
@@ -115,21 +113,17 @@ public class Board : MonoBehaviour
         }
     }
 
-
     void Start()
     {
         //anim = GetComponent<Animator>();
-        brickDamage = FindObjectOfType<BrickDamage>();
+       
         goalManager = FindObjectOfType<GoalManager>();
         soundManager = FindObjectOfType<SoundManager>();
         scoreManager = FindObjectOfType<ScoreManager>();
         breakableTiles = new BackgroundTile[width, height];
         lockTiles = new BackgroundTile[width, height];
-        concreteTiles = new BackgroundTile[width, height];
-
-       // concreteTiles = new BackgroundTileConcrete[width, height];
+        concreteTiles = new BackgroundTile[width, height];       
         slimeTiles = new BackgroundTile[width, height];
-
         findMatches = FindObjectOfType<FindMatches>();
         blankSpaces = new bool[width, height];
         allCircle = new GameObject[width, height];
@@ -562,6 +556,7 @@ public class Board : MonoBehaviour
                 
                 if (lockTiles[column, row].hitPoints <= 0)
                 {
+                    Instantiate(lockDestroy, lockTiles[column, row].transform.position, Quaternion.identity);
                     lockTiles[column, row] = null;
                     Music.PlaySound("Lock");
                 }
@@ -634,9 +629,10 @@ public class Board : MonoBehaviour
                
                 if (concreteTiles[column - 1, row].hitPoints <= 0)
                 {
+                    Instantiate(concreteDestroy, concreteTiles[column - 1, row].transform.position, Quaternion.identity);
                     concreteTiles[column - 1, row] = null;
                     Music.PlaySound("Concrete Destroy");
-
+                    
                 }
             }
         }
@@ -648,8 +644,10 @@ public class Board : MonoBehaviour
 
                 if (concreteTiles[column + 1, row].hitPoints <= 0)
                 {
+                    Instantiate(concreteDestroy, concreteTiles[column + 1, row].transform.position, Quaternion.identity);
                     concreteTiles[column + 1 , row] = null;
                     Music.PlaySound("Concrete Destroy");
+                    
                 }
             }
         }
@@ -661,8 +659,10 @@ public class Board : MonoBehaviour
 
                 if (concreteTiles[column, row - 1].hitPoints <= 0)
                 {
+                    Instantiate(concreteDestroy, concreteTiles[column, row - 1].transform.position, Quaternion.identity);
                     concreteTiles[column, row - 1] = null;
                     Music.PlaySound("Concrete Destroy");
+                    
                 }
             }
         }
@@ -674,8 +674,10 @@ public class Board : MonoBehaviour
 
                 if (concreteTiles[column, row + 1].hitPoints <= 0)
                 {
+                    Instantiate(concreteDestroy, concreteTiles[column, row + 1].transform.position, Quaternion.identity);
                     concreteTiles[column, row + 1] = null;
                     Music.PlaySound("Concrete Destroy");
+                    
                 }
             }
         }
@@ -691,6 +693,7 @@ public class Board : MonoBehaviour
                 slimeTiles[column - 1, row].TakeDamage(1);
                 if (slimeTiles[column - 1, row].hitPoints <= 0)
                 {
+                    Instantiate(slimeDestroy, slimeTiles[column - 1, row].transform.position, Quaternion.identity);
                     slimeTiles[column - 1, row] = null;
                     Music.PlaySound("Slim");
                 }
@@ -704,6 +707,7 @@ public class Board : MonoBehaviour
                 slimeTiles[column + 1, row].TakeDamage(1);
                 if (slimeTiles[column + 1, row].hitPoints <= 0)
                 {
+                    Instantiate(slimeDestroy, slimeTiles[column + 1, row].transform.position, Quaternion.identity);
                     slimeTiles[column + 1, row] = null;
                     Music.PlaySound("Slim");
                 }
@@ -717,6 +721,7 @@ public class Board : MonoBehaviour
                 slimeTiles[column, row - 1].TakeDamage(1);
                 if (slimeTiles[column, row - 1].hitPoints <= 0)
                 {
+                    Instantiate(slimeDestroy, slimeTiles[column, row - 1].transform.position, Quaternion.identity);
                     slimeTiles[column, row - 1] = null;
                     Music.PlaySound("Slim");
 
@@ -731,7 +736,7 @@ public class Board : MonoBehaviour
                 slimeTiles[column, row + 1].TakeDamage(1);
                 if (slimeTiles[column, row + 1].hitPoints <= 0)
                 {
-
+                    Instantiate(slimeDestroy, slimeTiles[column, row + 1].transform.position, Quaternion.identity);
                     slimeTiles[column, row + 1] = null;
                     Music.PlaySound("Slim");
 
@@ -869,7 +874,7 @@ public class Board : MonoBehaviour
             StartCoroutine(ShuffleBoard()); // перемешиваем круги на доске
             Debug.Log("НЕТ ХОДОВ!!");
         }
-        yield return new WaitForSeconds(refillDelay);// сколько ждать, что бы ходить дальше после взрывов 
+        //yield return new WaitForSeconds(refillDelay);// сколько ждать, что бы ходить дальше после взрывов 
 
         if (currentState != GameState.pause)
         {
