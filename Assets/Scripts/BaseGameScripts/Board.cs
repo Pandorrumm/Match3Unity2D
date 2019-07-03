@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GoogleMobileAds.Api;
 
 public enum GameState //состояние игры
 {
@@ -88,7 +89,13 @@ public class Board : MonoBehaviour
     private GoalManager goalManager;
     private bool makeSlime = true;
 
-   // private Animator anim;
+    // private Animator anim;
+   
+   // для рекламы 
+    public string AppID;
+    public string BannerAdUnitID;
+    private BannerView bannerView;
+    //
 
     private void Awake()
     {
@@ -129,6 +136,11 @@ public class Board : MonoBehaviour
         allCircle = new GameObject[width, height];
         SetUp();
         currentState = GameState.pause;
+
+        //реклама
+        MobileAds.Initialize(AppID);
+        bannerView = new BannerView(BannerAdUnitID, AdSize.Banner, AdPosition.Bottom);
+        bannerView.LoadAd(new AdRequest.Builder().Build());
     }
 
     public void GenerateBlankSpaces()
@@ -589,6 +601,8 @@ public class Board : MonoBehaviour
             Destroy(allCircle[column, row], .3f);
             scoreManager.IncreaseScore(basePieceValue * streakValue);
             allCircle[column, row] = null;
+            Music.PlaySound("DestroyCircle");
+
 
         }
     }

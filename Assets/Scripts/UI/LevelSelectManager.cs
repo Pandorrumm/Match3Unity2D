@@ -68,26 +68,26 @@ public class LevelSelectManager : MonoBehaviour
 
     public void PageRight() // стрелка в право
     {
-        Music.PlaySound("Button");
+       // Music.PlaySound("Button_1");
         if (page < panels.Length - 1)
         {
-
-            currentPanel.SetActive(false);
+            
+            currentPanel.SetActive(false);           
             page++;
             currentPanel = panels[page];
             currentPanel.SetActive(true);
             LeftButton.SetActive(true);
         }
+        
     }
 
     public void PageLeft()
     {
-        Music.PlaySound("Button");
+      //  Music.PlaySound("Button_1");
         if (page > 0)
-        {          
+        {            
             currentPanel.SetActive(false);
             page--;
-
             currentPanel = panels[page];
             currentPanel.SetActive(true);
             if (page == 0 && currentPanel == panels[0])
@@ -95,11 +95,12 @@ public class LevelSelectManager : MonoBehaviour
                 LeftButton.SetActive(false);
             }
         }
+        
     }
 
     public void QuitGame()
     {
-        Music.PlaySound("Button");
+       // Music.PlaySound("Button_1");
         gameData.Save();
         Application.Quit();        
         Debug.Log("Вышли из игры");

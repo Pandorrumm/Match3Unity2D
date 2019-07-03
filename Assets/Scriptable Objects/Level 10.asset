@@ -42,7 +42,7 @@ MonoBehaviour:
     gameType: 1
     counterValue: 120
   levelGoals:
-  - numberNeeded: 25
+  - numberNeeded: 35
     numberCollected: 0
     goalSprite: {fileID: 21300000, guid: 3b76d6bc184c70843992357a734ac98c, type: 3}
     matchValue: Orange Rakuska

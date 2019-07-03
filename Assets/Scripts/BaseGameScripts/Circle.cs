@@ -230,9 +230,8 @@ public class Circle : MonoBehaviour
         if (Mathf.Abs(finalTouchPosition.y - firstTouchPosition.y) > swipeResist ||
             Mathf.Abs(finalTouchPosition.x - firstTouchPosition.x) > swipeResist)
         {
-            board.currentState = GameState.wait;
-            swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y,
-            finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;          
+           // board.currentState = GameState.wait; // типа ждать перед следующим ходом, когда все выпадут сверху кругляшки
+            swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;          
             MovePieces();           
             board.currentCircle = this;
         }

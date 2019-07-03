@@ -19,7 +19,7 @@ public class MusicStartPanel : MonoBehaviour {
         switch (clip)
         {
             case "StartGameFon)":
-                myMusicStartPanel.PlayOneShot(musicStartPanel);
+              //  myMusicStartPanel.PlayOneShot(musicStartPanel);
                 break;
 
         }

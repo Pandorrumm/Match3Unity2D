@@ -96,7 +96,7 @@ MonoBehaviour:
     gameType: 1
     counterValue: 110
   levelGoals:
-  - numberNeeded: 15
+  - numberNeeded: 30
     numberCollected: 24
     goalSprite: {fileID: 21300000, guid: 978d6fb1be8b13646821e52dc859c156, type: 3}
     matchValue: Gray

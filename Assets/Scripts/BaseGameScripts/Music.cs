@@ -8,7 +8,7 @@ public class Music : MonoBehaviour {
   //  public Slider volume;
     static AudioSource myMusic;
     public static AudioClip concretDamage, concreteDestroy, lockTile, slim, slimStart, 
-                            breakable, lose, win, clickButton, colorBomb, adjacentBomb, columnRowBomb, musicStartPanel;
+                            breakable, lose, win, clickButton, colorBomb, adjacentBomb, columnRowBomb, musicStartPanel, destroyCircle;
 
    
 
@@ -22,11 +22,13 @@ public class Music : MonoBehaviour {
         breakable = Resources.Load<AudioClip>("Breakable");
         lose = Resources.Load<AudioClip>("Lose");
         win = Resources.Load<AudioClip>("Win");
-        clickButton = Resources.Load<AudioClip>("Button");
+        // clickButton = Resources.Load<AudioClip>("Button");
+        clickButton = Resources.Load<AudioClip>("Button_1");
         colorBomb = Resources.Load<AudioClip>("ColorBomb");
         adjacentBomb = Resources.Load<AudioClip>("AdjacentBomb");
         columnRowBomb = Resources.Load<AudioClip>("ColumnRow");
         musicStartPanel = Resources.Load<AudioClip>("StartGameFon)");
+        destroyCircle = Resources.Load<AudioClip>("DestroyCircle");
 
 
         myMusic = GetComponent<AudioSource>();
@@ -66,7 +68,7 @@ public class Music : MonoBehaviour {
             case "Win":
                 myMusic.PlayOneShot(win);
                 break;
-            case "Button":
+            case "Button_1":
                 myMusic.PlayOneShot(clickButton);
                 break;
             case "ColorBomb":
@@ -81,8 +83,9 @@ public class Music : MonoBehaviour {
             case "StartGameFon)":
                 myMusic.PlayOneShot(musicStartPanel);
                 break;
-
-
+            case "DestroyCircle":
+                myMusic.PlayOneShot(destroyCircle);
+                break;
 
         }
     }

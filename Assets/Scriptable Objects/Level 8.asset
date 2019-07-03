@@ -34,12 +34,12 @@ MonoBehaviour:
   - {fileID: 1673749335803036, guid: e8847766a0d2d734aa046936caa28d89, type: 2}
   - {fileID: 1333517241104996, guid: d8ddf58b23940b24e83515de1f001326, type: 2}
   - {fileID: 1499334700140012, guid: 72d64279e01f57f4b8fa7badbf8edb09, type: 2}
-  scoreGoals: 5802000008070000b80b0000
+  scoreGoals: e8030000c4090000d80e0000
   endGameRequirements:
     gameType: 0
     counterValue: 25
   levelGoals:
-  - numberNeeded: 30
+  - numberNeeded: 35
     numberCollected: 0
     goalSprite: {fileID: 21300000, guid: ef5c08666a7acca4e9a27c9e14b41117, type: 3}
     matchValue: Violet Rakuska

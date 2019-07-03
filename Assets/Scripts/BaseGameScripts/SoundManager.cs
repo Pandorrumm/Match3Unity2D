@@ -19,13 +19,13 @@ public class SoundManager : MonoBehaviour
             else
             {
                 backGroundMusic.Play();
-                backGroundMusic.volume = 0.4f;
+                backGroundMusic.volume = 1f;
             }
         }
         else
         {
             backGroundMusic.Play();
-            backGroundMusic.volume = 0.4f;
+            backGroundMusic.volume = 1f;
         }
     }
 
@@ -39,7 +39,7 @@ public class SoundManager : MonoBehaviour
             }
             else
             {
-                backGroundMusic.volume = 0.4f;
+                backGroundMusic.volume = 1f;
             }
         }
     }
@@ -48,7 +48,7 @@ public class SoundManager : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("Sound"))
         {
-            if (PlayerPrefs.GetInt("Sound") == 0.5)
+            if (PlayerPrefs.GetInt("Sound") == 0.6)
             {
                 //choose a random number
                 int clipToPlay = Random.Range(0, destroyNoise.Length);

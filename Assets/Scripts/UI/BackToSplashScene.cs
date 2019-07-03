@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using GoogleMobileAds.Api;
 
 public class BackToSplashScene : MonoBehaviour
 {
     public string sceneToLoad;
     private GameData gameData;
     private Board board;
-    
 
-   // public GameObject startGamePanel;
-
+    public AdMobInterstitial ad; //реклама
+  
     public void WinOK()
     {
-        Music.PlaySound("Button");
+        ad.ShowAds();
+
+       // Music.PlaySound("Button");
         if (gameData != null && board.level < 98)
         {
             gameData.saveData.isActiv[board.level + 1] = true;
@@ -27,7 +29,8 @@ public class BackToSplashScene : MonoBehaviour
 	
     public void LoseOK()
     {
-        Music.PlaySound("Button");
+        ad.ShowAds();
+        // Music.PlaySound("Button");
         SceneManager.LoadScene(sceneToLoad);
         
         //startGamePanel.SetActive(false);

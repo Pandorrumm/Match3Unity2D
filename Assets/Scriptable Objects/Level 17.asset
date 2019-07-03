@@ -91,7 +91,7 @@ MonoBehaviour:
     numberCollected: 10
     goalSprite: {fileID: 21300000, guid: 118508e4fb5615d4a98fe4e26d725478, type: 3}
     matchValue: Concrete
-  - numberNeeded: 15
+  - numberNeeded: 30
     numberCollected: 25
     goalSprite: {fileID: 21300000, guid: a080e6fb983fb1d4d87441b63b4fceb4, type: 3}
     matchValue: Pink

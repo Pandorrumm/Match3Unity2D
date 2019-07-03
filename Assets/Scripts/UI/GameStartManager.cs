@@ -24,7 +24,7 @@ public class GameStartManager : MonoBehaviour
 	
 	public void PlayGame()
     {
-        Music.PlaySound("Button");
+       // Music.PlaySound("Button_1");
         startPanel.SetActive(false);
         trainingPanel.SetActive(true);
        // levelPanel.SetActive(true);
@@ -33,7 +33,7 @@ public class GameStartManager : MonoBehaviour
 
     public void Next()
     {
-        Music.PlaySound("Button");
+      //  Music.PlaySound("Button_1");
         trainingPanel.SetActive(false);
          levelPanel.SetActive(true);
         // gameData.Load();
@@ -53,9 +53,9 @@ public class GameStartManager : MonoBehaviour
 
 	void Update ()
     {
-        if (startPanel == true)
-        {
-            MusicStartPanel.PlaySound("StartGameFon)");
-        }
+        //if (startPanel == true)
+        //{
+        //    MusicStartPanel.PlaySound("StartGameFon)");
+        //}
     }
 }
