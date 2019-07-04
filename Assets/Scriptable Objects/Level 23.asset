@@ -95,7 +95,7 @@ MonoBehaviour:
   - {fileID: 1190178853279326, guid: d96c3900473537c42982f9facc1cbac9, type: 2}
   - {fileID: 1292004112657398, guid: 654b816314b27cd4cb32ff93cda99c8f, type: 2}
   - {fileID: 1333517241104996, guid: d8ddf58b23940b24e83515de1f001326, type: 2}
-  scoreGoals: e8030000c4090000d80e0000
+  scoreGoals: 20030000980800007a0d0000
   endGameRequirements:
     gameType: 0
     counterValue: 20
@@ -104,7 +104,7 @@ MonoBehaviour:
     numberCollected: 4
     goalSprite: {fileID: 21300000, guid: f68659a671d5be743a42eaf36c6125d2, type: 3}
     matchValue: Lock
-  - numberNeeded: 20
+  - numberNeeded: 25
     numberCollected: 21
     goalSprite: {fileID: 21300000, guid: c4f77e9f8af13b449a93c18368032af0, type: 3}
     matchValue: Orange

@@ -46,7 +46,7 @@ MonoBehaviour:
   - {fileID: 1673749335803036, guid: e8847766a0d2d734aa046936caa28d89, type: 2}
   - {fileID: 1244611654818998, guid: 3234cfc5e8aa36d4780256918a80bcb5, type: 2}
   - {fileID: 1333517241104996, guid: d8ddf58b23940b24e83515de1f001326, type: 2}
-  scoreGoals: 58020000a406000098080000
+  scoreGoals: 20030000980800007a0d0000
   endGameRequirements:
     gameType: 0
     counterValue: 25

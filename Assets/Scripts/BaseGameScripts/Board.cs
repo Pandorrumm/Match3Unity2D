@@ -762,7 +762,7 @@ public class Board : MonoBehaviour
 
     private IEnumerator DecreaseRowCo2() //падение вниз circle Не в пустоты
     {
-        yield return new WaitForSeconds(1f); // задержка кругов при падении вниз после взрыва кругов под ними
+        yield return new WaitForSeconds(0.8f); // задержка кругов при падении вниз после взрыва кругов под ними
 
         for (int i = 0; i < width; i++)
         {

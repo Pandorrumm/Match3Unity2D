@@ -24,11 +24,20 @@ public class GameStartManager : MonoBehaviour
 	
 	public void PlayGame()
     {
-       // Music.PlaySound("Button_1");
-        startPanel.SetActive(false);
-        trainingPanel.SetActive(true);
-       // levelPanel.SetActive(true);
-       // gameData.Load();
+        if (!gameData.saveData.isActiv[7]) // что бы тренировочное меню появлялось первые 7 уровней 
+        {
+            // Music.PlaySound("Button_1");
+            startPanel.SetActive(false);
+            trainingPanel.SetActive(true);
+            // levelPanel.SetActive(true);
+            // gameData.Load();
+        }
+        else
+        {
+            startPanel.SetActive(false);
+            levelPanel.SetActive(true);
+        }
+
     }
 
     public void Next()

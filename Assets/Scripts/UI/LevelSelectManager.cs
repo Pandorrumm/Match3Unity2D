@@ -16,7 +16,11 @@ public class LevelSelectManager : MonoBehaviour
 
     void Start ()
     {
-        LeftButton.SetActive(false);
+        if (currentLevel < 9)
+        {
+            LeftButton.SetActive(false);
+        }
+        
 
         gameData = FindObjectOfType<GameData>();
 
@@ -45,11 +49,11 @@ public class LevelSelectManager : MonoBehaviour
 		
 	void Update ()
     {
-		if(currentLevel > 9 && page >= 1)
+		if(page >= 1)
         {
             LeftButton.SetActive(true);
         }
-        if (currentLevel > 90 && page == 10)
+        if (/*currentLevel > 90 && */page == 10)
         {
             RightButton.SetActive(false);
         }

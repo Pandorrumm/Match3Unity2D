@@ -14,27 +14,32 @@ public class BackToSplashScene : MonoBehaviour
   
     public void WinOK()
     {
+        
         ad.ShowAds();
-
-       // Music.PlaySound("Button");
+        
+        // Music.PlaySound("Button");
         if (gameData != null && board.level < 98)
         {
             gameData.saveData.isActiv[board.level + 1] = true;
             gameData.Save();
         }
         SceneManager.LoadScene(sceneToLoad);
-        
+
         //startManager.startPanel.SetActive(false);
     }
+
+  
 	
     public void LoseOK()
     {
         ad.ShowAds();
-        // Music.PlaySound("Button");
+       
         SceneManager.LoadScene(sceneToLoad);
-        
+
         //startGamePanel.SetActive(false);
     }
+
+   
 
     void Start()
     {

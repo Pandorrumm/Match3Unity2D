@@ -63,12 +63,17 @@
   <ItemGroup>
     <Compile Include="Assets\GoogleMobileAds\Editor\PListProcessor.cs" />
     <None Include="Assets\PlayServicesResolver\Editor\play-services-resolver_v1.2.102.0.txt" />
-    <None Include="Assets\GoogleMobileAds\Editor\Plugins\Android\GoogleMobileAdsPlugin\AndroidManifest.xml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Assets\GoogleMobileAds\Editor\GoogleMobileAdsDependencies.xml">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Assets\GoogleMobileAds\Editor\Plugins\Android\GoogleMobileAdsPlugin\AndroidManifest.xml" />
+    <None Include="Assets\GoogleMobileAds\Editor\GoogleMobileAdsDependencies.xml" />
+    <Reference Include="UnityEditor.StandardEvents">
+      <HintPath>D:/Unity/Проекты/Match3/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro.Editor">
+      <HintPath>D:/Unity/Проекты/Match3/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PackageManagerUI.Editor">
+      <HintPath>D:/Unity/Проекты/Match3/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>D:/Unity/Проекты/Match3/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>

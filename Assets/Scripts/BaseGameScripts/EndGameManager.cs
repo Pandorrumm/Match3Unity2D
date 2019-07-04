@@ -124,7 +124,8 @@ public class EndGameManager : MonoBehaviour
         //youWinPanel.SetActive(true);
         Invoke("YouWinPanel", 2); // задержка в появлении панели
         board.currentState = GameState.win;
-        currentCounterValue = 0;      
+        //currentCounterValue = 0;      
+        currentCounterValue = requirements.counterValue;
         counter.text = "" + currentCounterValue;
         FadePanelController fade = FindObjectOfType<FadePanelController>();
         fade.GameOver();

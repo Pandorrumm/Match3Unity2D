@@ -1,6 +1,6 @@
 Android
 PlayerPath?
-D:/Unity/Проекты/Match3/Match3_3 с рекламой.apk
+D:/Unity/Проекты/Match3/Match3_3 с рекламой_1.apk
 SceneListBegin?
 Assets/Scenes/Splash.unity
 Assets/Scenes/Main.unity

@@ -22436,7 +22436,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -2, y: 393}
+  m_AnchoredPosition: {x: -2, y: 441}
   m_SizeDelta: {x: 362.9, y: 241.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &721758798
@@ -55753,7 +55753,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 231, y: 399}
+  m_AnchoredPosition: {x: 231, y: 447}
   m_SizeDelta: {x: 250.5, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1705729498
@@ -57670,6 +57670,11 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114790032220710346, guid: f2f50024c4564dc4ab404d7a348981e3,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 224980542090082132, guid: f2f50024c4564dc4ab404d7a348981e3,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -57872,6 +57877,31 @@ Prefab:
       value: Load
       objectReference: {fileID: 0}
     - target: {fileID: 114374224452401028, guid: f2f50024c4564dc4ab404d7a348981e3,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114790032220710346, guid: f2f50024c4564dc4ab404d7a348981e3,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114790032220710346, guid: f2f50024c4564dc4ab404d7a348981e3,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114790032220710346, guid: f2f50024c4564dc4ab404d7a348981e3,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 729956646}
+    - target: {fileID: 114790032220710346, guid: f2f50024c4564dc4ab404d7a348981e3,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Save
+      objectReference: {fileID: 0}
+    - target: {fileID: 114790032220710346, guid: f2f50024c4564dc4ab404d7a348981e3,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
@@ -65103,7 +65133,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -238, y: 395}
+  m_AnchoredPosition: {x: -238, y: 443}
   m_SizeDelta: {x: 250.5, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2017385039
